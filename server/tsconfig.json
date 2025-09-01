@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2019" /* Node.js 12~14 이상 호환 */,
+    "module": "CommonJS" /* Express는 commonjs와 호환 */,
+    "lib": ["ESNext"] /* 최신 JS API 사용 가능 */,
+    "types": ["node"] /* Node.js 타입 지원 */,
+
+    /* Project Structure */
+    "rootDir": "./src" /* 소스코드 경로 */,
+    "outDir": "./dist" /* 빌드 결과물 경로 */,
+
+    /* Module Resolution */
+    "esModuleInterop": true /* import express from "express" 가능 */,
+    "skipLibCheck": true /* 타입 검사 속도 향상 */,
+    "moduleResolution": "node",
+
+    /* Strict Type Checking */
+    "strict": true /* 엄격한 타입 체크 */,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
+  },
+  "include": ["src"] /* src 폴더 포함 */,
+  "exclude": ["node_modules", "dist"] /* 불필요한 폴더 제외 */
+}
