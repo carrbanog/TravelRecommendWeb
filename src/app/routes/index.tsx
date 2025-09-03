@@ -5,6 +5,7 @@ import { HomePage } from "../../pages/HomePage";
 import { TravelPage } from "../../pages/TravelPage";
 import { CommunityPage } from "../../pages/CommunityPage";
 import { SignupPage } from "../../pages/Signup.tsx";
+import { LoginPage } from "../../pages/LoginPage/index.tsx";
 
 export const AppRoutes = () => {
   return (
@@ -14,7 +15,7 @@ export const AppRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/travel" element={<TravelPage />} />
         <Route path="/community" element={<CommunityPage />} />
-        {/* <Route path="/login" element={<LoginPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Routes>
     </BrowserRouter>
