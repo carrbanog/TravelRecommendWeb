@@ -1,10 +1,25 @@
 import { useState } from "react";
+import axios from "axios";
 import { AuthLayout } from "../../shared/ui/AuthLayout/AuthLayout";
 import { AuthButton } from "../../shared/ui/AuthButton/AuthButton";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:5000/login", {
+        email,
+        password,
+      });
+    } catch (error) {
+      console.error("서버 요청 중 오류 발생: ", error);
+    }
+  };
+
   return (
     <AuthLayout
       title="로그인"
@@ -13,7 +28,7 @@ export const LoginPage = () => {
       linkTo="/signup"
     >
       {/* 로그인 폼 */}
-      <form action="">
+      <form onSubmit={handleLogin}>
         {/* 아이디 입력 */}
         <div className="mb-6">
           <label

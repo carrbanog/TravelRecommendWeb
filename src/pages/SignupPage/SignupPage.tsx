@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthButton } from "../../shared/ui/AuthButton/AuthButton";
 import { AuthLayout } from "../../shared/ui/AuthLayout/AuthLayout";
+import { useNavigate } from "react-router-dom";
+import { signUp } from "../../features/auth/signup/signupApi";
 
 export const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -10,20 +12,25 @@ export const SignupPage = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [name, setName] = useState("");
 
+  const navigate = useNavigate();
+
   const handelSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email, password, passwordConfirm);
 
     try {
-      const response = await axios.post("http://localhost:5000/signup", {
-        name,
-        email,
-        password,
-        passwordConfirm,
-      });
+      const response = await signUp({ name, email, password, passwordConfirm });
       console.log("서버응답: ", response);
+      alert(response.data.message);
+
+      //회원가입 성공 시 로그인 페이지로 이동
+      if (response.status === 201) {
+        navigate("/login");
+      }
     } catch (error) {
       console.error("서버 요청 중 오류 발생: ", error);
+      if (axios.isAxiosError(error) && error.response) {
+        alert(error.response.data.message);
+      }
     }
   };
 

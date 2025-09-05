@@ -4,8 +4,8 @@ import Header from "../../widgets/Header/Header";
 import { HomePage } from "../../pages/HomePage";
 import { TravelPage } from "../../pages/TravelPage";
 import { CommunityPage } from "../../pages/CommunityPage";
-import { SignupPage } from "../../pages/Signup.tsx";
-import { LoginPage } from "../../pages/LoginPage/index.tsx";
+import { SignupPage } from "../../pages/SignupPage/SignupPage";
+import { LoginPage } from "../../pages/LoginPage/LoginPage";
 
 export const AppRoutes = () => {
   return (
