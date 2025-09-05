@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AuthLayout } from "../../shared/ui/AuthLayout/AuthLayout";
+import { AuthButton } from "../../shared/ui/AuthButton/AuthButton";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +12,9 @@ export const LoginPage = () => {
       linkText="회원가입하기"
       linkTo="/signup"
     >
+      {/* 로그인 폼 */}
       <form action="">
+        {/* 아이디 입력 */}
         <div className="mb-6">
           <label
             htmlFor="email"
@@ -30,6 +33,7 @@ export const LoginPage = () => {
           />
         </div>
 
+        {/* 비밀 번호 입력력 */}
         <div className="mb-6">
           <label
             htmlFor="password"
@@ -47,6 +51,7 @@ export const LoginPage = () => {
             required
           />
         </div>
+        <AuthButton>로그인</AuthButton>
       </form>
     </AuthLayout>
   );
