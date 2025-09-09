@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../app/providers/AuthProvider";
 
 const Header = () => {
+  const { user } = useAuth();
   return (
     <header className="bg-gradient-to-r from-slate-100 to-slate-200 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,18 +45,28 @@ const Header = () => {
 
           {/* 로그인 영역 */}
           <div className="flex items-center space-x-4">
-            <Link
-              to="/login"
-              className="text-slate-700 hover:text-blue-600 transition-colors duration-300 font-medium"
-            >
-              로그인
-            </Link>
-            <Link
-              to="/signup"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium"
-            >
-              회원가입
-            </Link>
+            {user ? (
+              <>
+                <span className="text-slate-700 font-medium">
+                  안녕하세요, {user.name}님 👋
+                </span>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-slate-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+                >
+                  로그인
+                </Link>
+                <Link
+                  to="/signup"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium"
+                >
+                  회원가입
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

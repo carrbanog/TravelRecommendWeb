@@ -2,21 +2,41 @@ import { useState } from "react";
 import axios from "axios";
 import { AuthLayout } from "../../shared/ui/AuthLayout/AuthLayout";
 import { AuthButton } from "../../shared/ui/AuthButton/AuthButton";
+import { loginApi } from "../../features/auth/login/loginApi";
+
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../app/providers/AuthProvider";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/login", {
-        email,
-        password,
+      const response = await loginApi({ email, password });
+      console.log(response);
+      const userDoc = response.data.userDoc;
+      console.log(userDoc.username);
+      login({
+        name: userDoc.username,
+        email: userDoc.email,
       });
+      console.log(login);
+      alert(response.data.message);
+
+      if (response.status === 200) {
+        navigate("/");
+      }
     } catch (error) {
       console.error("서버 요청 중 오류 발생: ", error);
+      if (axios.isAxiosError(error) && error.response) {
+        alert(error.response.data.error);
+      }
     }
   };
 
@@ -48,7 +68,7 @@ export const LoginPage = () => {
           />
         </div>
 
-        {/* 비밀 번호 입력력 */}
+        {/* 비밀 번호 입력 */}
         <div className="mb-6">
           <label
             htmlFor="password"
