@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "../api/signupApi";
 import axios from "axios";
-import type { UserData } from "./type";
+import type { UserData } from "../../../../shared/types/user";
 import { AUTH_ENDPOINTS } from "../../../../shared/api/endpoints";
 
 export const useSignup = () => {

@@ -1,5 +1,5 @@
 // features/auth/login/model/types.ts
-import type { AuthCredentials } from "../../type";
+// import type { AuthCredentials } from "../../type";
 
 export type LoginResponse = {
   message: string;
@@ -11,4 +11,4 @@ export type LoginResponse = {
   };
 };
 
-export type loginData = AuthCredentials;
+// export type loginData = AuthCredentials;
