@@ -8,9 +8,13 @@ const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
 interface TravelMapProps {
   searchTerm?: string;
+  onSelectPlace?: (place: {
+    name: string;
+    coordinates: [number, number];
+  }) => void;
 }
 
-const TravelMap: React.FC<TravelMapProps> = ({ searchTerm }) => {
+const TravelMap: React.FC<TravelMapProps> = ({ searchTerm, onSelectPlace }) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markerRef = useRef<mapboxgl.Marker | null>(null);
@@ -56,6 +60,15 @@ const TravelMap: React.FC<TravelMapProps> = ({ searchTerm }) => {
       .setLngLat([lon, lat])
       .setPopup(new mapboxgl.Popup().setText(placeName))
       .addTo(mapRef.current);
+
+    markerRef.current.getElement().addEventListener("click", () => {
+      if (onSelectPlace) {
+        onSelectPlace({
+          name: placeName,
+          coordinates: [lon, lat],
+        });
+      }
+    });
 
     markerRef.current.getPopup()?.addTo(mapRef.current);
   }, [data]);
