@@ -12,9 +12,14 @@ interface TravelMapProps {
     name: string;
     coordinates: [number, number];
   }) => void;
+  selectedPlace: { name: string; coordinates: [number, number] }[];
 }
 
-const TravelMap: React.FC<TravelMapProps> = ({ searchTerm, onSelectPlace }) => {
+const TravelMap: React.FC<TravelMapProps> = ({
+  searchTerm,
+  onSelectPlace,
+  selectedPlace,
+}) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markerRef = useRef<mapboxgl.Marker | null>(null);
@@ -29,10 +34,27 @@ const TravelMap: React.FC<TravelMapProps> = ({ searchTerm, onSelectPlace }) => {
       container: mapContainer.current as HTMLElement,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [139.767125, 35.681236], // 기본 위치: 도쿄역
-      zoom: 12,
+      zoom: 9,
     });
 
     mapRef.current.addControl(new mapboxgl.NavigationControl());
+
+    mapRef.current.on("click", (e) => {
+      const { lng, lat } = e.lngLat;
+
+      markerRef.current = new mapboxgl.Marker({ color: "red" })
+        .setLngLat([lng, lat])
+        .addTo(mapRef.current!);
+
+      markerRef.current.getElement().addEventListener("click", () => {
+        if (onSelectPlace) {
+          onSelectPlace({
+            name: "사용자 위치 선택",
+            coordinates: [lng, lat],
+          });
+        }
+      });
+    });
 
     return () => mapRef.current?.remove();
   }, []);
@@ -50,30 +72,38 @@ const TravelMap: React.FC<TravelMapProps> = ({ searchTerm, onSelectPlace }) => {
     if (!data || !mapRef.current) return;
 
     const [lon, lat] = data.center;
-    const placeName = data.place_name;
+    // const placeName = data.place_name;
 
-    mapRef.current.flyTo({ center: [lon, lat], zoom: 13 });
-
-    if (markerRef.current) markerRef.current.remove();
-
-    markerRef.current = new mapboxgl.Marker({ color: "red" })
-      .setLngLat([lon, lat])
-      .setPopup(new mapboxgl.Popup().setText(placeName))
-      .addTo(mapRef.current);
-
-    markerRef.current.getElement().addEventListener("click", () => {
-      if (onSelectPlace) {
-        onSelectPlace({
-          name: placeName,
-          coordinates: [lon, lat],
-        });
-      }
-    });
-
-    markerRef.current.getPopup()?.addTo(mapRef.current);
+    mapRef.current.flyTo({ center: [lon, lat], zoom: 10 });
   }, [data]);
 
-  return <div ref={mapContainer} style={{ height: "80vh", width: "100%" }} />;
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    const savedPlaces = localStorage.getItem("selectedPlace");
+    if (!savedPlaces) return;
+
+    const places: { name: string; coordinates: [number, number] }[] =
+      JSON.parse(savedPlaces);
+
+    places.forEach((place) => {
+      const marker = new mapboxgl.Marker({ color: "red" })
+        .setLngLat(place.coordinates)
+        .setPopup(new mapboxgl.Popup().setText(place.name))
+        .addTo(mapRef.current!);
+
+      marker.getElement().addEventListener("click", () => {
+        if (onSelectPlace) {
+          onSelectPlace(place);
+        }
+      });
+    });
+    if (places.length > 0) {
+      mapRef.current.flyTo({ center: places[0].coordinates, zoom: 5 });
+    }
+  }, []);
+
+  return <div ref={mapContainer} style={{ height: "100vh", width: "100%" }} />;
 };
 
 export default TravelMap;
