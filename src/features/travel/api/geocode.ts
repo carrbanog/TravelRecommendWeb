@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Place } from "../model/travelTypes";
+import type { AddressType } from "../model/addressType";
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
@@ -15,7 +15,7 @@ export const fetchPlaceCoordinates = async (
       )}.json`,
       {
         params: {
-          types: "place",
+          types: "region",
           access_token: MAPBOX_TOKEN,
         },
       }

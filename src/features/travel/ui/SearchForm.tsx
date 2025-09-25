@@ -1,36 +1,42 @@
 import React, { useState } from "react";
 
 export type SearchFormProps = {
-  onSearch: (query: string) => void;
+  setPlaceSearch: (key: string) => void; //TravelPage에 검색어 전달
 };
 
-const SearchForm = ({ onSearch }: SearchFormProps) => {
-  const [searchDestination, setSearchDestination] = useState<string>("");
-  const destinationHandleSubmit = (e: React.FormEvent) => {
+const SearchForm = ({ setPlaceSearch }: SearchFormProps) => {
+  const [inputValue, setInputValue] = useState<string>("");
+  const handleDestinationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchDestination.trim() !== "") {
-      onSearch(searchDestination);
-    }
+    const trimmed = inputValue?.trim(); //공백 방지
+    if (!trimmed) return; //빈 문자열 무시
+    setPlaceSearch(trimmed);
   };
-  return (
-    <form onSubmit={destinationHandleSubmit} className="grid grid-cols-10 mb-4">
-      {/* 검색 입력창 (90%) */}
-      <input
-        type="text"
-        placeholder="지역을 입력하세요"
-        value={searchDestination}
-        onChange={(e) => setSearchDestination(e.target.value)}
-        className="col-span-9 border border-gray-300 p-2 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
 
-      {/* 확인 버튼 (10%) */}
-      <button
-        type="submit"
-        className="col-span-1 bg-blue-500 text-white rounded-r hover:bg-blue-600 transition-colors"
-      >
-        확인
-      </button>
-    </form>
+  return (
+    <div className="bg-gradient-to-r from-slate-100 to-slate-200 rounded-xl shadow-lg">
+      <div className="max-w-3xl mx-auto px-4 py-4">
+        <form
+          onSubmit={handleDestinationSubmit}
+          className="flex items-center space-x-3"
+        >
+          <input
+            type="search"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="여행지를 검색해보세요"
+            aria-label="여행지 검색"
+            className="flex-1 px-4 py-2 bg-white text-slate-800 placeholder-slate-400 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium shadow-sm"
+          >
+            검색
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

@@ -42,6 +42,11 @@ const TravelMap: React.FC<TravelMapProps> = ({
     mapRef.current.on("click", (e) => {
       const { lng, lat } = e.lngLat;
 
+      const newPlace = {
+        name: "사용자 위치 선택",
+        coordinates: [lng, lat] as [number, number],
+      };
+
       markerRef.current = new mapboxgl.Marker({ color: "red" })
         .setLngLat([lng, lat])
         .addTo(mapRef.current!);
@@ -74,7 +79,7 @@ const TravelMap: React.FC<TravelMapProps> = ({
     const [lon, lat] = data.center;
     // const placeName = data.place_name;
 
-    mapRef.current.flyTo({ center: [lon, lat], zoom: 10 });
+    mapRef.current.flyTo({ center: [lon, lat], zoom: 15 });
   }, [data]);
 
   useEffect(() => {

@@ -1,12 +1,35 @@
-import { useEffect, useState } from "react";
-import TravelMap from "../../features/travel/ui/TravelMap";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
+// import TravelMap from "../../features/travel/ui/TravelMap";
 import SearchForm from "../../features/travel/ui/SearchForm";
 import { useSelectedPlace } from "../../features/travel/model/useSelectedPlace";
+import MyMap from "../../features/travel/ui/MyMap";
+
+import { fetchMapCode } from "../../features/travel/api/fetchMapCode";
+import { fetchNearbyPlaces } from "../../features/travel/api/fetchNearbyPlaces";
 
 export const TravelPage = () => {
-  const { selectedPlaces, addPlace, removePlace } = useSelectedPlace();
+  // const { selectedPlaces, addPlace, removePlace } = useSelectedPlace();
 
-  const [search, setSearch] = useState<string>("");
+  const [placeSearch, setPlaceSearch] = useState<string>("");
+
+  //좌표 전환환
+  const { data: coords } = useQuery({
+    queryKey: ["geocode", placeSearch],
+    queryFn: () => fetchMapCode(placeSearch),
+    enabled: !!placeSearch, //빈 문자열이면 api 호출 막음
+  });
+  console.log(coords?.geometry.location);
+  const cetner = coords?.geometry.location ?? { lat: 37.5665, lng: 126.978 };
+
+  //주변 관광지 추천
+  const { data: nearbyPlaces } = useQuery({
+    queryKey: ["nearbyPlaces", coords],
+    queryFn: () => fetchNearbyPlaces(coords!.geometry.location),
+    enabled: !!coords,
+  });
+  console.log(nearbyPlaces);
 
   return (
     <div className="h-screen w-full flex flex-col">
@@ -16,19 +39,15 @@ export const TravelPage = () => {
       <main className="flex flex-1 gap-4 p-4">
         {/* 지도 영역 (70%) */}
         <div className="w-[70%] rounded-lg overflow-hidden shadow-md">
-          <TravelMap
-            searchTerm={search}
-            onSelectPlace={addPlace}
-            selectedPlace={selectedPlaces}
-          />
+          <MyMap center={cetner} />
         </div>
 
         {/* 검색창 영역 (30%) */}
         <div className="w-[30%] flex flex-col gap-4">
-          <SearchForm onSearch={setSearch} />
+          <SearchForm setPlaceSearch={setPlaceSearch} />
 
           {/* ✅ 선택된 장소 리스트 */}
-          <div className="p-2 border rounded-md shadow-sm bg-white">
+          {/* <div className="p-2 border rounded-md shadow-sm bg-white">
             <h3 className="font-bold mb-2">선택된 장소</h3>
             <ul className="list-disc pl-5">
               {selectedPlaces.map((place, idx) => (
@@ -45,7 +64,7 @@ export const TravelPage = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
       </main>
     </div>
