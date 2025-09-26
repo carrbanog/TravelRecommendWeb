@@ -20,7 +20,7 @@ export const TravelPage = () => {
     queryFn: () => fetchMapCode(placeSearch),
     enabled: !!placeSearch, //빈 문자열이면 api 호출 막음
   });
-  console.log(coords?.geometry.location);
+  // console.log(coords?.geometry.location);
   const cetner = coords?.geometry.location ?? { lat: 37.5665, lng: 126.978 };
 
   //주변 관광지 추천
@@ -29,8 +29,7 @@ export const TravelPage = () => {
     queryFn: () => fetchNearbyPlaces(coords!.geometry.location),
     enabled: !!coords,
   });
-  console.log(nearbyPlaces);
-
+  console.log("test");
   return (
     <div className="h-screen w-full flex flex-col">
       {/* 상단 헤더 */}

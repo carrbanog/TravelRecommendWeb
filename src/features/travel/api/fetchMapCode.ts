@@ -2,6 +2,8 @@ import axios from "axios";
 import React from "react";
 import type { AddressType } from "../model/addressType";
 
+
+
 export const fetchMapCode = async (
   address: string
 ): Promise<AddressType | undefined> => {
@@ -15,6 +17,7 @@ export const fetchMapCode = async (
         },
       }
     );
+    console.log(import.meta.env.VITE_GOOGLE_MAP);
     console.log(res.data.results[0]);
     return res.data.results[0];
     // if(res.data.)
