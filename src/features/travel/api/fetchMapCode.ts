@@ -18,6 +18,7 @@ export const fetchMapCode = async (
       }
     );
     console.log(res.data.results[0]);
+    console.log("test");
     return res.data.results[0];
     // if(res.data.)
   } catch (err) {
