@@ -3,7 +3,7 @@ import React from "react";
 import type { AddressType } from "../model/addressType";
 
 
-
+// 도시이름, 좌표 반환
 export const fetchMapCode = async (
   address: string
 ): Promise<AddressType | undefined> => {
@@ -17,7 +17,6 @@ export const fetchMapCode = async (
         },
       }
     );
-    console.log(import.meta.env.VITE_GOOGLE_MAP);
     console.log(res.data.results[0]);
     return res.data.results[0];
     // if(res.data.)

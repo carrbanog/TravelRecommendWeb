@@ -2,34 +2,27 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 // import TravelMap from "../../features/travel/ui/TravelMap";
-import SearchForm from "../../features/travel/ui/SearchForm";
-import { useSelectedPlace } from "../../features/travel/model/useSelectedPlace";
+import SearchForm from "../../features/travel/search-place/ui/SearchForm";
 import MyMap from "../../features/travel/ui/MyMap";
-
-import { fetchMapCode } from "../../features/travel/api/fetchMapCode";
 import { fetchNearbyPlaces } from "../../features/travel/api/fetchNearbyPlaces";
+import { useGeocodeQuery } from '../../features/travel/search-place/hooks/useGeoCodeQuery';
 
 export const TravelPage = () => {
   // const { selectedPlaces, addPlace, removePlace } = useSelectedPlace();
 
   const [placeSearch, setPlaceSearch] = useState<string>("");
 
-  //좌표 전환환
-  const { data: coords } = useQuery({
-    queryKey: ["geocode", placeSearch],
-    queryFn: () => fetchMapCode(placeSearch),
-    enabled: !!placeSearch, //빈 문자열이면 api 호출 막음
-  });
-  // console.log(coords?.geometry.location);
-  const cetner = coords?.geometry.location ?? { lat: 37.5665, lng: 126.978 };
+  const { data: coords, isLoading } = useGeocodeQuery(placeSearch);   //검색 시 좌표 반환
+
+  const defaultCoords = coords ?? {lat: 37.5665, lng:126.9890};   //기본 좌표값 설정
+  console.log(coords);
 
   //주변 관광지 추천
-  const { data: nearbyPlaces } = useQuery({
-    queryKey: ["nearbyPlaces", coords],
-    queryFn: () => fetchNearbyPlaces(coords!.geometry.location),
-    enabled: !!coords,
-  });
-  console.log("test");
+  // const { data: nearbyPlaces } = useQuery({
+  //   queryKey: ["nearbyPlaces", coords],
+  //   queryFn: () => fetchNearbyPlaces(coords!.geometry.location),
+  //   enabled: !!coords,
+  // });
   return (
     <div className="h-screen w-full flex flex-col">
       {/* 상단 헤더 */}
@@ -38,7 +31,8 @@ export const TravelPage = () => {
       <main className="flex flex-1 gap-4 p-4">
         {/* 지도 영역 (70%) */}
         <div className="w-[70%] rounded-lg overflow-hidden shadow-md">
-          <MyMap center={cetner} />
+          {isLoading && <div>지도 로딩 중...</div>}
+          <MyMap center={defaultCoords} />
         </div>
 
         {/* 검색창 영역 (30%) */}
