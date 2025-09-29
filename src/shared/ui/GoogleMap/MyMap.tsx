@@ -1,9 +1,5 @@
 import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
-import { useQuery } from "@tanstack/react-query";
-import { fetchMapCode } from "../api/fetchMapCode";
-import { useEffect } from "react";
-import { fetchNearbyPlaces } from "../api/fetchNearbyPlaces";
-import type { coordinates } from "../model/addressType";
+import type { coordinates } from "../../types/coordinatestype";
 
 export type MyMapProps = {
   center: coordinates;

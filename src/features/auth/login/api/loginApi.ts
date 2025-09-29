@@ -1,5 +1,5 @@
 import type { LoginResponse } from "../../login/model/type";
-import type { LoginData } from "../../../../shared/types/user";
+import type { LoginData } from "../../../../shared/types/usertype";
 import api from "../../../../shared/api/axiosInstance";
 import { AUTH_ENDPOINTS } from "../../../../shared/api/endpoints";
 

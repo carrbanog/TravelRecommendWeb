@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 import signUpRoutes from "./routes/signUpRoutes";
 import loginRoutes from "./routes/loginRoutes";
+import nearPlacesRoutes from "./routes/nearPlacesRoutes";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ mongoose
 
 app.use("/signup", signUpRoutes);
 app.use("/login", loginRoutes);
+app.use("/nearbyplaces", nearPlacesRoutes);
 
 app.listen(5000, () => {
   console.log("서버 실행 중: http://localhost:5000");

@@ -14,7 +14,7 @@ const Header = () => {
               <span className="text-3xl">✈️</span>
             </div>
             <div className="text-slate-800">
-              <h1 className="text-2xl font-bold tracking-wide">TravelDream</h1>
+              <h1 className="text-2xl font-bold tracking-wide">Traveller</h1>
               <p className="text-sm text-slate-600">
                 당신의 꿈의 여행을 찾아보세요
               </p>

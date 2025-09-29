@@ -1,7 +1,5 @@
 import axios from "axios";
-import React from "react";
 import type { AddressType } from "../model/addressType";
-
 
 // 도시이름, 좌표 반환
 export const fetchMapCode = async (
@@ -17,8 +15,8 @@ export const fetchMapCode = async (
         },
       }
     );
-    console.log(res.data.results[0]);
-    console.log("test");
+    // console.log(res.data.results[0]);
+    // console.log("test");
     return res.data.results[0];
     // if(res.data.)
   } catch (err) {
