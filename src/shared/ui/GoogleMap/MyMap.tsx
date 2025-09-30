@@ -1,6 +1,6 @@
 import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import type { coordinates } from "../../types/coordinatestype";
-import type { NearPlace } from '../../../features/travel/near-place/model/nearPlaceType';
+import type { NearPlace } from "../../types/nearPlaceType"
 
 export type MyMapProps = {
   place?: coordinates;  //초반에 값이 없을 경우 대비

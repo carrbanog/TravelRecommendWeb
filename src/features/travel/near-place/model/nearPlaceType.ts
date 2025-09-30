@@ -9,8 +9,3 @@ export type NearPlaceApiResponse = {
   rating: number;
 };
 
-//데이터 반환 타입
-export type NearPlace = {
-  title: string;
-  nearCoordinates:coordinates
-}

@@ -1,5 +1,5 @@
 import React from "react";
-import type { NearPlace } from '../model/nearPlaceType';
+import type { NearPlace } from "../../../../shared/types/nearPlaceType"
 
 
 export type nearbyPlacesListProps = {

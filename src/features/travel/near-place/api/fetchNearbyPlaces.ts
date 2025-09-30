@@ -1,7 +1,8 @@
 import type { coordinates } from "../../../../shared/types/coordinatestype";
 import api from "../../../../shared/api/axiosInstance";
 import { AUTH_ENDPOINTS } from "../../../../shared/api/endpoints";
-import type { NearPlaceApiResponse, NearPlace } from '../model/nearPlaceType';
+import type { NearPlaceApiResponse } from '../model/nearPlaceType';
+import type { NearPlace } from '../../../../shared/types/nearPlaceType';
 
 
 //좌표 받으면 주변 여행지 요청
