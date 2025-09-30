@@ -8,7 +8,7 @@ export type nearbyPlacesListProps = {
 }
 
 const NearbyPlacesList = ({ places }: nearbyPlacesListProps) => {
-  console.log(places);
+  // console.log(places);
   return <div></div>;
 };
 

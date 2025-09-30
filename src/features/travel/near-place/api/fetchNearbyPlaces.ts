@@ -1,9 +1,10 @@
 import type { coordinates } from "../../../../shared/types/coordinatestype";
 import api from "../../../../shared/api/axiosInstance";
 import { AUTH_ENDPOINTS } from "../../../../shared/api/endpoints";
-import axios from "axios";
 import type { NearPlaceApiResponse, NearPlace } from '../model/nearPlaceType';
 
+
+//좌표 받으면 주변 여행지 요청
 export const fetchNearbyPlaces = async (query: coordinates): Promise<NearPlace[] | undefined> => {
   try {
     const res = await api.get<NearPlaceApiResponse[]>(AUTH_ENDPOINTS.NEARBYPLACES, {
@@ -17,7 +18,7 @@ export const fetchNearbyPlaces = async (query: coordinates): Promise<NearPlace[]
         title: nearPlace.name,
         nearCoordinates: nearPlace.geometry.location
       }))
-      console.log(nearPlaceData);
+      // console.log(nearPlaceData);
       // console.log(res.data)
       return nearPlaceData;
     }
