@@ -5,7 +5,7 @@ import { fetchNearbyPlaces } from "../api/fetchNearbyPlaces";
 const getNearbyPlaces = async (req: Request, res: Response) => {
   // 1. 클라이언트가 쿼리로 보낸 위도(lat), 경도(lng)를 추출
   const { lat, lng } = req.query;
-  console.log(lat, lng);
+  // console.log(lat, lng);
 
   // 2. 위도 또는 경도 값이 없으면 400 에러 응답
   if (!lat || !lng) {

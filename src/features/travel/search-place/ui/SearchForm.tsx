@@ -11,6 +11,7 @@ const SearchForm = ({ setPlaceSearch }: SearchFormProps) => {
     const trimmed = inputValue?.trim(); //공백 방지
     if (!trimmed) return; //빈 문자열 무시
     setPlaceSearch(trimmed);
+    setInputValue("");
   };
 
   return (

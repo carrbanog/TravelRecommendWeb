@@ -1,7 +1,14 @@
 import React from "react";
-import type { coordinates } from "../../../../shared/types/coordinatestype";
+import type { NearPlace } from '../model/nearPlaceType';
 
-const NearbyPlacesList = ({ nearPlaces }: coordinates) => {
+
+export type nearbyPlacesListProps = {
+  places?: NearPlace[]
+
+}
+
+const NearbyPlacesList = ({ places }: nearbyPlacesListProps) => {
+  console.log(places);
   return <div></div>;
 };
 

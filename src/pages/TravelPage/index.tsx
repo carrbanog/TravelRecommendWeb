@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import SearchForm from "../../features/travel/search-place/ui/SearchForm";
 import MyMap from "../../shared/ui/GoogleMap/MyMap";
@@ -11,6 +11,7 @@ export const TravelPage = () => {
   const [placeSearch, setPlaceSearch] = useState<string>("");
 
   const { data: coords, isLoading } = useGeocodeQuery(placeSearch); //검색 시 좌표 반환
+  console.log(coords);
 
   const defaultCoords = coords ?? { lat: 37.5665, lng: 126.989 }; //기본 좌표값 설정
 
@@ -35,7 +36,7 @@ export const TravelPage = () => {
           <SearchForm setPlaceSearch={setPlaceSearch} />
         </div>
 
-        <div>{/* <NearbyPlacesList nearPlacesCoords={nearPlaces} /> */}</div>
+        <div><NearbyPlacesList places={nearPlaces} /></div>
       </main>
     </div>
   );
