@@ -6,18 +6,15 @@ import NearbyPlacesList from "../../features/travel/near-place/ui/NearbyPlacesLi
 
 import { useGeocodeQuery } from "../../features/travel/search-place/hooks/useGeoCodeQuery";
 import { useNearcodeQuery } from "../../features/travel/near-place/hooks/useNearcodeQuery";
-
+import SelectedList from "../../features/travel/selected-place/model/SelectedList";
 
 export const TravelPage = () => {
   const [placeSearch, setPlaceSearch] = useState<string>("");
 
   const { data: coords, isLoading } = useGeocodeQuery(placeSearch); //검색 시 좌표 반환
-  // console.log(coords);
-
-  // const defaultCoords = coords ?? { lat: 37.5665, lng: 126.989 }; //기본 좌표값 설정
 
   const { data: nearPlaces } = useNearcodeQuery(coords); //여행지 검색 시 주변 여행지 출력
-  console.log(nearPlaces);
+  // console.log(nearPlaces);
 
   //주변 관광지 추천
 
@@ -36,9 +33,12 @@ export const TravelPage = () => {
         {/* 검색창 영역 (30%) */}
         <div className="w-[30%] flex flex-col gap-4">
           <SearchForm setPlaceSearch={setPlaceSearch} />
+          <SelectedList />
         </div>
 
-        <div><NearbyPlacesList places={nearPlaces} /></div>
+        <div>
+          <NearbyPlacesList places={nearPlaces} />
+        </div>
       </main>
     </div>
   );
