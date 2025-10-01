@@ -2,6 +2,7 @@ import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import type { coordinates } from "../../types/coordinatestype";
 import type { NearPlace } from "../../types/nearPlaceType"
 
+
 type MarkerPlace = Pick<NearPlace, "nearCoordinates">;
 
 export type MyMapProps = {
