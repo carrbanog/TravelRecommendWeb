@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import React from 'react';
 import {
   LoadScript,
   GoogleMap,
@@ -19,11 +20,11 @@ export type MyMapProps = {
 const MyMap = ({ place, nearPlaces }: MyMapProps) => {
   // const [selectedPlace, setSelectedPlace] = useState<NearPlace | undefined>();
   const addPlace = useSelectedPlacesStore((s) => s.addPlace);
-  const selectedPlaces = useSelectedPlacesStore((state) => state.selectedPlaces)
   const defaultCoords: coordinates = { lat: 37.5665, lng: 126.989 };
   const mapCenter = place ?? defaultCoords; //지도 기본 위치 지정
 
-  console.log(selectedPlaces);
+  console.log("렌더링");
+
   return (
     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP}>
       <GoogleMap
@@ -65,4 +66,4 @@ const MyMap = ({ place, nearPlaces }: MyMapProps) => {
   );
 };
 
-export default MyMap;
+export default  MyMap

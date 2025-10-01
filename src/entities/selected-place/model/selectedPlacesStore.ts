@@ -16,7 +16,6 @@ export const useSelectedPlacesStore = create<SelectedPlacesState>((set) => ({
       if(state.selectedPlaces.find((p) => p.title === place.title)){
         return state;
       }
-      console.log("zustand의 state", state);
       // console.log(selectedPlaces)
       return {selectedPlaces : [...state.selectedPlaces, place]}
     }),

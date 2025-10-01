@@ -6,13 +6,14 @@ import NearbyPlacesList from "../../features/travel/near-place/ui/NearbyPlacesLi
 
 import { useGeocodeQuery } from "../../features/travel/search-place/hooks/useGeoCodeQuery";
 import { useNearcodeQuery } from "../../features/travel/near-place/hooks/useNearcodeQuery";
+import SelectedList from '../../entities/selected-place/ui/SelectedList';
 
 export const TravelPage = () => {
   const [placeSearch, setPlaceSearch] = useState<string>("");
 
-  const { data: coords, isLoading } = useGeocodeQuery(placeSearch); //검색 시 좌표 반환
+  const { data: coords, isLoading: loadingCoords } = useGeocodeQuery(placeSearch); //검색 시 좌표 반환
 
-  const { data: nearPlaces } = useNearcodeQuery(coords); //여행지 검색 시 주변 여행지 출력
+  const { data: nearPlaces, isLoading: loadingPlaces } = useNearcodeQuery(coords); //여행지 검색 시 주변 여행지 출력
   // console.log(nearPlaces);
 
   //주변 관광지 추천
@@ -25,16 +26,18 @@ export const TravelPage = () => {
       <main className="flex flex-1 gap-4 p-4">
         {/* 지도 영역 (70%) */}
         <div className="w-[70%] rounded-lg overflow-hidden shadow-md">
-          {isLoading && <div>지도 로딩 중...</div>}
+          {loadingCoords && <div>지도 로딩 중...</div>}
           <MyMap place={coords} nearPlaces={nearPlaces} />
         </div>
 
         {/* 검색창 영역 (30%) */}
         <div className="w-[30%] flex flex-col gap-4">
           <SearchForm setPlaceSearch={setPlaceSearch} />
+          <SelectedList />
         </div>
 
         <div>
+          {loadingPlaces && <div>여행지 검색 중</div>}
           <NearbyPlacesList places={nearPlaces} />
         </div>
       </main>
