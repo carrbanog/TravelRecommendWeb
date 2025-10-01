@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import {
   LoadScript,
   GoogleMap,
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
+
 import type { coordinates } from "../../types/coordinatestype";
 import type { NearPlace } from "../../types/nearPlaceType"
+
+import { useSelectedPlacesStore } from '../../../entities/selected-place/model/selectedPlacesStore';
 
 export type MyMapProps = {
   place?: coordinates;  //초반에 값이 없을 경우 대비
@@ -13,17 +17,19 @@ export type MyMapProps = {
 };
 
 const MyMap = ({ place, nearPlaces }: MyMapProps) => {
-  const [selectedPlace, setSelectedPlace] = useState<NearPlace | undefined>();
+  // const [selectedPlace, setSelectedPlace] = useState<NearPlace | undefined>();
+  const addPlace = useSelectedPlacesStore((s) => s.addPlace);
+  const selectedPlaces = useSelectedPlacesStore((state) => state.selectedPlaces)
   const defaultCoords: coordinates = { lat: 37.5665, lng: 126.989 };
   const mapCenter = place ?? defaultCoords; //지도 기본 위치 지정
-  // console.log(nearPlaces);
-  // console.log(selectedPlace.nearCoordinates);
+
+  console.log(selectedPlaces);
   return (
     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP}>
       <GoogleMap
         mapContainerStyle={{ width: "100%", height: "100%" }}
         center={mapCenter}
-        zoom={12}
+        zoom={13}
       >
         {/* 마커 예시 */}
         {/* <Marker position={mapCenter} /> */}
@@ -31,11 +37,11 @@ const MyMap = ({ place, nearPlaces }: MyMapProps) => {
           <Marker
             key={index}
             position={placeItem.nearCoordinates}
-            onClick={() => setSelectedPlace(placeItem)}
+            onClick={() => addPlace(placeItem)}
           />
         ))}
 
-        {selectedPlace && (
+        {/* {selectedPlace && (
           <InfoWindow
             position={selectedPlace.nearCoordinates}
             onCloseClick={() => setSelectedPlace(null)}
@@ -53,7 +59,7 @@ const MyMap = ({ place, nearPlaces }: MyMapProps) => {
               </button>
             </div>
           </InfoWindow>
-        )}
+        )} */}
       </GoogleMap>
     </LoadScript>
   );

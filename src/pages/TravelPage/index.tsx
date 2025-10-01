@@ -6,7 +6,6 @@ import NearbyPlacesList from "../../features/travel/near-place/ui/NearbyPlacesLi
 
 import { useGeocodeQuery } from "../../features/travel/search-place/hooks/useGeoCodeQuery";
 import { useNearcodeQuery } from "../../features/travel/near-place/hooks/useNearcodeQuery";
-import SelectedList from "../../features/travel/selected-place/model/SelectedList";
 
 export const TravelPage = () => {
   const [placeSearch, setPlaceSearch] = useState<string>("");
@@ -33,7 +32,6 @@ export const TravelPage = () => {
         {/* 검색창 영역 (30%) */}
         <div className="w-[30%] flex flex-col gap-4">
           <SearchForm setPlaceSearch={setPlaceSearch} />
-          <SelectedList />
         </div>
 
         <div>
