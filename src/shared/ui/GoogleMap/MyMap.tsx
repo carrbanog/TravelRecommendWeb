@@ -2,9 +2,11 @@ import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import type { coordinates } from "../../types/coordinatestype";
 import type { NearPlace } from "../../types/nearPlaceType"
 
+type MarkerPlace = Pick<NearPlace, "nearCoordinates">;
+
 export type MyMapProps = {
   place?: coordinates;  //초반에 값이 없을 경우 대비
-  nearPlaces?: NearPlace[]; //초반에 값이 없을 경우 대비
+  nearPlaces?: MarkerPlace[]; //초반에 값이 없을 경우 대비
 };
 
 const MyMap = ({ place, nearPlaces }: MyMapProps) => {
