@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LoadScript, LoadScriptNext } from "@react-google-maps/api";
+import { LoadScriptNext, Marker } from "@react-google-maps/api";
 
 import SearchForm from "../../features/travel/search-place/ui/SearchForm";
 import MyMap from "../../shared/ui/GoogleMap/MyMap";
@@ -8,7 +8,7 @@ import SelectedList from "../../entities/selected-place/ui/SelectedList";
 import { useGeocodeQuery } from "../../features/travel/search-place/hooks/useGeoCodeQuery";
 import { useNearcodeQuery } from "../../features/travel/near-place/hooks/useNearcodeQuery";
 import { useSelectedPlacesStore } from "../../entities/selected-place/model/selectedPlacesStore";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const TravelPage = () => {
   const [placeSearch, setPlaceSearch] = useState<string>("");
@@ -41,15 +41,15 @@ export const TravelPage = () => {
         <div className="w-[70%] rounded-lg overflow-hidden shadow-md">
           {loadingCoords && <div>지도 로딩 중...</div>}
           <LoadScriptNext googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP}>
-            <MyMap
-              place={coords}
-              nearPlaces={nearPlaces}
-              // onAddPlace={(place) => {
-              //   addPlace(place);
-              //   setLastCoords(place.nearCoordinates); // 클릭 시 좌표 저장
-              // }}
-              onAddPlace={addPlace}
-            />
+            <MyMap place={coords}>
+              {nearPlaces?.map((p, idx) => (
+                <Marker
+                  key={idx}
+                  position={p.nearCoordinates}
+                  onClick={() => addPlace(p)}
+                />
+              ))}
+            </MyMap>
           </LoadScriptNext>
         </div>
 
@@ -57,7 +57,7 @@ export const TravelPage = () => {
         <div className="w-[30%] flex flex-col gap-4">
           <SearchForm setPlaceSearch={setPlaceSearch} />
           <SelectedList place={selectedPlaces} onRemovePlace={removePlace} />
-          <Link to={"/travel/path"} state={{places: selectedPlaces}}>
+          <Link to={"/travel/path"} state={{ places: selectedPlaces }}>
             경로
           </Link>
         </div>
