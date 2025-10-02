@@ -1,4 +1,4 @@
-import { Children, useState } from "react";
+
 import React from "react";
 import {
   GoogleMap,
@@ -7,19 +7,18 @@ import {
 } from "@react-google-maps/api";
 
 import type { coordinates } from "../../types/coordinatestype";
-import type { NearPlace } from "../../types/nearPlaceType";
 
 //나중에 경로 지정할 때 마커 분리 생각하기
 
 export type MyMapProps = {
   place?: coordinates; //초반에 값이 없을 경우 대비
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 const MyMap = ({ place, children }: MyMapProps) => {
     const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS, // ✅ 환경변수에서 키 불러오기
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP, // ✅ 환경변수에서 키 불러오기
   });
 
   if (!isLoaded) {
