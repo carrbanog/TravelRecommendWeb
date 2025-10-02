@@ -7,6 +7,7 @@ import { CommunityPage } from "../../pages/CommunityPage";
 import { SignupPage } from "../../pages/SignupPage";
 import { LoginPage } from "../../pages/LoginPage/LoginPage";
 import { AuthProvider } from "../providers/AuthProvider";
+import TravelPathPage from '../../pages/TravelPage/path';
 
 export const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ export const AppRoutes = () => {
           <Route path="/community" element={<CommunityPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/travel/path" element={<TravelPathPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

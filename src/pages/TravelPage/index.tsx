@@ -8,6 +8,7 @@ import SelectedList from "../../entities/selected-place/ui/SelectedList";
 import { useGeocodeQuery } from "../../features/travel/search-place/hooks/useGeoCodeQuery";
 import { useNearcodeQuery } from "../../features/travel/near-place/hooks/useNearcodeQuery";
 import { useSelectedPlacesStore } from "../../entities/selected-place/model/selectedPlacesStore";
+import { Link } from 'react-router-dom';
 
 export const TravelPage = () => {
   const [placeSearch, setPlaceSearch] = useState<string>("");
@@ -56,6 +57,9 @@ export const TravelPage = () => {
         <div className="w-[30%] flex flex-col gap-4">
           <SearchForm setPlaceSearch={setPlaceSearch} />
           <SelectedList place={selectedPlaces} onRemovePlace={removePlace} />
+          <Link to={"/travel/path"} state={{places: selectedPlaces}}>
+            경로
+          </Link>
         </div>
       </main>
     </div>
