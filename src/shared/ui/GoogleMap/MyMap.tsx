@@ -9,7 +9,8 @@ import {
 
 import type { coordinates } from "../../types/coordinatestype";
 import type { NearPlace } from "../../types/nearPlaceType";
-import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
+
+//나중에 경로 지정할 때 마커 분리 생각하기
 
 export type MyMapProps = {
   place?: coordinates; //초반에 값이 없을 경우 대비

@@ -21,7 +21,7 @@ export const TravelPage = () => {
 
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
   const addPlace = useSelectedPlacesStore((s) => s.addPlace);
-  // const removePlace = useSelectedPlacesStore((s) => s.removePlace);
+  const removePlace = useSelectedPlacesStore((s) => s.removePlace);
 
   //마지막 위치로 이동
   // const setLastCoords = useSelectedPlacesStore((s) => s.setLastCoords);
@@ -55,7 +55,7 @@ export const TravelPage = () => {
         {/* 검색창 영역 (30%) */}
         <div className="w-[30%] flex flex-col gap-4">
           <SearchForm setPlaceSearch={setPlaceSearch} />
-          <SelectedList place={selectedPlaces} />
+          <SelectedList place={selectedPlaces} onRemovePlace={removePlace} />
         </div>
       </main>
     </div>
