@@ -42,11 +42,11 @@ export const TravelPage = () => {
           {loadingCoords && <div>지도 로딩 중...</div>}
           <LoadScriptNext googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP}>
             <MyMap place={coords}>
-              {nearPlaces?.map((p, idx) => (
+              {nearPlaces?.map((placeItem, idx) => (
                 <Marker
                   key={idx}
-                  position={p.nearCoordinates}
-                  onClick={() => addPlace(p)}
+                  position={placeItem.nearCoordinates}
+                  onClick={() => addPlace(placeItem)}
                 />
               ))}
             </MyMap>

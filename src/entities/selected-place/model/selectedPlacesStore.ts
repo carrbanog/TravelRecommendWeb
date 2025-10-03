@@ -8,7 +8,6 @@ type SelectedPlacesState = {
   setLastCoords: (coords: coordinates) => void;
   addPlace: (place: NearPlace) => void;
   removePlace: (place: NearPlace) => void;
-  clear: () => void;
 }
 
 
@@ -28,5 +27,4 @@ export const useSelectedPlacesStore = create<SelectedPlacesState>((set) => ({
       selectedPlaces: state.selectedPlaces.filter((p) => p.title !== place.title),
     })),
   setLastCoords: (coords) => set({lastCoords: coords}),
-  clear: () => set({selectedPlaces: []})
 }))
