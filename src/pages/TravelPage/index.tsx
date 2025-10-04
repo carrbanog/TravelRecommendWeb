@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoadScriptNext, Marker } from "@react-google-maps/api";
 
 import SearchForm from "../../features/travel/search-place/ui/SearchForm";
@@ -20,9 +20,16 @@ export const TravelPage = () => {
     useNearcodeQuery(coords); //여행지 검색 시 주변 여행지 출력
   // console.log(nearPlaces);
 
-  const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
-  const addPlace = useSelectedPlacesStore((s) => s.addPlace);
-  const removePlace = useSelectedPlacesStore((s) => s.removePlace);
+  //검색해서 나온 좌료 coords를 통해서 중간값 전역으로 관리
+  useEffect(() => {
+    if (coords) setCenter(coords);
+    console.log(coords);
+  }, [coords]);
+
+  const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces); // 추천여행지에서 선택한 리스트 모음
+  const addPlace = useSelectedPlacesStore((s) => s.addPlace); // 마커 클릭시 selectedPlaces에 추가
+  const removePlace = useSelectedPlacesStore((s) => s.removePlace); // 제거
+  const setCenter = useSelectedPlacesStore((s) => s.setCenter);
 
   //마지막 위치로 이동
   // const setLastCoords = useSelectedPlacesStore((s) => s.setLastCoords);
@@ -41,7 +48,7 @@ export const TravelPage = () => {
         <div className="w-[70%] rounded-lg overflow-hidden shadow-md">
           {loadingCoords && <div>지도 로딩 중...</div>}
           <LoadScriptNext googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP}>
-            <MyMap place={coords}>
+            <MyMap>
               {nearPlaces?.map((placeItem, idx) => (
                 <Marker
                   key={idx}
@@ -57,9 +64,7 @@ export const TravelPage = () => {
         <div className="w-[30%] flex flex-col gap-4">
           <SearchForm setPlaceSearch={setPlaceSearch} />
           <SelectedList place={selectedPlaces} onRemovePlace={removePlace} />
-          <Link to={"/travel/path"} state={{ places: selectedPlaces }}>
-            경로
-          </Link>
+          <Link to={"/travel/path"}>경로 지정</Link>
         </div>
       </main>
     </div>
