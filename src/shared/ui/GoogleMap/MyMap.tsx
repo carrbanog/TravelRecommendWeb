@@ -1,5 +1,5 @@
 import React from "react";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
 

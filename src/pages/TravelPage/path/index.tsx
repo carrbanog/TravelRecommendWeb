@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
 import MyMap from "../../../shared/ui/GoogleMap/MyMap";
 import { Marker } from "@react-google-maps/api";
@@ -15,7 +15,7 @@ const TravelPathPage = () => {
     if (selectedPlaces.length > 0) {
       setCenter(selectedPlaces[0].nearCoordinates);
     } else {
-      navigate("/travel", { replace: true });
+      navigate("/travel", { replace: true }); //새로고침 시 돌아가기
     }
   }, [selectedPlaces]);
 
