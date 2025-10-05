@@ -42,10 +42,6 @@ const TravelPathPage = () => {
         {/* 상단: 여행지 카드 리스트 */}
         <SelectedListCard selectedPlaces={selectedPlaces} />
 
-        {/* 하단: 지도 예정 영역 */}
-        <section className="basis-[30%] flex items-center justify-center text-gray-400 text-sm bg-gray-50">
-          <p>🗺️ 나중에 지도 선택 영역이 여기에 들어갑니다</p>
-        </section>
       </div>
     </div>
   );
