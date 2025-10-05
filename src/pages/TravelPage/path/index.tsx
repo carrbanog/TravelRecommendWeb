@@ -1,12 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
 import MyMap from "../../../shared/ui/GoogleMap/MyMap";
 import { Marker } from "@react-google-maps/api";
 
 import { useNavigate } from "react-router-dom";
-import { SelectedListCard } from '../../../widgets/selectedListCart/SelectedListCart';
+import { SelectedListCard } from '../../../entities/selected-place/ui/SelectedListCard';
+
+  type PlanCard = {
+    id: number;
+  }
 
 const TravelPathPage = () => {
+  const [planCards, setPlanCards] = useState<PlanCard[]>([]);
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
   const setCenter = useSelectedPlacesStore((s) => s.setCenter);
   const navigate = useNavigate();
@@ -20,28 +25,33 @@ const TravelPathPage = () => {
     }
   }, [selectedPlaces]);
 
+  const handleAddPlanCard = () => {
+    setPlanCards((prev) => [...prev, {id:prev.length + 1}])
+  }
   return (
-    // <div className="h-screen w-full flex flex-col">
-    //   {/* 상단 헤더 */}
-
-    //   {/* 본문 */}
-    //   <main className="flex flex-1 gap-4 p-4">
-    //     {/* 지도 영역 70% */}
-    //     <div className="w-[30%] rounded-lg overflow-hidden shadow-md">
-    //       <MyMap >
-    //         {selectedPlaces.map((placeItem, idx) => (
-    //           <Marker key={idx} position={placeItem.nearCoordinates} />
-    //         ))}
-    //       </MyMap>
-    //     </div>
-    //   </main>
-    // </div>
     <div className="flex justify-center items-center h-screen bg-gray-100">
       {/* 전체 박스 */}
       <div className="w-[80%] h-[85%] bg-white rounded-3xl shadow-xl flex flex-col overflow-hidden">
         {/* 상단: 여행지 카드 리스트 */}
         <SelectedListCard selectedPlaces={selectedPlaces} />
-
+        <div className="p-4 border-t border-gray-200 flex gap-4 items-center">
+          <button
+            onClick={handleAddPlanCard}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+          >
+            계획 추가하기
+          </button>
+        </div>
+        <div className="p-4 flex gap-4 overflow-x-auto">
+          {planCards.map((card) => (
+            <div
+              key={card.id}
+              className="w-full bg-gray-50 rounded-2xl shadow-sm hover:shadow-md p-4 transition-all cursor-grab active:cursor-grabbing"
+            >
+              Day {card.id}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

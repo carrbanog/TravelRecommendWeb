@@ -1,5 +1,4 @@
-import React from "react";
-import { useSelectedPlacesStore } from "../model/selectedPlacesStore";
+
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 
 import { MdDelete } from "react-icons/md";
@@ -9,6 +8,8 @@ type SelectedListProps = {
   onRemovePlace: (place: NearPlace) => void;
 };
 
+
+//TravelPage에서 선택한 리스트들을 보여주는 코드
 const SelectedList = ({ place, onRemovePlace }: SelectedListProps) => {
   return (
     <div className="bg-gradient-to-r from-slate-100 to-slate-200 rounded-xl shadow-lg p-4">
