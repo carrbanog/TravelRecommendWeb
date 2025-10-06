@@ -12,13 +12,16 @@ import { Link } from "react-router-dom";
 
 export const TravelPage = () => {
   const [placeSearch, setPlaceSearch] = useState<string>("");
-  // const [selected, setSelected] = useState<NearPlace>()
+  const [tripDays, setTripDays] = useState(1);
+
+  const handleDaysChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTripDays(Number(e.target.value));
+  };
 
   const { data: coords, isLoading: loadingCoords } =
     useGeocodeQuery(placeSearch); //검색 시 좌표 반환
   const { data: nearPlaces, isLoading: loadingPlaces } =
     useNearcodeQuery(coords); //여행지 검색 시 주변 여행지 출력
-  // console.log(nearPlaces);
 
   //검색해서 나온 좌료 coords를 통해서 중간값 전역으로 관리
 
@@ -58,8 +61,18 @@ export const TravelPage = () => {
         {/* 검색창 영역 (30%) */}
         <div className="w-[30%] flex flex-col gap-4">
           <SearchForm setPlaceSearch={setPlaceSearch} />
+          <div className="flex flex-col gap-2 mt-2">
+            <label>여행 일수</label>
+            <input
+              type="number"
+              min={1}
+              value={tripDays}
+              onChange={handleDaysChange}
+              className="border rounded px-2 py-1"
+            />
+          </div>
           <SelectedList place={selectedPlaces} onRemovePlace={removePlace} />
-          <Link to={"/travel/path"}>경로 지정</Link>
+          <Link to={"/travel/path"} state={tripDays}>경로 지정</Link>
         </div>
       </main>
     </div>

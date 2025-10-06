@@ -1,14 +1,14 @@
-
+import type { PlanCard } from '../model/planCardType';
+import { MdDelete } from "react-icons/md";
 type PlanCardListProps = {
-  planCards: {
-    id: number;
-  }[]
+  planCards: PlanCard[];
   onAddCard:() => void;
+  onDeleteCard:(id:number) => void
 }
 
 
 
-export const PlanCardList = ({planCards, onAddCard}: PlanCardListProps) => {
+export const PlanCardList = ({planCards, onAddCard, onDeleteCard}: PlanCardListProps) => {
   return (
     <>
       <div className="p-4 border-t border-gray-200 flex gap-4 items-center">
@@ -23,9 +23,14 @@ export const PlanCardList = ({planCards, onAddCard}: PlanCardListProps) => {
         {planCards.map((card) => (
           <div
             key={card.id}
-            className="w-full bg-gray-50 rounded-2xl shadow-sm hover:shadow-md p-4 transition-all cursor-grab active:cursor-grabbing"
+            className="w-full bg-gradient-to-r from-slate-100 to-slate-200 shadow-lg rounded-2xl shadow-sm hover:shadow-md p-4 transition-all cursor-grab active:cursor-grabbing"
           >
-            Day {card.id}
+            <div className="flex justify-between items-center mb-2">
+              <div className="font-semibold text-lg">Day {card.id}</div>
+              <div className="text-gray-400 hover:text-red-500 transition cursor-pointer" onClick={() => onDeleteCard(card.id)}>
+                <MdDelete />
+              </div>
+            </div>
           </div>
         ))}
       </div>

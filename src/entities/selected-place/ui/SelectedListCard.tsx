@@ -2,6 +2,8 @@
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { useSelectedPlacesStore } from '../model/selectedPlacesStore';
 
+import { MdDelete } from "react-icons/md";
+
 type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates">;
 
 type SelectedListCardProps = {
@@ -19,10 +21,10 @@ export const SelectedListCard = ({ selectedPlaces }: SelectedListCardProps) => {
         {selectedPlaces.map((place, idx) => (
           <div
             key={idx}
-            className="bg-gray-50 rounded-2xl shadow-sm hover:shadow-md p-4 transition-all"
+            className="bg-gradient-to-r from-slate-100 to-slate-200 shadow-lg rounded-2xl shadow-sm hover:shadow-md p-4 transition-all"
           >
             <div className="flex justify-between items-center mb-2">
-              <button className="text-gray-400 hover:text-red-500 transition" onClick={() => removePlace(place)}>✕</button>
+              <button className="text-gray-400 hover:text-red-500 transition" onClick={() => removePlace(place)}><MdDelete /></button>
             </div>
             <h3 className="text-lg font-semibold text-gray-800 truncate">{place.title}</h3>
           </div>
