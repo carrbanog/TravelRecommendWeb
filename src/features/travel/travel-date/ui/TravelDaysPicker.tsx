@@ -1,24 +1,22 @@
-import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { differenceInDays } from "date-fns";
-
-type TravelDaysPickerProps = {
-  setTripsDays: (days: number) => void;
-};
-
-export const TravelDaysPicker = ({ setTripsDays }: TravelDaysPickerProps) => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+import { useTravelPlanStore } from "../../../../entities/travel-plan/model/useTravelPlanStore"
+export const TravelDaysPicker = () => {
+  const { startDate, endDate, setStartDate, setEndDate, setTripDays } = useTravelPlanStore();
 
   const handleChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
+
     setStartDate(start);
     setEndDate(end);
+    console.log(dates)
 
     if (start && end) {
       const days = differenceInDays(end, start) + 1;
-      setTripsDays(days);
+      setTripDays(days);
+    } else {
+      setTripDays(0);
     }
   };
 
@@ -34,11 +32,6 @@ export const TravelDaysPicker = ({ setTripsDays }: TravelDaysPickerProps) => {
         placeholderText="여행 날짜를 선택하세요"
         className="border rounded px-3 py-2 w-full cursor-pointer"
       />
-      {startDate && endDate && (
-        <p className="text-sm text-gray-600">
-          여행일수: {differenceInDays(endDate, startDate) + 1}일
-        </p>
-      )}
     </div>
   );
 };

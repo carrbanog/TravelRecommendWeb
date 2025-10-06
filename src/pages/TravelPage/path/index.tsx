@@ -9,6 +9,7 @@ import { PlanCardList } from "../../../entities/selected-place/ui/PlanCardList";
 import { DndContext } from "@dnd-kit/core";
 import type { PlanCard } from "../../../entities/selected-place/model/planCardType"
 import { handleDragEnd } from '../../../features/travel/travel-path/lib/handleDragEnd';
+import { useTravelPlanStore } from '../../../entities/travel-plan/model/useTravelPlanStore';
 
 
 
@@ -17,6 +18,7 @@ const TravelPathPage = () => {
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
   const setCenter = useSelectedPlacesStore((s) => s.setCenter);
   const navigate = useNavigate();
+  const tripDays = useTravelPlanStore((s) => s.tripDays);
 
   // zustand로 관리하는 지도 중간값 받아오기 없으면 /travel로 이동
   useEffect(() => {
@@ -27,12 +29,12 @@ const TravelPathPage = () => {
     }
   }, [selectedPlaces]);
 
-  const handleAddPlanCard = () => {
-    setPlanCards((prev) => [...prev, { id: prev.length + 1, places: [] }]);
-  };
-  const handleDeleteCard = (id:number) => {
-    setPlanCards((prev) => prev.filter((card) => card.id !== id));
-  }
+  // const handleAddPlanCard = () => {
+  //   setPlanCards((prev) => [...prev, { id: prev.length + 1, places: [] }]);
+  // };
+  // const handleDeleteCard = (id:number) => {
+  //   setPlanCards((prev) => prev.filter((card) => card.id !== id));
+  // }
 
 
   return (
@@ -42,7 +44,7 @@ const TravelPathPage = () => {
         <div className="w-[80%] h-[85%] bg-white rounded-3xl shadow-xl flex flex-col overflow-hidden">
           {/* 상단: 여행지 카드 리스트 */}
           <SelectedListCard selectedPlaces={selectedPlaces} />
-          <PlanCardList planCards={planCards} onAddCard={handleAddPlanCard} onDeleteCard={handleDeleteCard} />
+          <PlanCardList tripDays={tripDays} />
         </div>
       </div>
     </DndContext>

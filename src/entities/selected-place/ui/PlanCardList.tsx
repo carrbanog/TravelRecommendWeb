@@ -1,23 +1,20 @@
 import type { PlanCard } from '../model/planCardType';
 import { MdDelete } from "react-icons/md";
 type PlanCardListProps = {
-  planCards: PlanCard[];
-  onAddCard:() => void;
-  onDeleteCard:(id:number) => void
+  tripDays: number
 }
 
 
 
-export const PlanCardList = ({planCards, onAddCard, onDeleteCard}: PlanCardListProps) => {
+export const PlanCardList = ({tripDays}: PlanCardListProps) => {
+  const planCards: PlanCard[] = Array.from({length: tripDays}, (_, i) => ({
+    id: i + 1,
+    places: [],
+  }))
   return (
     <>
       <div className="p-4 border-t border-gray-200 flex gap-4 items-center">
-        <button
-          onClick={onAddCard}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-        >
-          계획 추가하기
-        </button>
+        {/* 필요하면 여기에 버튼 영역 추가 가능 */}
       </div>
       <div className="p-4 flex gap-4 overflow-x-auto">
         {planCards.map((card) => (
@@ -27,10 +24,15 @@ export const PlanCardList = ({planCards, onAddCard, onDeleteCard}: PlanCardListP
           >
             <div className="flex justify-between items-center mb-2">
               <div className="font-semibold text-lg">Day {card.id}</div>
-              <div className="text-gray-400 hover:text-red-500 transition cursor-pointer" onClick={() => onDeleteCard(card.id)}>
-                <MdDelete />
-              </div>
+              {/* 필요하면 삭제 버튼 추가 가능 */}
+              {/* <div className="text-gray-400 hover:text-red-500 cursor-pointer"><MdDelete /></div> */}
             </div>
+            {/* 드롭된 장소들을 표시 */}
+            <ul className="space-y-1 text-sm text-gray-700">
+              {card.places?.map((place, idx) => (
+                <li key={idx}>📍 {place}</li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>

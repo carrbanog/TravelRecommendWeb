@@ -13,7 +13,6 @@ import { TravelDaysPicker } from '../../features/travel/travel-date/ui/TravelDay
 
 export const TravelPage = () => {
   const [placeSearch, setPlaceSearch] = useState<string>("");
-  const [tripDays, setTripDays] = useState(1);
 
   const { data: coords, isLoading: loadingCoords } =
     useGeocodeQuery(placeSearch); //검색 시 좌표 반환
@@ -58,9 +57,9 @@ export const TravelPage = () => {
         {/* 사이드 영역 (30%) */}
         <div className="w-[30%] flex flex-col gap-4">
           <SearchForm setPlaceSearch={setPlaceSearch} />
-          <TravelDaysPicker setTripsDays={setTripDays} />
+          <TravelDaysPicker />
           <SelectedList place={selectedPlaces} onRemovePlace={removePlace} />
-          <Link to={"/travel/path"} state={tripDays}>경로 지정</Link>
+          <Link to={"/travel/path"}>경로 지정</Link>
         </div>
       </main>
     </div>
