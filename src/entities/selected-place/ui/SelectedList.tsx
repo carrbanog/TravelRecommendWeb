@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 
 type SelectedListProps = {
   place?: NearPlace[];
-  onRemovePlace: (place: NearPlace) => void;
+  onRemovePlace: (place: string) => void;
 };
 
 
@@ -25,7 +25,7 @@ const SelectedList = ({ place, onRemovePlace }: SelectedListProps) => {
                 {placeItem.title}
               </span>
               <button
-                onClick={() => onRemovePlace(placeItem)}
+                onClick={() => onRemovePlace(placeItem.placeId)}
                 aria-label={`${placeItem.title} 삭제`}
                 className="text-red-500 hover:text-red-600 transition"
               >

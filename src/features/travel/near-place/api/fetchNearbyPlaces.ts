@@ -24,8 +24,8 @@ export const fetchNearbyPlaces = async (
         nearCoordinates: nearPlace.geometry.location,
         placeId: nearPlace.place_id
       }));
-      console.log(nearPlaceData);
-      console.log(res.data[0]);
+      // console.log(nearPlaceData);
+      // console.log(res.data[0]);
       return nearPlaceData;
     }
     // console.log(res.data.map((e) => console.log(e.geometry.location)));
