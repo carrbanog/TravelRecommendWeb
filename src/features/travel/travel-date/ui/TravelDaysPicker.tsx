@@ -10,7 +10,6 @@ export const TravelDaysPicker = () => {
 
     setStartDate(start);
     setEndDate(end);
-    console.log(dates)
 
     if (start && end) {
       const days = differenceInDays(end, start) + 1;
