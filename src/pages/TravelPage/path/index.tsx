@@ -14,7 +14,6 @@ import { useTravelPlanStore } from '../../../entities/travel-plan/model/useTrave
 
 
 const TravelPathPage = () => {
-  const [planCards, setPlanCards] = useState<PlanCard[]>([]);
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
   const setCenter = useSelectedPlacesStore((s) => s.setCenter);
   const navigate = useNavigate();
@@ -29,16 +28,10 @@ const TravelPathPage = () => {
     }
   }, [selectedPlaces]);
 
-  // const handleAddPlanCard = () => {
-  //   setPlanCards((prev) => [...prev, { id: prev.length + 1, places: [] }]);
-  // };
-  // const handleDeleteCard = (id:number) => {
-  //   setPlanCards((prev) => prev.filter((card) => card.id !== id));
-  // }
 
 
   return (
-    <DndContext onDragEnd={(e) => handleDragEnd(e, setPlanCards)}>
+    <DndContext>
       <div className="flex justify-center items-center h-screen bg-gray-100">
         {/* 전체 박스 */}
         <div className="w-[80%] h-[85%] bg-white rounded-3xl shadow-xl flex flex-col overflow-hidden">
