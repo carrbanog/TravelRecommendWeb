@@ -23,7 +23,7 @@ export const DroppableDayCard = ({ card }: DroppableDayCardProps) => {
 
       <ul className="space-y-1 text-sm text-gray-700">
         {card.places?.map((place, idx) => (
-          <li key={idx}>📍 {place}</li>
+          <li key={idx}>📍 {place.title}</li>
         ))}
       </ul>
     </div>
