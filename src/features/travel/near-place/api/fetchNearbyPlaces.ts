@@ -22,9 +22,10 @@ export const fetchNearbyPlaces = async (
       const nearPlaceData: NearPlace[] = res.data.map((nearPlace) => ({
         title: nearPlace.name,
         nearCoordinates: nearPlace.geometry.location,
+        placeId: nearPlace.place_id
       }));
-      // console.log(nearPlaceData);
-      // console.log(res.data[0].photos);
+      console.log(nearPlaceData);
+      console.log(res.data[0]);
       return nearPlaceData;
     }
     // console.log(res.data.map((e) => console.log(e.geometry.location)));

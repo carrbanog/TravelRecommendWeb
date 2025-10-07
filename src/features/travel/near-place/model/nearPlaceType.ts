@@ -7,5 +7,6 @@ export type NearPlaceApiResponse = {
     location: coordinates;
   };
   rating: number;
+  place_id:string;
 };
 

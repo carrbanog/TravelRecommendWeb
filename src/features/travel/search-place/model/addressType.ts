@@ -5,4 +5,5 @@ export type AddressType = {
   geometry: {
     location: coordinates;
   };
+  place_id: string;
 };
