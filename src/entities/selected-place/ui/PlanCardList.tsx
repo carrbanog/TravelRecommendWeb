@@ -24,8 +24,6 @@ export const PlanCardList = ({tripDays}: PlanCardListProps) => {
           >
             <div className="flex justify-between items-center mb-2">
               <div className="font-semibold text-lg">Day {card.id}</div>
-              {/* 필요하면 삭제 버튼 추가 가능 */}
-              {/* <div className="text-gray-400 hover:text-red-500 cursor-pointer"><MdDelete /></div> */}
             </div>
             {/* 드롭된 장소들을 표시 */}
             <ul className="space-y-1 text-sm text-gray-700">
