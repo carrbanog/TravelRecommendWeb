@@ -7,10 +7,11 @@ export const handleDragEnd = (event: DragEndEvent) => {
   if (!over) return;
 
   const draggedPlace = active.data.current?.place;
-  // console.log(draggedPlace)
+  console.log(draggedPlace)
   const placeObj = {
     id: draggedPlace?.placeId ?? String(draggedPlace),
     title: draggedPlace?.title ?? String(draggedPlace),
+    nearCoordinates: draggedPlace?.nearCoordinates ?? String(draggedPlace)
   };
 
   const overId = String(over.id);
