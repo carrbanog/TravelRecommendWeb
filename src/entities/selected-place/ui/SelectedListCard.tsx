@@ -2,8 +2,6 @@
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { useSelectedPlacesStore } from "../model/selectedPlacesStore";
 
-// import { DraggableListCard } from "../ui/";
-import { MdDelete } from "react-icons/md";
 import { DraggableListCard } from "../ui/DraggableListCard";
 
 type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates" | "placeId">;

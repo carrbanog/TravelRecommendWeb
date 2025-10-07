@@ -48,8 +48,7 @@ export const DraggableListCard = ({
         <button
           className="text-gray-400 hover:text-red-500 transition"
           onPointerDown={(e) => e.stopPropagation()}
-          onClick={(e) => {
-            e.stopPropagation(); // 버튼 클릭 시 드래그가 시작되지 않도록 이벤트 전파를 막습니다.
+          onClick={() => {
             onRemove(place.placeId);
             console.log(selectPlace)
           }}
