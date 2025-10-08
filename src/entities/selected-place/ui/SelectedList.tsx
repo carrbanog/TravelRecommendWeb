@@ -15,7 +15,7 @@ const SelectedList = ({ place, onRemovePlace }: SelectedListProps) => {
     <div className="bg-gradient-to-r from-slate-100 to-slate-200 rounded-xl shadow-lg p-4">
       <h2 className="text-lg font-semibold text-slate-700 mb-3">선택한 장소</h2>
       {place && place.length > 0 ? (
-        <ul className="space-y-2">
+        <ul className="space-y-2 max-h-96 overflow-y-auto pr-2">
           {place.map((placeItem, idx) => (
             <li
               key={idx}

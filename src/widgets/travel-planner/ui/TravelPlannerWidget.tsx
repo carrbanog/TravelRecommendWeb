@@ -19,7 +19,7 @@ export const TravelPlannerWidget = ({ onShowPathClick }: TravelPlannerWidgetProp
 
   return (
     <DndContext sensors={sensors} onDragEnd={handleDragEnd} autoScroll={false}>
-      <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="flex justify-center items-center h-full bg-gray-100">
         <div className="w-[80%] h-[85%] bg-white rounded-3xl shadow-xl flex flex-col overflow-hidden">
           <SelectedListCard selectedPlaces={selectedPlaces} />
           <PlanCardList />
