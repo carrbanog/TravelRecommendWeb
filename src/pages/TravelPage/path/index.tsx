@@ -10,7 +10,7 @@ import { useTravelPlanStore } from "../../../entities/travel-plan/model/useTrave
 import { useNavigate } from "react-router-dom";
 import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
 import { TravelPlannerWidget } from '../../../widgets/travel-planner/ui/TravelPlannerWidget';
-import { TravelPathMapWidget } from '../../../widgets/travel-planner/TravelPathMapWidget';
+import { TravelPathMapWidget } from '../../../widgets/travel-planner/ui/TravelPathMapWidget';
 
 const TravelPathPage = () => {
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);

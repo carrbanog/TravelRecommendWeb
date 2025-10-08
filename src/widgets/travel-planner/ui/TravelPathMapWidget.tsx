@@ -1,7 +1,7 @@
 import { Marker, Polyline } from "@react-google-maps/api";
-import { usePlanCardsStore } from "../../entities/travel-plan/model/usePlanCardsStore";
-import MyMap from "../../shared/ui/GoogleMap/MyMap";
-import { useSelectedPlacesStore } from "../../entities/selected-place/model/selectedPlacesStore";
+import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
+import MyMap from "../../../shared/ui/GoogleMap/MyMap";
+import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
 
 interface TravelPathMapWidgetProps {
   onBackClick: () => void;
