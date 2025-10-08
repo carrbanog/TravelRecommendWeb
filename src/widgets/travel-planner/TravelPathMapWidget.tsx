@@ -22,7 +22,7 @@ export const TravelPathMapWidget = ({ onBackClick }: TravelPathMapWidgetProps) =
 
   return (
     // 전체 레이아웃을 flex 컨테이너로 변경
-    <main className="h-screen w-full flex gap-4 p-4 bg-gray-50">
+    <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
       {/* 지도 영역 (70%) */}
       <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
         <MyMap place={initialCenter}>

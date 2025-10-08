@@ -19,6 +19,7 @@ const TravelPathPage = () => {
   const { planCards, initialize } = usePlanCardsStore();
   const [path, setPath] = useState(false);
 
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,13 +40,13 @@ const TravelPathPage = () => {
   const sensors = useSensors(useSensor(PointerSensor)); //마우스 감지
 
   return (
-    <>
+    <div className="h-full w-full">
       {!path ? (
         <TravelPlannerWidget onShowPathClick={() => setPath(true)} />
       ) : (
         <TravelPathMapWidget onBackClick={() => setPath(false)} />
       )}
-    </>
+    </div>
   );
 };
 
