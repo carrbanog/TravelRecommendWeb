@@ -1,6 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
 import type { PlanCard } from "../model/planCardType";
 import { MdDelete } from "react-icons/md";
+import { usePlanCardsStore } from '../../travel-plan/model/usePlanCardsStore';
 
 type DroppableDayCardProps = {
   card: PlanCard;
@@ -8,6 +9,7 @@ type DroppableDayCardProps = {
 
 export const DroppableDayCard = ({ card }: DroppableDayCardProps) => {
   const { setNodeRef, isOver } = useDroppable({ id: `day-${card.id}` });
+  const removePlaceToDay = usePlanCardsStore((s) => s.removePlaceToDay)
 
   return (
     <div
@@ -35,6 +37,7 @@ export const DroppableDayCard = ({ card }: DroppableDayCardProps) => {
             <span className="text-slate-800 font-medium">📍 {place.title}</span>
             <button
               className="hover:text-red-700 font-bold ml-4" // place.id를 이용해 삭제
+              onClick={() => removePlaceToDay(card.id, place)}
             >
               <MdDelete />
             </button>

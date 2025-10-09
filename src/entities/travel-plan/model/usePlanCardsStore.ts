@@ -1,11 +1,15 @@
-import {create} from "zustand"
-import type { PlanCard, PlanPlace } from '../../selected-place/model/planCardType'
+import { create } from "zustand";
+import type {
+  PlanCard,
+  PlanPlace,
+} from "../../selected-place/model/planCardType";
 
 type PlanCardsState = {
   planCards: PlanCard[];
   initialize: (tripDays: number) => void;
   addPlaceToDay: (dayId: number, place: PlanPlace) => void;
-}
+  removePlaceToDay: (dayId: number, place: PlanPlace) => void;
+};
 
 export const usePlanCardsStore = create<PlanCardsState>((set) => ({
   planCards: [],
@@ -25,6 +29,15 @@ export const usePlanCardsStore = create<PlanCardsState>((set) => ({
       planCards: state.planCards.map((card) =>
         card.id === dayId
           ? { ...card, places: [...(card.places ?? []), place] }
+          : card
+      ),
+    })),
+
+  removePlaceToDay: (dayId, place) =>
+    set((state) => ({
+      planCards: state.planCards.map((card) =>
+        card.id === dayId
+          ? { ...card, places: card.places?.filter((p) => p.id !== place.id) }
           : card
       ),
     })),
