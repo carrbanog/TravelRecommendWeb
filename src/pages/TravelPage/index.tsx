@@ -68,6 +68,12 @@ export const TravelPage = () => {
 
           {/* 3번 그룹: 일정 선택 링크 버튼 */}
           <Link
+            onClick={(e) => {
+              if(!selectedPlaces || selectedPlaces.length === 0){
+                e.preventDefault();
+                alert("여행지를 선택하세요!")
+              } 
+            }}
             to="/travel/path"
             className="block text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-200"
           >

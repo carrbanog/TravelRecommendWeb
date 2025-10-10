@@ -1,7 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
 import type { PlanCard } from "../model/planCardType";
 import { MdDelete } from "react-icons/md";
-import { usePlanCardsStore } from '../../travel-plan/model/usePlanCardsStore';
+import { usePlanCardsStore } from "../../travel-plan/model/usePlanCardsStore";
 
 type DroppableDayCardProps = {
   card: PlanCard;
@@ -9,7 +9,9 @@ type DroppableDayCardProps = {
 
 export const DroppableDayCard = ({ card }: DroppableDayCardProps) => {
   const { setNodeRef, isOver } = useDroppable({ id: `day-${card.id}` });
-  const removePlaceToDay = usePlanCardsStore((s) => s.removePlaceToDay)
+  const removePlaceToDay = usePlanCardsStore((s) => s.removePlaceToDay);
+  const planCardz = usePlanCardsStore((s) => s.planCards);
+  console.log(planCardz);
 
   return (
     <div
@@ -29,20 +31,28 @@ export const DroppableDayCard = ({ card }: DroppableDayCardProps) => {
         className="space-y-2 overflow-y-auto pr-2"
         style={{ maxHeight: "calc(100% - 3rem)" }} // header 높이 제외
       >
-        {card.places?.map((place, idx) => (
-          <li
-            key={idx}
-            className="flex justify-between items-center bg-white border border-slate-200 rounded-lg px-3 py-2 shadow-sm hover:shadow-md transition"
-          >
-            <span className="text-slate-800 font-medium">📍 {place.title}</span>
-            <button
-              className="hover:text-red-700 font-bold ml-4" // place.id를 이용해 삭제
-              onClick={() => removePlaceToDay(card.id, place)}
+        {card.places && card.places.length > 0 ? (
+          card.places.map((place, idx) => (
+            <li
+              key={idx}
+              className="flex justify-between items-center bg-white border border-slate-200 rounded-lg px-3 py-2 shadow-sm hover:shadow-md transition"
             >
-              <MdDelete />
-            </button>
+              <span className="text-slate-800 font-medium">
+                📍 {place.title}
+              </span>
+              <button
+                className="hover:text-red-700 font-bold ml-4"
+                onClick={() => removePlaceToDay(card.id, place)}
+              >
+                <MdDelete />
+              </button>
+            </li>
+          ))
+        ) : (
+          <li className="text-slate-500 text-center py-4 italic">
+            여행지를 드래그 해서 일정을 짜보세요 🗓️
           </li>
-        ))}
+        )}
       </ul>
     </div>
   );
