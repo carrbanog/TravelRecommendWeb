@@ -32,7 +32,7 @@ const fetchNearbyPlaces = async (
       {
         params: {
           location: `${lat},${lng}`,
-          radius: 5000, // 5km 반경
+          radius: 15000, // 15km 반경
           type: "tourist_attraction", // 관광 명소 타입
           language: "ko", // 한국어 결과
           key: process.env.GOOGLE_MAP_API_KEY, // .env 파일의 API 키
