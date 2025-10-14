@@ -4,5 +4,6 @@ export type NearPlace = {
   title: string;
   nearCoordinates:coordinates;
   placeId: string;
+  type:string;
 }
 

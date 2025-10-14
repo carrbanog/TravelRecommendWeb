@@ -10,14 +10,19 @@ import { useNearcodeQuery } from "../../features/travel/near-place/hooks/useNear
 import { useSelectedPlacesStore } from "../../entities/selected-place/model/selectedPlacesStore";
 import { Link } from "react-router-dom";
 import { TravelDaysPicker } from "../../features/travel/travel-date/ui/TravelDaysPicker";
+import type { SearchParams } from "../../features/travel/search-place/model/SearchType";
 
 export const TravelPage = () => {
-  const [placeSearch, setPlaceSearch] = useState<string>("");
-
-  const { data: coords, isLoading: loadingCoords } =
-    useGeocodeQuery(placeSearch); //검색 시 좌표 반환
+  const [placeSearch, setPlaceSearch] = useState<SearchParams>({
+    query: "",
+    type: "place",
+  });
+  console.log(placeSearch);
+  const { data: coords, isLoading: loadingCoords } = useGeocodeQuery(
+    placeSearch.query
+  ); //검색 시 좌표 반환
   const { data: nearPlaces, isLoading: loadingPlaces } =
-    useNearcodeQuery(coords); //여행지 검색 시 주변 여행지 출력
+    useNearcodeQuery({coords, type: placeSearch.type}); //여행지 검색 시 주변 여행지 출력
 
   //검색해서 나온 좌료 coords를 통해서 중간값 전역으로 관리
 
@@ -25,16 +30,8 @@ export const TravelPage = () => {
   const addPlace = useSelectedPlacesStore((s) => s.addPlace); // 마커 클릭시 selectedPlaces에 추가
   const removePlace = useSelectedPlacesStore((s) => s.removePlace); // 제거
 
-  //마지막 위치로 이동
-  // const setLastCoords = useSelectedPlacesStore((s) => s.setLastCoords);
-  // const lastCoords = useSelectedPlacesStore((s) => s.lastCoords);
-  // const mapCenter = lastCoords ?? coords;
-
-  //주변 관광지 추천
-
   return (
     <div className="h-full w-full flex flex-col">
-
       {/* 본문 (지도 + 검색창) */}
       <main className="flex flex-1 gap-4 p-5">
         {/* 지도 영역 (70%) - 이 부분은 변경되지 않았습니다. */}
@@ -69,10 +66,10 @@ export const TravelPage = () => {
           {/* 3번 그룹: 일정 선택 링크 버튼 */}
           <Link
             onClick={(e) => {
-              if(!selectedPlaces || selectedPlaces.length === 0){
+              if (!selectedPlaces || selectedPlaces.length === 0) {
                 e.preventDefault();
-                alert("여행지를 선택하세요!")
-              } 
+                alert("여행지를 선택하세요!");
+              }
             }}
             to="/travel/path"
             className="block text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-200"
