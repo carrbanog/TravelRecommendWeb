@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { LoadScriptNext, Marker } from "@react-google-maps/api";
 
-import SearchForm from "../../features/travel/search-place/ui/SearchForm";
+import SearchForm from "../../features/search-plcae/ui/SearchForm";
 import MyMap from "../../shared/ui/GoogleMap/MyMap";
 import SelectedList from "../../entities/selected-place/ui/SelectedList";
 
-import { useGeocodeQuery } from "../../features/travel/search-place/hooks/useGeoCodeQuery";
-import { useNearcodeQuery } from "../../features/travel/near-place/hooks/useNearcodeQuery";
+import { useGeocodeQuery } from "../../features/search-plcae/lib/useGeoCodeQuery"
+import { useNearcodeQuery } from "../../features/find-nearby-places/lib/useNearByPlacesQuery";
 import { useSelectedPlacesStore } from "../../entities/selected-place/model/selectedPlacesStore";
 import { Link } from "react-router-dom";
-import { TravelDaysPicker } from "../../features/travel/travel-date/ui/TravelDaysPicker";
-import type { SearchParams } from "../../features/travel/search-place/model/SearchType";
-
+import { TravelDaysPicker } from "../../features/select-travel-dates/ui/TravelDaysPicker";
+import type { SearchParams } from "../../entities/place/model/type"
 export const TravelPage = () => {
   const [placeSearch, setPlaceSearch] = useState<SearchParams>({
     query: "",

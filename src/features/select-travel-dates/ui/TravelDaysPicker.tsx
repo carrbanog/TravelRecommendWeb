@@ -1,7 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { differenceInDays } from "date-fns";
-import { useTravelPlanStore } from "../../../../entities/travel-plan/model/useTravelPlanStore"
+import { useTravelPlanStore } from "../../../entities/travel-plan/model/useTravelPlanStore"
 export const TravelDaysPicker = () => {
   const { startDate, endDate, setStartDate, setEndDate, setTripDays } = useTravelPlanStore();
 

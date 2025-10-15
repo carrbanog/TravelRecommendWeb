@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { SearchParams, SearchType } from '../model/SearchType';
+import type { SearchParams, SearchType } from "../../../entities/place/model/type"
 
 interface SearchFormProps {
   setPlaceSearch: (value: SearchParams) => void;
