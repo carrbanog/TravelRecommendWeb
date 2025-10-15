@@ -1,6 +1,6 @@
 // src/features/travel/lib/handleDragEnd.ts
 import type { DragEndEvent } from "@dnd-kit/core";
-import { usePlanCardsStore } from "../../../../entities/travel-plan/model/usePlanCardsStore"
+import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore"
 
 export const handleDragEnd = (event: DragEndEvent) => {
   const { over, active } = event;

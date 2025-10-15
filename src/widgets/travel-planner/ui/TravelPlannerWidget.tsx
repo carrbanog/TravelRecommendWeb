@@ -7,7 +7,7 @@ import {
 import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
 import { SelectedListCard } from "../../../entities/selected-place/ui/SelectedListCard";
 import { PlanCardList } from "../../../entities/selected-place/ui/PlanCardList";
-import { handleDragEnd } from "../../../features/travel/travel-path/lib/handleDragEnd";
+import { handleDragEnd } from "../../../features/plan-itinerary-route/lib/handleDragEnd";
 
 interface TravelPlannerWidgetProps {
   onShowPathClick: () => void;
