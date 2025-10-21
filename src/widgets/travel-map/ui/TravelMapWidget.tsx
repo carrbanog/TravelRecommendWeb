@@ -1,3 +1,4 @@
+import React from "react";
 import { LoadScriptNext, Marker } from "@react-google-maps/api";
 import MyMap from "../../../shared/ui/GoogleMap/MyMap"
 import type { coordinates } from '../../../shared/types/coordinatestype';
@@ -10,7 +11,7 @@ type Props = {
   isLoading: boolean;
 }
 
-export const TravelMapWidget = ({ centerCoords, onMarkerClick, places, isLoading }: Props) => {
+export const TravelMapWidget = React.memo(({ centerCoords, onMarkerClick, places, isLoading }: Props) => {
   console.log("TravelMapWidget 렌더링:", { centerCoords, places, isLoading });
   if (isLoading) {
     return (
@@ -32,4 +33,4 @@ export const TravelMapWidget = ({ centerCoords, onMarkerClick, places, isLoading
       </MyMap>
     </LoadScriptNext>
   );
-};
+});

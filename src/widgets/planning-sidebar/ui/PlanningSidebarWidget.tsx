@@ -13,7 +13,7 @@ type Props = {
   setPlaceSearch: (params: SearchParams) => void;
 };
 
-export const PlanningSidebarWidget = ({
+export const PlanningSidebarWidget = React.memo(({
   selectedPlaces,
   onRemovePlace,
   setPlaceSearch,
@@ -48,4 +48,4 @@ export const PlanningSidebarWidget = ({
       </Link>
     </div>
   );
-};
+});

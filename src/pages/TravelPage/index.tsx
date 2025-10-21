@@ -19,7 +19,7 @@ export const TravelPage = () => {
   const { data: nearPlaces, isLoading: isloadingPlaces } = useNearcodeQuery({
     coords,
     type: placeSearch.type,
-  }); //여행지 검색 시 주변 여행지 출력
+  }); //여행지 검색 시 반환한 좌표를 기준으로 주변 여행지 출력
 
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces); // 추천여행지에서 선택한 리스트 모음
   const addPlace = useSelectedPlacesStore((s) => s.addPlace); // 마커 클릭시 selectedPlaces에 추가
