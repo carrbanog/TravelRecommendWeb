@@ -38,7 +38,7 @@ const fetchNearbyPlaces = async (
       {
         params: {
           location: `${lat},${lng}`,
-          radius: 15000,
+          radius: 10000,
           type: mappedType,
           language: "ko",
           key: process.env.GOOGLE_MAP_API_KEY,

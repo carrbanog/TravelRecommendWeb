@@ -58,11 +58,7 @@ const SearchForm = ({ setPlaceSearch }: SearchFormProps) => {
             type="search"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder={
-              searchType === "hotel"
-                ? "숙소를 검색해보세요 (예: 신라호텔)"
-                : "여행지를 검색해보세요 (예: 제주도)"
-            }
+            placeholder="여행지를 검색해보세요"
             aria-label="여행지 검색"
             className="flex-1 h-11 px-4 bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
