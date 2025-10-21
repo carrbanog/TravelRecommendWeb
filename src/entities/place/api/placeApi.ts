@@ -49,7 +49,7 @@ export const fetchNearbyPlaces = async (
 
     // ✅ res.data.results 에 실제 배열 데이터가 있음
     const { results } = res.data;
-    console.log(results)
+    // console.log(results)
     if (Array.isArray(results)) {
       const nearPlaceData: NearPlace[] = results.map((place) => ({
         title: place.name,

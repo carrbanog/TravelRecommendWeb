@@ -7,11 +7,12 @@ import type { SearchParams } from "../../entities/place/model/type";
 import { TravelMapWidget } from "../../widgets/travel-map/ui/TravelMapWidget";
 import { PlanningSidebarWidget } from '../../widgets/planning-sidebar/ui/PlanningSidebarWidget';
 export const TravelPage = () => {
+  console.log("TravelPage 렌더링");
   const [placeSearch, setPlaceSearch] = useState<SearchParams>({
     query: "",
     type: "place",
   });
-  console.log(placeSearch);
+  // console.log(placeSearch);
   const { data: coords, isLoading: loadingCoords } = useGeocodeQuery(
     placeSearch.query
   ); //검색 시 좌표 반환

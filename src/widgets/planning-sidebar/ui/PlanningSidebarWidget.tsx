@@ -18,6 +18,7 @@ export const PlanningSidebarWidget = ({
   onRemovePlace,
   setPlaceSearch,
 }: Props) => {
+  console.log("PlanningSidebarWidget 렌더링:", { selectedPlaces });
   const handleNextClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!selectedPlaces || selectedPlaces.length === 0) {
       e.preventDefault();

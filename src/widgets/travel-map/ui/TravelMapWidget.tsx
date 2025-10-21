@@ -11,6 +11,7 @@ type Props = {
 }
 
 export const TravelMapWidget = ({ centerCoords, onMarkerClick, places, isLoading }: Props) => {
+  console.log("TravelMapWidget 렌더링:", { centerCoords, places, isLoading });
   if (isLoading) {
     return (
       <div className="w-full h-full flex items-center justify-center bg-slate-100 rounded-lg">

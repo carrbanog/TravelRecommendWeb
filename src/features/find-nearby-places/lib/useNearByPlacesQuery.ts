@@ -5,7 +5,7 @@ import type { coordinates } from "../../../shared/types/coordinatestype";
 import type { NearbyPlaceParams } from "../../../entities/place/model/type"
 
 export const useNearcodeQuery = ({coords, type}: NearbyPlaceParams) => {
-  console.log(coords, type)
+  // console.log(coords, type)
   return useQuery({
     queryKey: ["nearbyPlaces", coords, type],
     queryFn: () => fetchNearbyPlaces({coords, type}),
