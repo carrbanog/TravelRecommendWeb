@@ -28,7 +28,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const response = await axios.get("http://localhost:5000/getprofile", {
           withCredentials: true,
         });
-        console.log("User profile response:", response);
+        setUser({
+          name: response.data.user.name,
+          email: response.data.user.email,
+        })
+        console.log("User profile response:", response.data);
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
