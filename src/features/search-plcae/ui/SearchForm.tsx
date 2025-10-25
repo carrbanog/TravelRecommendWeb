@@ -1,11 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import type { SearchParams, SearchType } from "../../../entities/place/model/type"
 
 interface SearchFormProps {
   setPlaceSearch: (value: SearchParams) => void;
 }
 
-const SearchForm = ({ setPlaceSearch }: SearchFormProps) => {
+const SearchForm = React.memo(({ setPlaceSearch }: SearchFormProps) => {
+  console.log("SearchForm 렌더링");
   const [inputValue, setInputValue] = useState<string>("");
   const [searchType, setSearchType] = useState<SearchType>("place");
 
@@ -72,6 +73,6 @@ const SearchForm = ({ setPlaceSearch }: SearchFormProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default SearchForm;

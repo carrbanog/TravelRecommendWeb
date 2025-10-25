@@ -1,4 +1,4 @@
-
+import React from "react";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 
 import { MdDelete } from "react-icons/md";
@@ -10,7 +10,8 @@ type SelectedListProps = {
 
 
 //TravelPage에서 선택한 리스트들을 보여주는 코드
-const SelectedList = ({ place, onRemovePlace }: SelectedListProps) => {
+const SelectedList = React.memo(  ({ place, onRemovePlace }: SelectedListProps) => {
+  console.log("SelectedList 렌더링:", { place });
   return (
     <div className="bg-gradient-to-r from-slate-100 to-slate-200 rounded-xl shadow-lg p-4">
       <h2 className="text-lg font-semibold text-slate-700 mb-3">선택한 장소</h2>
@@ -39,7 +40,7 @@ const SelectedList = ({ place, onRemovePlace }: SelectedListProps) => {
       )}
     </div>
   );
-};
+});
 
 
 export default SelectedList;

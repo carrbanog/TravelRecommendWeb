@@ -10,7 +10,7 @@ type TravelPlanState = {
   resetPlan: () => void;
 }
 
-export const useTravelPlanStore = create<TravelPlanState>((set) => ({
+export const useDayPickerStore = create<TravelPlanState>((set) => ({
   startDate: null,
   endDate: null,
   tripDays: 0,

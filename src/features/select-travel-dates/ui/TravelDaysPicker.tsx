@@ -1,9 +1,9 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { differenceInDays } from "date-fns";
-import { useTravelPlanStore } from "../../../entities/travel-plan/model/useTravelPlanStore"
+import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore"
 export const TravelDaysPicker = () => {
-  const { startDate, endDate, setStartDate, setEndDate, setTripDays } = useTravelPlanStore();
+  const { startDate, endDate, setStartDate, setEndDate, setTripDays } = useDayPickerStore();
 
   const handleChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;

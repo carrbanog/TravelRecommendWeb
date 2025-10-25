@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SearchForm from "../../../features/search-plcae/ui/SearchForm";
-import { TravelDaysPicker } from "../../../features/select-travel-dates/ui/TravelDaysPicker";
+import { TravelDaysPicker } from "../../../features/select-travel-dates/ui/TravelDaysPicker"
 
 import SelectedList from "../../../entities/selected-place/ui/SelectedList";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import type { SearchParams } from "../../../entities/place/model/type";
+import { useDayPickerStore } from '../../../entities/travel-plan/model/useDayPickerStore';
 
-type Props = {
+type PlanningSidebarWidgetProps = {
   selectedPlaces: NearPlace[];
   onRemovePlace: (placeId: string) => void;
   setPlaceSearch: (params: SearchParams) => void;
@@ -17,12 +18,17 @@ export const PlanningSidebarWidget = React.memo(({
   selectedPlaces,
   onRemovePlace,
   setPlaceSearch,
-}: Props) => {
+}: PlanningSidebarWidgetProps) => {
   console.log("PlanningSidebarWidget 렌더링:", { selectedPlaces });
+  const tripsDays = useDayPickerStore((state) => state.tripDays);
   const handleNextClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!selectedPlaces || selectedPlaces.length === 0) {
       e.preventDefault();
       alert("여행지를 하나 이상 선택하세요!");
+    }
+    else if (tripsDays === 0) {
+      e.preventDefault();
+      alert("여행 날짜를 선택하세요!");
     }
   };
   return (

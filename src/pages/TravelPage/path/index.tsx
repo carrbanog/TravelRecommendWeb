@@ -6,7 +6,7 @@ import {
 } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
 import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
-import { useTravelPlanStore } from "../../../entities/travel-plan/model/useTravelPlanStore";
+import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
 import { useNavigate } from "react-router-dom";
 import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
 import { TravelPlannerWidget } from '../../../widgets/travel-planner/ui/TravelPlannerWidget';
@@ -15,7 +15,7 @@ import { TravelPathMapWidget } from '../../../widgets/travel-planner/ui/TravelPa
 const TravelPathPage = () => {
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
   const setCenter = useSelectedPlacesStore((s) => s.setCenter);
-  const tripDays = useTravelPlanStore((s) => s.tripDays);
+  const tripDays = useDayPickerStore((s) => s.tripDays);
   const { planCards, initialize } = usePlanCardsStore();
   const [path, setPath] = useState(false);
 
