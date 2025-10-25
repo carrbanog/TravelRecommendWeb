@@ -7,17 +7,18 @@ import cookieParser from "cookie-parser";
 import signUpRoutes from "./routes/signUpRoutes";
 import loginRoutes from "./routes/loginRoutes";
 import nearPlacesRoutes from "./routes/nearPlacesRoutes";
+import authRoutes from './routes/authRoutes';
 
 dotenv.config();
 
 const app = express();
+app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
     origin: "http://localhost:5173",
   })
 );
-app.use(cookieParser());
 app.use(express.json());
 const mongoURL = process.env.MONGODB_URL;
 
@@ -34,6 +35,7 @@ mongoose
 
 app.use("/signup", signUpRoutes);
 app.use("/login", loginRoutes);
+app.use("/getprofile", authRoutes);
 app.use("/nearbyplaces", nearPlacesRoutes);
 
 app.listen(5000, () => {

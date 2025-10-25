@@ -6,7 +6,6 @@ interface SearchFormProps {
 }
 
 const SearchForm = React.memo(({ setPlaceSearch }: SearchFormProps) => {
-  console.log("SearchForm 렌더링");
   const [inputValue, setInputValue] = useState<string>("");
   const [searchType, setSearchType] = useState<SearchType>("place");
 

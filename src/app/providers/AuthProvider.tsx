@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
 import type { ReactNode } from "react";
+import api from "../../shared/api/axiosInstance";
 type User = {
   name: string;
   email: string;
@@ -19,6 +21,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (userData: User) => setUser(userData);
 
   const logout = () => setUser(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/getprofile", {
+          withCredentials: true,
+        });
+        console.log("User profile response:", response);
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
