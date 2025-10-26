@@ -21,7 +21,7 @@ export const getProfile = async (req: Request, res: Response) => {
     // console.log("Fetched user:", user);
     res.json({
       user: { name: user?.username, email: user?.email },
-      token,
+      // token,
     });
   } catch (error) {
     console.error("프로필 조회 중 오류 발생:", error);

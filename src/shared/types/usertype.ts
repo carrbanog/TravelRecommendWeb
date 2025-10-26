@@ -6,3 +6,5 @@ export type UserData = {
 };
 
 export type LoginData = Pick<UserData, "email" | "password">;
+
+export type ProfileData = { user: Pick<UserData, "name" | "email"> };
