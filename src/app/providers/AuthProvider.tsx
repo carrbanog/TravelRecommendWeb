@@ -1,9 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
-import api from "../../shared/api/axiosInstance";
-import { useProfileQuery } from '../../entities/user/model/useProfileQuery';
-import { set } from 'date-fns';
+import { useProfileQuery } from "../../entities/user/model/useProfileQuery";
 type User = {
   name: string;
   email: string;
@@ -19,18 +16,25 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User>(null);
-  const {data, isError} = useProfileQuery();
+  const { data, isError } = useProfileQuery();
 
   const login = (userData: User) => setUser(userData);
 
   const logout = () => setUser(null);
 
   useEffect(() => {
-    if(data){
-      console.log("Setting user from profile data:", data);
+    if (data) {
+      // console.log("Setting user from profile data:", data);
       setUser({ name: data.user.name, email: data.user.email });
     }
-  }, [data])
+  }, [data]);
+
+  useEffect(() => {
+    if (isError) {
+      console.warn("❌ 사용자 인증 실패. 로그아웃 처리 중...");
+      logout();
+    }
+  }, [isError]);
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
