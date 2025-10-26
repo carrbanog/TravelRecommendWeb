@@ -1,7 +1,9 @@
+import PostList from '../../features/post-list/ui/PostList';
+
 export const CommunityPage = () => {
   return (
     <div>
-      <h1>CommunityPage</h1>
+      <PostList />
     </div>
   );
 };

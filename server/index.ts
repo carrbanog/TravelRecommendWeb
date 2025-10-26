@@ -8,6 +8,7 @@ import signUpRoutes from "./routes/signUpRoutes";
 import loginRoutes from "./routes/loginRoutes";
 import nearPlacesRoutes from "./routes/nearPlacesRoutes";
 import authRoutes from './routes/authRoutes';
+import createPostRoutes from './routes/createPostRoutes';
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use("/signup", signUpRoutes);
 app.use("/login", loginRoutes);
 app.use("/getprofile", authRoutes);
 app.use("/nearbyplaces", nearPlacesRoutes);
+app.use("/createpost", createPostRoutes);
 
 app.listen(5000, () => {
   console.log("서버 실행 중: http://localhost:5000");

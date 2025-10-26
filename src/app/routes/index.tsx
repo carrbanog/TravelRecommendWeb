@@ -8,6 +8,7 @@ import { SignupPage } from "../../pages/SignupPage";
 import { LoginPage } from "../../pages/LoginPage/LoginPage";
 import { AuthProvider } from "../providers/AuthProvider";
 import TravelPathPage from '../../pages/TravelPage/path';
+import CreatePost from '../../features/create-post/ui/CreatePost';
 
 export const AppRoutes = () => {
   return (
@@ -26,6 +27,7 @@ export const AppRoutes = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/travel/path" element={<TravelPathPage />} />
+              <Route path="/post/create" element={<CreatePost />} />
             </Routes>
           </main>
         </div>
