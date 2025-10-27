@@ -1,21 +1,25 @@
 import React, { useState } from "react";
-import { useCreatePost } from "../lib/useCreatePost";
+import { useCreatePost } from "../../../entities/post/hooks/useCreatePost";
+import type { Post } from "../../../entities/post/model/postTypes";
 
 function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const { handleCreatePost, loading, success, error } = useCreatePost();
+  const { mutateAsync, isPending } = useCreatePost();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await handleCreatePost({ title, content });
-    if (!error) {
+    const newPost: Post = { title, content };
+    try {
+      await mutateAsync(newPost);
       setTitle("");
       setContent("");
+      alert("게시글이 성공적으로 작성되었습니다!");
+    } catch (error) {
+      alert("게시글 작성 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
-
 
   return (
     <div className="flex flex-col h-full w-full">
@@ -56,9 +60,11 @@ function CreatePost() {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-6 py-3 rounded-xl text-lg hover:bg-blue-600 transition-colors duration-200"
+                disabled={isPending} // 요청이 진행 중이면 클릭 방지
+                className={`bg-blue-500 text-white px-6 py-3 rounded-xl text-lg hover:bg-blue-600 transition-colors duration-200
+              ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
               >
-                저장하기
+                {isPending ? "저장 중..." : "저장하기"}
               </button>
             </div>
           </form>

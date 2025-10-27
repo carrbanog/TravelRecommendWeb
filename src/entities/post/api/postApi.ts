@@ -1,6 +1,6 @@
-import axios from 'axios'
+
 import api from '../../../shared/api/axiosInstance'
-import type { Post } from '../model/postTypes';
+import type { CreatePostResponse, Post } from '../model/postTypes';
 
 
 export const fetchPosts = async () => {
@@ -8,7 +8,7 @@ export const fetchPosts = async () => {
   return response.data;
 }
 
-export const createPost = async (post:Post) => {
-  const response = await api.post('/createpost', post);
+export const createPostApi = async (post:Post):Promise<CreatePostResponse> => {
+  const response = await api.post<CreatePostResponse>('/createpost', post);
   return response.data;
 }
