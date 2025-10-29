@@ -1,21 +1,33 @@
 import React, { useState } from "react";
 import { useCreatePost } from "../../../entities/post/hooks/useCreatePost";
 import type { Post } from "../../../entities/post/model/postTypes";
+import { useAuth } from "../../../app/providers/AuthProvider";
+import { useNavigate } from 'react-router-dom';
 
 function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
+  const { user } = useAuth();
   const { mutateAsync, isPending } = useCreatePost();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newPost: Post = { title, content };
+
+    if (!user?.email) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    const author = user.email.split("@")[0];
+
+    const newPost: Post = { title, content, author };
     try {
       await mutateAsync(newPost);
       setTitle("");
       setContent("");
       alert("게시글이 성공적으로 작성되었습니다!");
+      navigate("/community");
     } catch (error) {
       alert("게시글 작성 중 오류가 발생했습니다. 다시 시도해주세요.");
     }

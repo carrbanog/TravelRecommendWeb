@@ -8,4 +8,3 @@ export const getPostsList =  async (req: Request, res: Response) => {
   }
 }
 
- 

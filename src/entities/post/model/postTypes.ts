@@ -1,7 +1,7 @@
 export type Post = {
   title: string;
   content: string;
-  author?: string;
+  author: string;
 }
 
 export type CreatePostResponse = {
