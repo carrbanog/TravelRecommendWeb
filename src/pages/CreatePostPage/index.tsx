@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useCreatePost } from "../../../entities/post/hooks/useCreatePost";
-import type { Post } from "../../../entities/post/model/postTypes";
-import { useAuth } from "../../../app/providers/AuthProvider";
+import { useCreatePost } from "../../entities/post/hooks/useCreatePost";
+import type { Post } from "../../entities/post/model/postTypes";
+import { useAuth } from "../../app/providers/AuthProvider";
 import { useNavigate } from 'react-router-dom';
 
-function CreatePost() {
+function CreatePostPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const { user } = useAuth();
@@ -86,4 +86,4 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;
+export default CreatePostPage;
