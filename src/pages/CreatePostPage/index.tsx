@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useCreatePost } from "../../entities/post/hooks/useCreatePost";
-import type { Post } from "../../entities/post/model/postTypes";
+import type { CreatePost } from "../../entities/post/model/postTypes";
 import { useAuth } from "../../app/providers/AuthProvider";
 import { useNavigate } from 'react-router-dom';
+
+
 
 function CreatePostPage() {
   const [title, setTitle] = useState("");
@@ -21,7 +23,7 @@ function CreatePostPage() {
 
     const author = user.email.split("@")[0];
 
-    const newPost: Post = { title, content, author };
+    const newPost: CreatePost = { title, content, author };
     try {
       await mutateAsync(newPost);
       setTitle("");

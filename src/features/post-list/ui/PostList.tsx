@@ -28,6 +28,7 @@ const PostList = () => {
         {posts && posts.length > 0 ? (
           posts.map((post) => (
             <li
+            key={post.id}
               className="py-4 cursor-pointer hover:bg-gray-50 transition"
               // onClick={() => navigate(`/post/${post._id}`)}
             >

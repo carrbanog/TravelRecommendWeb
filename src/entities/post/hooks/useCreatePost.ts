@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createPostApi } from '../api/postApi';
-import type { CreatePostResponse, Post } from '../model/postTypes';
+import type { CreatePostResponse, CreatePost } from '../model/postTypes';
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (newPost: Post) => createPostApi(newPost),
+    mutationFn: (newPost: CreatePost) => createPostApi(newPost),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
       //새 게시글이 추가되었으니, 기존에 캐시된 게시글 목록(["posts"])을 자동으로 다시 불러오게 함.
