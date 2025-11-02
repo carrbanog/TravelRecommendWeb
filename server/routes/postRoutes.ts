@@ -1,7 +1,7 @@
-// import { Router } from 'express';
-// import { getPostsList } from "../controllers/postController"
-// const router = Router();
+import { Router } from 'express';
+import { getAllPosts } from "../controllers/postController"
+const router = Router();
 
-// router.get('/', getPostsList);
+router.get('/', getAllPosts);
 
-// export default router;
+export default router;
