@@ -9,6 +9,7 @@ import { LoginPage } from "../../pages/LoginPage/LoginPage";
 import { AuthProvider } from "../providers/AuthProvider";
 import TravelPathPage from '../../pages/TravelPage/path';
 import CreatePostPage from '../../pages/CreatePostPage';
+import PostDetail from '../../features/post-list/ui/PostDetail';
 
 export const AppRoutes = () => {
   return (
@@ -28,6 +29,7 @@ export const AppRoutes = () => {
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/travel/path" element={<TravelPathPage />} />
               <Route path="/post/create" element={<CreatePostPage />} />
+              <Route path="/post/:id" element={<PostDetail />} />
             </Routes>
           </main>
         </div>
