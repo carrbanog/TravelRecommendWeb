@@ -41,6 +41,7 @@ app.use("/getprofile", authRoutes);
 app.use("/nearbyplaces", nearPlacesRoutes);
 app.use("/createpost", createPostRoutes);
 app.use("/posts", postRoutes)
+app.use("/posts", postRoutes);
 
 app.listen(5000, () => {
   console.log("서버 실행 중: http://localhost:5000");
