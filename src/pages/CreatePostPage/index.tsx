@@ -23,7 +23,7 @@ function CreatePostPage() {
 
     const author = user.email.split("@")[0];
 
-    const newPost: CreatePost = { title, content, author };
+    const newPost: CreatePost = { title, content, author};
     try {
       await mutateAsync(newPost);
       setTitle("");
