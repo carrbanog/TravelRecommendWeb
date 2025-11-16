@@ -58,7 +58,7 @@ const SearchForm = React.memo(({ setPlaceSearch }: SearchFormProps) => {
             type="search"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder="여행지를 검색해보세요"
+            placeholder="여행하고 싶은 지역을 검색하세요"
             aria-label="여행지 검색"
             className="flex-1 h-11 px-4 bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
