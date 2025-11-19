@@ -4,4 +4,4 @@
   
 3. 기술 스택: Typescript, tailwindCSS, React, zustand, react-query
    
-4. https://velog.io/@loopang5954/series/%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%97%AC%ED%96%89%EC%A7%80-%EC%B6%94%EC%B2%9C
+4. [https://velog.io/@loopang5954/series/%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%97%AC%ED%96%89%EC%A7%80-%EC%B6%94%EC%B2%9C](https://velog.io/@loopang5954/series/%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%97%AC%ED%96%89%EC%A7%80-%EC%B6%94%EC%B2%9C)
