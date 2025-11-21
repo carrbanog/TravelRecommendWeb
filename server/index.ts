@@ -18,6 +18,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
+    // 배열 대신 함수를 사용합니다.
     origin: "http://localhost:5173",
   })
 );
