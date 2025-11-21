@@ -7,6 +7,7 @@ import { data } from "react-router-dom";
 const handleApiError = (error: AxiosError | Error) => {
   if (axios.isAxiosError(error)) {
     console.error("API Client Error:", error.response?.data || error.message);
+    console.log("Error발생!!");
   } else {
     console.error("Unexpected Error:", error.message);
   }

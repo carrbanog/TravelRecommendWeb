@@ -2,23 +2,14 @@ import { apiClient } from "../../../shared/api/apiClient";
 import api from "../../../shared/api/axiosInstance";
 import type { CreatePostResponse, CreatePost, Post } from "../model/postTypes";
 
-export const fetchPosts = async () => {
-  const response = await api.get("/posts");
-  return response.data;
+export const fetchPosts = async (): Promise<Post[]> => {
+  const res = await apiClient.get<Post[]>("/posts");
+  return res;
 };
 
 export const fetchPostById = async (id: string): Promise<Post> => {
-  const response = await api.get(`posts/${id}`);
-  // console.log(response)
-  return response.data;
-};
-
-export const createPostApi = async (
-  post: CreatePost
-): Promise<CreatePostResponse> => {
-  const response = await api.post<CreatePostResponse>("/createpost", post);
-  console.log(response);
-  return response.data;
+  const res = await apiClient.get<Post>(`posts/${id}`);
+  return res;
 };
 
 export const createPost = async (
@@ -26,7 +17,7 @@ export const createPost = async (
 ): Promise<CreatePostResponse | undefined> => {
   if (!post) return;
   const res = await apiClient.post<CreatePost, CreatePostResponse>(
-    "/createpost1",
+    "/createpost",
     post
   );
   return res;

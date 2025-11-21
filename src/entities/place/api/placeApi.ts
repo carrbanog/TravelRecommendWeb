@@ -30,6 +30,33 @@ export const fetchMapCode = async (
   }
 };
 
+export const fetchNearbyPlaces = async ({
+  coords,
+  type,
+}: NearbyPlaceParams): Promise<NearPlace[] | undefined> => {
+  if (!coords) return;
+  const res = await apiClient.get<NearPlaceApiResponse>(
+    AUTH_ENDPOINTS.NEARBYPLACES,
+    {
+      params: {
+        lat: coords.lat,
+        lng: coords.lng,
+        type,
+      },
+    }
+  );
+  const { results } = res;
+  if (Array.isArray(results)) {
+    const nearPlaceData: NearPlace[] = results.map((place) => ({
+      title: place.name,
+      nearCoordinates: place.geometry.location,
+      placeId: place.place_id,
+      type: res.type,
+    }));
+    return nearPlaceData;
+  }
+};
+
 // export const fetchNearbyPlaces = async (
 //   { coords, type }: NearbyPlaceParams
 // ): Promise<NearPlace[] | undefined> => {
@@ -66,30 +93,3 @@ export const fetchMapCode = async (
 //     console.error(err);
 //   }
 // };
-
-export const fetchNearbyPlaces = async ({
-  coords,
-  type,
-}: NearbyPlaceParams): Promise<NearPlace[] | undefined> => {
-  if (!coords) return;
-  const res = await apiClient.get<NearPlaceApiResponse>(
-    AUTH_ENDPOINTS.NEARBYPLACES,
-    {
-      params: {
-        lat: coords.lat,
-        lng: coords.lng,
-        type,
-      },
-    }
-  );
-  const { results } = res;
-  if (Array.isArray(results)) {
-    const nearPlaceData: NearPlace[] = results.map((place) => ({
-      title: place.name,
-      nearCoordinates: place.geometry.location,
-      placeId: place.place_id,
-      type: res.type,
-    }));
-    return nearPlaceData;
-  }
-};
