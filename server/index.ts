@@ -7,9 +7,9 @@ import cookieParser from "cookie-parser";
 import signUpRoutes from "./routes/signUpRoutes";
 import loginRoutes from "./routes/loginRoutes";
 import nearPlacesRoutes from "./routes/nearPlacesRoutes";
-import authRoutes from './routes/authRoutes';
-import createPostRoutes from './routes/createPostRoutes';
-import postRoutes from "./routes/postRoutes"
+import authRoutes from "./routes/authRoutes";
+import createPostRoutes from "./routes/createPostRoutes";
+import postRoutes from "./routes/postRoutes";
 
 dotenv.config();
 
@@ -40,7 +40,7 @@ app.use("/login", loginRoutes);
 app.use("/getprofile", authRoutes);
 app.use("/nearbyplaces", nearPlacesRoutes);
 app.use("/createpost", createPostRoutes);
-app.use("/posts", postRoutes)
+app.use("/posts", postRoutes);
 app.use("/posts", postRoutes);
 
 app.listen(5000, () => {
