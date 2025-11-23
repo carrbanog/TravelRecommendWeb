@@ -5,7 +5,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
-import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
+import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
 import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
 import { useNavigate } from "react-router-dom";
 import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";

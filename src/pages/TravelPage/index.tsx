@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useGeocodeQuery } from "../../features/search-plcae/lib/useGeoCodeQuery";
 import { useNearcodeQuery } from "../../features/find-nearby-places/lib/useNearByPlacesQuery";
-import { useSelectedPlacesStore } from "../../entities/selected-place/model/selectedPlacesStore";
+import { useSelectedPlacesStore } from "../../entities/place/model/selectedPlacesStore"
 import type { SearchParams } from "../../entities/place/model/type";
 import { TravelMapWidget } from "../../widgets/travel-map/ui/TravelMapWidget";
 import { PlanningSidebarWidget } from '../../widgets/planning-sidebar/ui/PlanningSidebarWidget';

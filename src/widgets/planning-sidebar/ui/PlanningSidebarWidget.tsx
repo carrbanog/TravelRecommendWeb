@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import SearchForm from "../../../features/search-plcae/ui/SearchForm";
 import { TravelDaysPicker } from "../../../features/select-travel-dates/ui/TravelDaysPicker"
 
-import SelectedList from "../../../entities/selected-place/ui/SelectedList";
+import SelectedList from "../../../entities/place/ui/SelectedList";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import type { SearchParams } from "../../../entities/place/model/type";
 import { useDayPickerStore } from '../../../entities/travel-plan/model/useDayPickerStore';

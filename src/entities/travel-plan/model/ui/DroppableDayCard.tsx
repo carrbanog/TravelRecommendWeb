@@ -1,7 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
-import type { PlanCard } from "../model/planCardType";
+import type { PlanCard } from "../../../place/model/type"
 import { MdDelete } from "react-icons/md";
-import { usePlanCardsStore } from "../../travel-plan/model/usePlanCardsStore";
+import { usePlanCardsStore } from "../usePlanCardsStore";
 
 type DroppableDayCardProps = {
   card: PlanCard;
@@ -10,8 +10,8 @@ type DroppableDayCardProps = {
 export const DroppableDayCard = ({ card }: DroppableDayCardProps) => {
   const { setNodeRef, isOver } = useDroppable({ id: `day-${card.id}` });
   const removePlaceToDay = usePlanCardsStore((s) => s.removePlaceToDay);
-  const planCardz = usePlanCardsStore((s) => s.planCards);
-  console.log(planCardz);
+  // const planCards = usePlanCardsStore((s) => s.planCards);
+  // console.log(planCards);
 
   return (
     <div

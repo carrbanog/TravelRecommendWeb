@@ -1,7 +1,7 @@
 import { Marker, Polyline } from "@react-google-maps/api";
 import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
 import MyMap from "../../../shared/ui/GoogleMap/MyMap";
-import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
+import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
 
 interface TravelPathMapWidgetProps {
   onBackClick: () => void;
@@ -11,7 +11,7 @@ export const TravelPathMapWidget = ({ onBackClick }: TravelPathMapWidgetProps) =
   const { planCards } = usePlanCardsStore();
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
   const colors = ["#FF0000", "#007BFF", "#00C851", "#FF8800"]; // Day-specific polyline colors
-
+  console.log(planCards);
   // selectedPlaces가 비어있을 때 오류가 나지 않도록 초기 중심값 설정
   const initialCenter =
     selectedPlaces.length > 0
@@ -33,11 +33,10 @@ export const TravelPathMapWidget = ({ onBackClick }: TravelPathMapWidgetProps) =
             />
           ))}
 
-          {/* Render a polyline for each day's plan */}
           {planCards.map((card, idx) => {
             const pathCoordinates = card.places
               ?.map((p) => p.nearCoordinates)
-              .filter(Boolean); // Ensure coordinates are not null/undefined
+              .filter(Boolean); 
 
             return (
               pathCoordinates &&
