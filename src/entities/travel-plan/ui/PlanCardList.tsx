@@ -1,6 +1,6 @@
 // src/entities/selected-place/ui/PlanCardList.tsx
 import { DroppableDayCard } from "./DroppableDayCard";
-import { usePlanCardsStore } from "../usePlanCardsStore";
+import { usePlanCardsStore } from "../model/usePlanCardsStore";
 
 // type PlanCardListProps = {
 //   tripDays: number;

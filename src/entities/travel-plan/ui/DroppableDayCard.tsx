@@ -1,7 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
-import type { PlanCard } from "../../../place/model/type"
+import type { PlanCard } from "../../place/model/type"
 import { MdDelete } from "react-icons/md";
-import { usePlanCardsStore } from "../usePlanCardsStore";
+import { usePlanCardsStore } from "../model/usePlanCardsStore";
 
 type DroppableDayCardProps = {
   card: PlanCard;
