@@ -13,7 +13,11 @@ import { apiClient } from "../../../../shared/api/apiClient";
 export const loginApi = async (data: LoginData): Promise<LoginResponse> => {
   const res = await apiClient.post<LoginData, LoginResponse>(
     AUTH_ENDPOINTS.LOGIN,
-    data
+    data,
   );
   return res;
+};
+
+export const logoutApi = async (): Promise<void> => {
+  await apiClient.post<{}, void>(AUTH_ENDPOINTS.LOGOUT, {});
 };
