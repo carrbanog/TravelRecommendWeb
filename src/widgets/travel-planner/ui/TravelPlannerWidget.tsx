@@ -4,9 +4,9 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useSelectedPlacesStore } from "../../../entities/selected-place/model/selectedPlacesStore";
-import { SelectedListCard } from "../../../entities/selected-place/ui/SelectedListCard";
-import { PlanCardList } from "../../../entities/selected-place/ui/PlanCardList";
+import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore"
+import { SelectedListCard } from "../../../entities/place/ui/SelectedListCard";
+import { PlanCardList } from "../../../entities/travel-plan/ui/PlanCardList"
 import { handleDragEnd } from "../../../features/plan-itinerary-route/lib/handleDragEnd";
 
 interface TravelPlannerWidgetProps {

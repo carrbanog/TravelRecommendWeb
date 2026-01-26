@@ -2,7 +2,7 @@ import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { MdDelete } from "react-icons/md";
-import { useSelectedPlacesStore } from '../model/selectedPlacesStore';
+import { useSelectedPlacesStore } from "../model/selectedPlacesStore";
 
 // NearPlace 타입에서 필요한 속성만 사용하도록 Pick 타입을 정의합니다.
 type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates" | "placeId">; 

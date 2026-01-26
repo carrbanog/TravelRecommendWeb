@@ -2,7 +2,7 @@
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { useSelectedPlacesStore } from "../model/selectedPlacesStore";
 
-import { DraggableListCard } from "../ui/DraggableListCard";
+import { DraggableListCard } from "./DraggableListCard";
 
 type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates" | "placeId">;
 

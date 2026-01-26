@@ -38,5 +38,15 @@ export type SearchParams = {
   type: SearchType;
 }
 
+// 
+export type PlanPlace = {
+  id: string;
+  title: string;
+  nearCoordinates: coordinates
+}
 
-
+//날짜별 여행지 정보
+export type PlanCard = {
+  id:number;
+  places?: PlanPlace[]
+}
