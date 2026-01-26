@@ -10,6 +10,7 @@ import nearPlacesRoutes from "./routes/nearPlacesRoutes";
 import authRoutes from "./routes/authRoutes";
 import createPostRoutes from "./routes/createPostRoutes";
 import postRoutes from "./routes/postRoutes";
+import logoutRoutes from "./routes/logoutRoutes";
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ app.use(
     credentials: true,
     // 배열 대신 함수를 사용합니다.
     origin: "http://localhost:5173",
-  })
+  }),
 );
 app.use(express.json());
 const mongoURL = process.env.MONGODB_URL;
@@ -38,6 +39,7 @@ mongoose
 
 app.use("/signup", signUpRoutes);
 app.use("/login", loginRoutes);
+app.use("/logout", logoutRoutes);
 app.use("/getprofile", authRoutes);
 app.use("/nearbyplaces", nearPlacesRoutes);
 app.use("/createpost", createPostRoutes);

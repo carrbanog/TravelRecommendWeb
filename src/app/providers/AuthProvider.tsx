@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import { useProfileQuery } from "../../entities/user/model/useProfileQuery";
+import { useNavigate } from "react-router-dom";
+import { logoutApi } from "../../features/auth/login/api/loginApi";
 type User = {
   name: string;
   email: string;
@@ -9,7 +11,7 @@ type User = {
 type AuthContextType = {
   user: User;
   login: (userData: User) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,10 +19,24 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User>(null);
   const { data, isError } = useProfileQuery();
+  const navigate = useNavigate;
 
   const login = (userData: User) => setUser(userData);
 
-  const logout = () => setUser(null);
+  const logout = async () => {
+    try {
+      // 1. 서버에 "쿠키 지워달라"고 요청
+      await logoutApi();
+    } catch (error) {
+      console.warn(
+        "로그아웃 API 호출 중 에러 (하지만 클라이언트 로그아웃은 진행함)",
+        error,
+      );
+    } finally {
+      // 유저 상태 초기화
+      setUser(null);
+    }
+  };
 
   useEffect(() => {
     if (data) {

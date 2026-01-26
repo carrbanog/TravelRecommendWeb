@@ -23,7 +23,7 @@ export const postLogin = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { id: userDoc._id, email: userDoc.email },
       process.env.JWT_SECRET as string,
-      { expiresIn: "1h" }
+      { expiresIn: "1h" },
     );
     res.cookie("token", token, {
       httpOnly: true,
