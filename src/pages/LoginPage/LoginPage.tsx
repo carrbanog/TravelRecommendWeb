@@ -4,10 +4,10 @@ import { LoginForm } from "../../features/auth/login/ui/LoginForm";
 export const LoginPage = () => {
   return (
     <AuthLayout
-      title="로그인"
-      linkDescription="계정이 없으신가요?"
-      linkText="회원가입하기"
-      linkTo="/signup"
+      title="Welcome back"
+      description="다시 오신 것을 환영합니다! 여행을 시작해보세요."
+      linkText="계정이 없으신가요? 회원가입"
+      linkUrl="/register"
     >
       <LoginForm />
     </AuthLayout>
