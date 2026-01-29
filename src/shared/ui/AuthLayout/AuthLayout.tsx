@@ -1,25 +1,51 @@
 import { Description } from "@radix-ui/react-dialog";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 type AuthLayoutProps = {
+  mode?: "login" | "signup";
   title: string;
   children: React.ReactNode;
-  linkText: string;
-  linkUrl: string;
+  // linkText: string;
+  // linkUrl: string;
   description: string;
 };
 
 export const AuthLayout = ({
   title,
   children,
-  linkText,
-  linkUrl,
+  // linkText,
+  // linkUrl,
   description,
+  mode,
 }: AuthLayoutProps) => {
   return (
     <div className="flex w-full h-[calc(100vh-5rem)] overflow-hidden">
       {/* 왼쪽 영역 */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-white p-10">
+        {/* 로그인, 회원가입 탭 버튼 */}
+        <div className="grid grid-cols-2 gap-4 mb-8 w-full max-w-md">
+          <Link
+            to="/login"
+            className={`flex items-center justify-center py-2.5 text-sm font-semibold rounded-md transition-all duration-200 ${
+              mode === "login"
+                ? "bg-white text-slate-900 shadow-sm" // 로그인 활성 스타일
+                : "text-slate-500 hover:text-slate-700"
+            }`}
+          >
+            로그인
+          </Link>
+          <Link
+            to="/signup"
+            className={`flex items-center justify-center py-2.5 text-sm font-semibold rounded-md transition-all duration-200 ${
+              mode === "signup"
+                ? "bg-white text-slate-900 shadow-sm" // 회원가입 활성 스타일
+                : "text-slate-500 hover:text-slate-700"
+            }`}
+          >
+            회원가입
+          </Link>
+        </div>
         <div className="w-full max-w-md space-y-8">
           {/* 헤더 (제목/설명) */}
           <div className="text-center">
@@ -30,18 +56,6 @@ export const AuthLayout = ({
           </div>
           {/* 로그인폼 */}
           {children}
-
-          {/* 하단 링크 */}
-          {linkText && linkUrl && (
-            <div className="text-center">
-              <Link
-                to={linkUrl}
-                className="text-sm text-blue-500 hover:underline"
-              >
-                {linkText}
-              </Link>
-            </div>
-          )}
         </div>
       </div>
       <div className="md:w-1/2 md:block hidden">
