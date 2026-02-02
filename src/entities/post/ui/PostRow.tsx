@@ -1,15 +1,7 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { PenLine, CalendarDays, User, FileText, MapPin } from "lucide-react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { CalendarDays, User } from "lucide-react";
 
 import type { Post } from "../model/postTypes";
 interface PostRowProps {

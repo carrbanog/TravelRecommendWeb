@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 // Icons
-import { PenLine, CalendarDays, User, FileText, MapPin } from "lucide-react";
+import { PenLine, MapPin } from "lucide-react";
 
 // FSD Imports
 import { fetchPosts } from "../../entities/post/api/postApi";
@@ -21,14 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/app/providers/AuthProvider";
 import PostSearch from "../../features/post-list/ui/PostSearch";
 import PostRow from "@/entities/post/ui/PostRow";
