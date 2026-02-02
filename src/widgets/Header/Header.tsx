@@ -27,7 +27,7 @@ const Header = () => {
 
   return (
     // [Header] 배경: 화이트, 투명도 80%, 블러 효과, 하단 연한 회색 선
-    <header className="sticky top-0 z-50 w-full border-b border-slate-300 bg-white/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-300 bg-white/80 backdrop-blur-md relative">
       {/* [Container] 최대 너비 1280px, 중앙 정렬, 양끝 배치 */}
       <div className="mx-auto flex h-20 max-w-screen-xl items-center justify-between px-6">
         {/* 1. 로고 영역 */}
@@ -47,7 +47,7 @@ const Header = () => {
         </Link>
 
         {/* 2. 네비게이션 (데스크탑) */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex items-center gap-8">
           <Link
             to="/travel"
             className="group flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors"
@@ -55,7 +55,7 @@ const Header = () => {
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-50 text-slate-500 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
               <Map className="h-4 w-4" />
             </div>
-            여행 추천
+            여행 경로 찾기
           </Link>
           <Link
             to="/community"

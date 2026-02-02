@@ -66,7 +66,6 @@ const PostList = () => {
       {/* 상단 헤더 영역: 제목과 글쓰기 버튼 배치 */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* 검색form */}
-
         <PostSearch onSearch={setSearchKeyword} />
 
         {/* 글 작성 버튼 */}
