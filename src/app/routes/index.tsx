@@ -19,7 +19,8 @@ export const AppRoutes = () => {
           <Header />
 
           {/* 2. 페이지 콘텐츠 영역이 남은 공간을 모두 차지하도록 설정 */}
-          <main className="flex-1 overflow-y-auto">
+          <main className="flex-1 overflow-y-scroll">
+            {/* overflow auto는 스크롤바가 필요할 때만 표시되기 때문에 있다가 없어지면 그 영역이 사라짐, scroll은 넘칠 경우에 대비해서 스크롤 영역 항상 생성 */}
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/travel" element={<TravelPage />} />

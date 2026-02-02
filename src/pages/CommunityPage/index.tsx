@@ -1,4 +1,4 @@
-import PostList from '../../features/post-list/ui/PostList';
+import PostList from "../../widgets/post-list/PostList";
 
 export const CommunityPage = () => {
   return (

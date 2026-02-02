@@ -1,3 +1,6 @@
+// postSearch와 PostRow를 widget에서 조립
+
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -5,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { PenLine, CalendarDays, User, FileText, MapPin } from "lucide-react";
 
 // FSD Imports
-import { fetchPosts } from "../../../entities/post/api/postApi";
-import type { Post } from "../../../entities/post/model/postTypes";
+import { fetchPosts } from "../../entities/post/api/postApi";
+import type { Post } from "../../entities/post/model/postTypes";
 
 // Shadcn UI Imports
 import {
@@ -27,10 +30,13 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/app/providers/AuthProvider";
+import PostSearch from "../../features/post-list/ui/PostSearch";
+import PostRow from "@/entities/post/ui/PostRow";
 
 const PostList = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [searchKeyword, setSearchKeyword] = useState("");
   const {
     data: posts,
     isLoading,
@@ -39,7 +45,12 @@ const PostList = () => {
     queryKey: ["posts"],
     queryFn: fetchPosts,
   });
-  console.log("Fetched posts:", user);
+
+  // 검색시 게시판 필터링
+  const filteredPosts = posts?.filter((post) =>
+    post.title.toLowerCase().includes(searchKeyword.toLowerCase()),
+  );
+
   if (isLoading)
     return (
       <div className="flex items-center justify-center h-[50vh] text-sky-600 animate-pulse">
@@ -61,6 +72,11 @@ const PostList = () => {
     <div className="container max-w-5xl mx-auto py-8 h-full flex flex-col gap-6">
       {/* 상단 헤더 영역: 제목과 글쓰기 버튼 배치 */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        {/* 검색form */}
+
+        <PostSearch onSearch={setSearchKeyword} />
+
+        {/* 글 작성 버튼 */}
         <Button
           onClick={() => navigate("/post/create")}
           disabled={!user}
@@ -68,11 +84,6 @@ const PostList = () => {
         >
           <PenLine className="w-4 h-4 mr-2" /> 새 여행기 작성
         </Button>
-        <div>
-          <form action="">
-            <input type="text" placeholder="검색어를 입력하세요" />
-          </form>
-        </div>
       </div>
 
       {/* 메인 테이블 카드 */}
@@ -95,49 +106,9 @@ const PostList = () => {
               </TableHeader>
 
               <TableBody>
-                {posts && posts.length > 0 ? (
-                  posts.map((post) => (
-                    <TableRow
-                      key={post._id}
-                      onClick={() => navigate(`/post/${post._id}`)}
-                      className="group cursor-pointer border-b-gray-50 hover:bg-sky-50/60 transition-colors duration-200"
-                    >
-                      {/* 제목 컬럼 */}
-                      <TableCell className="pl-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <span className="font-semibold text-gray-700 group-hover:text-sky-700 transition-colors truncate max-w-[200px] md:max-w-md">
-                            {post.title}
-                          </span>
-                          {/* 새 글인 경우 뱃지 표시 (로직은 예시) */}
-                          {new Date().getTime() -
-                            new Date(post.createdAt).getTime() <
-                            86400000 && (
-                            <Badge
-                              variant="secondary"
-                              className="bg-sky-100 text-sky-700 text-[10px] px-1.5 h-5"
-                            >
-                              N
-                            </Badge>
-                          )}
-                        </div>
-                      </TableCell>
-
-                      {/* 작성자 컬럼 */}
-                      <TableCell className="text-center py-4">
-                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-50 border border-gray-100 text-gray-600 text-sm">
-                          <User className="w-3 h-3 text-gray-400" />
-                          {post.author}
-                        </div>
-                      </TableCell>
-
-                      {/* 작성일 컬럼 */}
-                      <TableCell className="text-right pr-6 py-4">
-                        <div className="flex items-center justify-end gap-1 text-gray-400 text-sm font-light">
-                          <CalendarDays className="w-3 h-3" />
-                          {new Date(post.createdAt).toLocaleDateString("ko-KR")}
-                        </div>
-                      </TableCell>
-                    </TableRow>
+                {filteredPosts && filteredPosts.length > 0 ? (
+                  filteredPosts.map((post) => (
+                    <PostRow post={post} key={post._id} />
                   ))
                 ) : (
                   <TableRow>
