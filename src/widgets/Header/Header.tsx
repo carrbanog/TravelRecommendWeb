@@ -27,7 +27,7 @@ const Header = () => {
 
   return (
     // [Header] 배경: 화이트, 투명도 80%, 블러 효과, 하단 연한 회색 선
-    <header className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-300 bg-white/80 backdrop-blur-md">
       {/* [Container] 최대 너비 1280px, 중앙 정렬, 양끝 배치 */}
       <div className="mx-auto flex h-20 max-w-screen-xl items-center justify-between px-6">
         {/* 1. 로고 영역 */}
@@ -119,17 +119,10 @@ const Header = () => {
             // [비로그인 상태]: 로그인(Ghost) & 시작하기(Solid Blue)
             <div className="flex items-center gap-2">
               <Button
-                variant="ghost"
                 asChild
-                className="hidden md:flex text-slate-600 hover:text-blue-600 hover:bg-blue-50"
+                className="rounded-full bg-orange-500 hover:bg-blue-700 text-white px-6 shadow-md shadow-blue-200"
               >
-                <Link to="/login">로그인</Link>
-              </Button>
-              <Button
-                asChild
-                className="rounded-full bg-blue-600 hover:bg-blue-700 text-white px-6 shadow-md shadow-blue-200"
-              >
-                <Link to="/signup">시작하기</Link>
+                <Link to="/login">시작하기</Link>
               </Button>
             </div>
           )}

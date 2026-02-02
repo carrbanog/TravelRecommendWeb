@@ -24,13 +24,13 @@ export const AuthLayout = ({
       {/* 왼쪽 영역 */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-white p-10">
         {/* 로그인, 회원가입 탭 버튼 */}
-        <div className="grid grid-cols-2 gap-4 mb-8 w-full max-w-md">
+        <div className="grid grid-cols-2 gap-4 mb-8 w-full max-w-md bg-gray-100 rounded-md p-1">
           <Link
             to="/login"
             className={`flex items-center justify-center py-2.5 text-sm font-semibold rounded-md transition-all duration-200 ${
               mode === "login"
                 ? "bg-white text-slate-900 shadow-sm" // 로그인 활성 스타일
-                : "text-slate-500 hover:text-slate-700"
+                : "text-slate-900 hover:text-slate-700"
             }`}
           >
             로그인
