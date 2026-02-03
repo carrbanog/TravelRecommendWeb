@@ -7,8 +7,10 @@ import { CommunityPage } from "../../pages/CommunityPage";
 import { AuthPage } from "../../pages/AuthPage";
 import { AuthProvider } from "../providers/AuthProvider";
 import TravelPathPage from "../../pages/TravelPage/path";
-import CreatePostPage from "../../pages/CreatePostPage";
-import PostDetail from "../../features/post-list/ui/PostDetail";
+import { CreatePostPage } from "../../pages/CreatePostPage";
+import PostDetail from "../../features/post/ui/PostDetail";
+
+import { Toaster } from "sonner";
 
 export const AppRoutes = () => {
   return (
@@ -34,6 +36,7 @@ export const AppRoutes = () => {
             </Routes>
           </main>
         </div>
+        <Toaster position="top-center" richColors />
       </BrowserRouter>
     </AuthProvider>
   );

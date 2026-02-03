@@ -23,7 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/app/providers/AuthProvider";
-import PostSearch from "../../features/post-list/ui/PostSearch";
+import PostSearch from "../../features/post/ui/PostSearch";
 import PostRow from "@/entities/post/ui/PostRow";
 
 const PostList = () => {
@@ -62,7 +62,7 @@ const PostList = () => {
     );
 
   return (
-    <div className="container max-w-5xl mx-auto py-8 h-full flex flex-col gap-6">
+    <div className="container max-w-screen-xl mx-auto py-8 h-full flex flex-col gap-6">
       {/* 상단 헤더 영역: 제목과 글쓰기 버튼 배치 */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* 검색form */}
