@@ -19,15 +19,46 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
 // Icons
-import { Save, Loader2 } from "lucide-react";
+import {
+  Save,
+  Loader2,
+  ImagePlus,
+  X,
+  FileVideo,
+  Plus,
+  Trash2,
+} from "lucide-react";
+import { set } from "date-fns";
+
+type BlockType = "text" | "media";
+
+interface ContentBlock {
+  id: string;
+  type: BlockType;
+  value: string;
+  file?: File;
+  previewUrl?: string;
+  mediaType?: "image" | "video";
+}
 
 export const CreatePostForm = () => {
-  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const { user } = useAuth();
   const { mutateAsync, isPending } = useCreatePost();
   const navigate = useNavigate();
 
+  const [title, setTitle] = useState("");
+  const [blocks, setBlocks] = useState<ContentBlock[]>([
+    { id: "initial-block", type: "text", value: "" },
+  ]);
+
+  const handleTextChange = (id: string, newValue: string) => {
+    setBlocks((prev) =>
+      prev.map((block) =>
+        block.id === id ? { ...block, value: newValue } : block,
+      ),
+    );
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -96,19 +127,22 @@ export const CreatePostForm = () => {
 
             {/* 내용 영역 */}
             <div className="flex-1 space-y-2 min-h-[400px]">
-              <Label
-                htmlFor="content"
-                className="text-base font-semibold text-slate-700"
-              >
-                내용
-              </Label>
-              <Textarea
-                id="content"
-                placeholder="여행기의 내용을 입력하세요"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="h-full min-h-[300px] text-lg resize-none focus-visible:ring-blue-500 p-2"
-              />
+              {blocks.map((block, index) => (
+                <div key={block.id}>
+                  {/* 텍스트 */}
+                  {block.type === "text" && (
+                    <Textarea
+                      value={block.value}
+                      onChange={(e) =>
+                        handleTextChange(block.id, e.target.value)
+                      }
+                    />
+                  )}
+
+                  {/* 미디어 */}
+                  {block.type === "media" && <div>미디어</div>}
+                </div>
+              ))}
             </div>
 
             {/* 버튼 영역 */}
