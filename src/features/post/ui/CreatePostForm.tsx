@@ -4,6 +4,10 @@ import type { CreatePost } from "../../../entities/post/model/postTypes";
 import { useAuth } from "../../../app/providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
+// React Quill Imports
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css"; // 기본 스타일 (필수)
+
 // Shadcn UI Imports
 import {
   Card,
@@ -30,35 +34,23 @@ import {
 } from "lucide-react";
 import { set } from "date-fns";
 
-type BlockType = "text" | "media";
-
-interface ContentBlock {
-  id: string;
-  type: BlockType;
-  value?: string;
-  file?: File;
-  previewUrl?: string;
-  mediaType?: "image" | "video";
-}
-
 export const CreatePostForm = () => {
-  const [content, setContent] = useState("");
   const { user } = useAuth();
   const { mutateAsync, isPending } = useCreatePost();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
-  const [mediaFiles, setMediaFiles] = useState<ContentBlock[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const editorRef = useRef<HTMLDivElement>(null);
+  const [content, setContent] = useState("");
 
-
-  // 미디어 추가 함수
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files !! || files.length === 0) return;
-    console.log(files);
-  }
+  const quillRef = useRef<ReactQuill>(null);
+  // 툴바 설정
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["link", "image", "video"],
+      [{ color: [] }, { background: [] }],
+    ],
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +67,7 @@ export const CreatePostForm = () => {
     }
 
     // 3. 유효성 검사 (내용)
-    if (!content.trim()) {
+    if (!content && !content.includes("<img")) {
       toast.error("내용을 입력해주세요!");
       return; // 함수 종료
     }
@@ -83,6 +75,7 @@ export const CreatePostForm = () => {
     const author = user.email.split("@")[0];
 
     const newPost: CreatePost = { title, content, author };
+    console.log("newPost", newPost);
     try {
       await mutateAsync(newPost);
       setTitle("");
@@ -120,39 +113,19 @@ export const CreatePostForm = () => {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="여행의 핵심을 담은 제목을 입력하세요"
+                placeholder="제목을 입력하세요"
                 className="text-lg py-6 focus-visible:ring-blue-500"
               />
             </div>
 
             {/* 내용 영역 */}
-            <div className="flex-1 min-h-[500px] border border-gray-200 rounded-xl p-6 bg-white cursor-text focus-within:ring-2 focus-within:ring-sky-500 focus-within:ring-opacity-50 transition-all overflow-y-auto">
-              <div
-                contentEditable
-                className="outline-none min-h-full text-lg leading-relaxed text-slate-800 whitespace-pre-wrap"
-              ></div>
-            </div>
-
-            {/* 하단 툴바 */}
-            <div>
-              <div className="flex gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <ImagePlus /> 사진/동영상 추가
-                </Button>
-                <input
-                  type="file"
-                  onChange={handleFileSelect}
-                  ref={fileInputRef}
-                  accept="image/*,video/*"
-                  multiple
-                  className="hidden"
-                />
-              </div>
-            </div>
+            <ReactQuill
+              ref={quillRef}
+              value={content}
+              onChange={setContent}
+              modules={modules}
+              className="flex flex-col h-full flex-1"
+            />
 
             {/* 버튼 영역 */}
             <div className="flex justify-end pt-4">

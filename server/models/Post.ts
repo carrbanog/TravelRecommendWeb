@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export interface IPost extends Document {
   id: string; // 커스텀 id
@@ -10,10 +10,10 @@ export interface IPost extends Document {
 }
 
 const PostSchema: Schema = new Schema({
-  id: {type: String, deafult: uuidv4 },
+  id: { type: String, default: uuidv4 },
   title: { type: String, required: true },
   content: { type: String, required: true },
-  author:{type:String, reqired:true},
+  author: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 
