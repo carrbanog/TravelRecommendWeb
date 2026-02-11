@@ -32,7 +32,6 @@ export const PlanningSidebarWidget = React.memo(
       }
     };
     return (
-      // 전체 높이를 부모(main)의 높이에 맞추기 위해 h-full 추가
       <div className="w-full h-full flex flex-col justify-between p-4 bg-white shadow-md rounded-2xl overflow-hidden">
         {/* 1번 그룹: 고정 높이 */}
         <div className="flex flex-col gap-4 mb-4">

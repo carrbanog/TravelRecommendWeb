@@ -1,12 +1,38 @@
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { differenceInDays } from "date-fns";
-import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore"
-export const TravelDaysPicker = () => {
-  const { startDate, endDate, setStartDate, setEndDate, setTripDays } = useDayPickerStore();
+import { format, differenceInDays } from "date-fns";
+import { ko } from "date-fns/locale"; // 한국어 설정
+import { Calendar as CalendarIcon, CalendarRange } from "lucide-react";
+import type { DateRange } from "react-day-picker";
+import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
 
-  const handleChange = (dates: [Date | null, Date | null]) => {
-    const [start, end] = dates;
+// shadcn ui
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+export const TravelDaysPicker = () => {
+  const {
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+    setTripDays,
+    tripDays,
+  } = useDayPickerStore();
+
+  // shadcn Calendar는 { from: Date, to: Date } 객체 형태를 사용합니다.
+  const dateRange: DateRange | undefined = {
+    from: startDate || undefined,
+    to: endDate || undefined,
+  };
+
+  const handleSelect = (range: DateRange | undefined) => {
+    const start = range?.from || null;
+    const end = range?.to || null;
 
     setStartDate(start);
     setEndDate(end);
@@ -19,27 +45,61 @@ export const TravelDaysPicker = () => {
     }
   };
 
-return (
-  <div className="bg-gradient-to-r from-slate-100 to-slate-200 rounded-xl shadow-lg p-4">
-    {/* Label과 DatePicker를 div로 감싸고 flex-col로 정렬 */}
-    <div className="flex flex-col gap-2">
-      <label
-        htmlFor="travel-dates"
-        className="font-semibold text-slate-700"
-      >
-        여행 기간 📅
-      </label>
-      <DatePicker
-        id="travel-dates" // label과 연결하기 위한 id
-        selectsRange
-        startDate={startDate}
-        endDate={endDate}
-        onChange={handleChange}
-        dateFormat="yyyy/MM/dd"
-        placeholderText="여행 날짜를 선택하세요"
-        className="w-full cursor-pointer rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-700 placeholder-slate-400 shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
+  return (
+    <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-slate-100 p-4 transition-all hover:shadow-lg">
+      <div className="flex flex-col gap-3">
+        {/* 헤더 부분 */}
+        <div className="flex items-center justify-between">
+          <label className="flex items-center gap-2 font-bold text-slate-700 text-sm">
+            <CalendarRange className="w-4 h-4 text-blue-600" />
+            여행 기간
+          </label>
+          {tripDays > 0 && (
+            <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+              {tripDays}일간의 여정
+            </span>
+          )}
+        </div>
+
+        {/* Popover + Calendar 결합 */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              id="date"
+              variant={"outline"}
+              className={cn(
+                "w-full h-11 justify-start text-left font-normal border-slate-200 hover:bg-slate-50 transition-all",
+                !startDate && "text-slate-400",
+              )}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4 text-slate-500" />
+              {startDate ? (
+                endDate ? (
+                  <>
+                    {format(startDate, "M월 d일", { locale: ko })} -{" "}
+                    {format(endDate, "M월 d일", { locale: ko })}
+                  </>
+                ) : (
+                  format(startDate, "M월 d일", { locale: ko })
+                )
+              ) : (
+                <span>여행 날짜를 선택하세요</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="range"
+              defaultMonth={startDate || new Date()}
+              selected={dateRange}
+              onSelect={handleSelect}
+              numberOfMonths={2} // 두 달씩 보여주면 훨씬 전문적입니다
+              locale={ko}
+              className="rounded-md border shadow-md bg-white"
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
     </div>
-  </div>
-);
+  );
 };
