@@ -13,6 +13,7 @@ type SelectedListProps = {
   onRemovePlace: (placeId: string) => void;
 };
 
+// 경로 찾기 페이지에서 선택한 장소 리스트를 보여주는 컴포넌트
 const SelectedList = React.memo(
   ({ place, onRemovePlace }: SelectedListProps) => {
     console.log("SelectedList 렌더링:", { place });
