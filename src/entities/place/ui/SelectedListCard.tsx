@@ -3,6 +3,7 @@ import { useSelectedPlacesStore } from "../model/selectedPlacesStore";
 import { DraggableListCard } from "./DraggableListCard";
 import { Package, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useCallback } from "react";
 
 type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates" | "placeId">;
 
@@ -11,7 +12,12 @@ type SelectedListCardProps = {
 };
 
 export const SelectedListCard = ({ selectedPlaces }: SelectedListCardProps) => {
+  console.log("SelectedListCard 렌더링");
+
   const removePlace = useSelectedPlacesStore((s) => s.removePlace);
+  // const handleRemove = useCallback((placeId: string) => {
+  //   removePlace(placeId);
+  // }, []);
 
   return (
     <section className="flex flex-col h-full bg-white/50 backdrop-blur-sm">
@@ -35,7 +41,7 @@ export const SelectedListCard = ({ selectedPlaces }: SelectedListCardProps) => {
       </div>
 
       {/* 카드 그리드 영역 */}
-      <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
+      <div className="flex-1 overflow-y-hidden overflow-x-hidden p-6 custom-scrollbar">
         {selectedPlaces.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {selectedPlaces.map((place) => (

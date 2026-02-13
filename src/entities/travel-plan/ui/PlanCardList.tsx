@@ -1,9 +1,14 @@
+import { memo } from "react";
 import { DroppableDayCard } from "./DroppableDayCard";
 import { usePlanCardsStore } from "../model/usePlanCardsStore";
 import { CalendarDays, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-export const PlanCardList = () => {
+
+// 여행 일정의 일차별 카드를 가로로 나열하는 컴포넌트
+//memo를 사용함으로 써 
+export const PlanCardList = memo(() => {
+  console.log("-----------------------------------PlanCardList 렌더링-----------------------------------");
   const planCards = usePlanCardsStore((s) => s.planCards);
 
   return (
@@ -63,4 +68,4 @@ export const PlanCardList = () => {
       </div>
     </div>
   );
-};
+});

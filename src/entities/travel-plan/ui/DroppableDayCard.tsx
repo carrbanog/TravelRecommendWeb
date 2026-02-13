@@ -4,15 +4,17 @@ import { Trash2, MapPin, CalendarPlus } from "lucide-react";
 import { usePlanCardsStore } from "../model/usePlanCardsStore";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { memo } from 'react';
 
 type DroppableDayCardProps = {
   card: PlanCard;
 };
 
-export const DroppableDayCard = ({ card }: DroppableDayCardProps) => {
+export const DroppableDayCard = memo(({ card }: DroppableDayCardProps) => {
   const { setNodeRef, isOver } = useDroppable({ id: `day-${card.id}` });
   const removePlaceToDay = usePlanCardsStore((s) => s.removePlaceToDay);
 
+  console.log(`DroppableDayCard 렌더링: Day ${card.id}`, { isOver });
   return (
     <div
       ref={setNodeRef}
@@ -84,4 +86,4 @@ export const DroppableDayCard = ({ card }: DroppableDayCardProps) => {
       </div>
     </div>
   );
-};
+});

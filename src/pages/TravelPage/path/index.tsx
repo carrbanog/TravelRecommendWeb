@@ -38,7 +38,7 @@ const TravelPathPage = () => {
 
   // dnd-kit 센서 (PointerSensor 사용)
   const sensors = useSensors(useSensor(PointerSensor)); //마우스 감지
-
+  console.log("-----------------------------------travel/path 페이지 렌더링-----------------------------------");
   return (
     <div className="h-full w-full">
       {!path ? (
