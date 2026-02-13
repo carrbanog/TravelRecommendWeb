@@ -11,6 +11,7 @@ import { SelectedListCard } from "../../../entities/place/ui/SelectedListCard";
 import { PlanCardList } from "../../../entities/travel-plan/ui/PlanCardList";
 import { DraggableListCard } from "../../../entities/place/ui/DraggableListCard";
 import { handleDragEnd } from "../../../features/plan-itinerary-route/lib/handleDragEnd";
+import { ListCardUI } from "../../../entities/place/ui/DraggableListCard"; // UI 컴포넌트 임포트
 
 interface TravelPlannerWidgetProps {
   onShowPathClick: () => void;
@@ -70,10 +71,16 @@ export const TravelPlannerWidget = ({
         </div>
 
         {/* 🔹 DragOverlay: 영역 밖 이동을 가능하게 하는 핵심 */}
+
         <DragOverlay zIndex={1000}>
           {activeId && activePlace ? (
+            // 🔹 여기서 DraggableListCard(로직 포함) 대신 ListCardUI(UI만) 사용
             <div className="w-48 transform scale-105 rotate-3 opacity-90 shadow-2xl">
-              <DraggableListCard place={activePlace} onRemove={() => {}} />
+              <ListCardUI
+                place={activePlace}
+                onRemove={() => {}}
+                isDragging={false} // 오버레이는 그 자체가 드래그 중인 모습이므로 false 처리
+              />
             </div>
           ) : null}
         </DragOverlay>
