@@ -1,7 +1,7 @@
 import React from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
-import type { coordinates } from '../../types/coordinatestype';
+import type { coordinates } from "../../types/coordinatestype";
 
 //나중에 경로 지정할 때 마커 분리 생각하기
 

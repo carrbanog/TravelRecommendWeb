@@ -9,7 +9,7 @@ import { apiClient } from "../../../shared/api/apiClient";
 
 // 도시이름, 좌표 반환
 export const fetchMapCode = async (
-  address: string
+  address: string,
 ): Promise<AddressType | undefined> => {
   try {
     const res = await axios.get(
@@ -19,7 +19,7 @@ export const fetchMapCode = async (
           address,
           key: import.meta.env.VITE_GOOGLE_MAP,
         },
-      }
+      },
     );
     // console.log(res.data.results[0]);
     // console.log("test");
@@ -43,15 +43,17 @@ export const fetchNearbyPlaces = async ({
         lng: coords.lng,
         type,
       },
-    }
+    },
   );
   const { results } = res;
+  console.log("results in fetchNearbyPlaces", results);
   if (Array.isArray(results)) {
     const nearPlaceData: NearPlace[] = results.map((place) => ({
       title: place.name,
       nearCoordinates: place.geometry.location,
       placeId: place.place_id,
       type: res.type,
+      photos: place.photos,
     }));
     return nearPlaceData;
   }
