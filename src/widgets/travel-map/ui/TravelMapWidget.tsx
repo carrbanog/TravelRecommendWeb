@@ -4,7 +4,7 @@ import MyMap from "../../../shared/ui/GoogleMap/MyMap";
 import type { coordinates } from "../../../shared/types/coordinatestype";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { PlaceInfoWindow } from "@/entities/place/ui/PlaceInfoWindow";
-import { usePlaceDetailsQuery } from '@/features/place-details/lib/usePlaceDetailsQuery';
+import { usePlaceDetailsQuery } from "@/features/place-details/lib/usePlaceDetailsQuery";
 
 type Props = {
   centerCoords?: coordinates;
@@ -15,11 +15,13 @@ type Props = {
 
 export const TravelMapWidget = React.memo(
   ({ centerCoords, onMarkerClick, places, isLoading }: Props) => {
-    // 현재 마우스가 올라간 장소를 관리하는 상태
-    console.log(places, "places in TravelMapWidget");
     const [hoveredPlace, setHoveredPlace] = useState<NearPlace | null>(null);
-    const {data: detailData, isLoading: detailLoading} = usePlaceDetailsQuery(hoveredPlace?.placeId || "");
-    console.log(detailData, "detailData in TravelMapWidget");
+    
+
+    const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
+      hoveredPlace?.placeId || "",
+    );
+
     if (isLoading) {
       return (
         <div className="w-full h-full flex items-center justify-center bg-slate-100 rounded-lg">
@@ -41,9 +43,13 @@ export const TravelMapWidget = React.memo(
             onMouseOut={() => setHoveredPlace(null)}
           >
             {/* 현재 호버된 마커와 이 마커의 데이터가 일치할 때만 InfoWindow 표시 */}
-            {hoveredPlace === placeItem && (
+            {hoveredPlace?.placeId === placeItem.placeId && detailData && (
               <InfoWindow>
-                <PlaceInfoWindow place={placeItem} />
+                {detailLoading ? (
+                  <div style={{ padding: "8px", fontSize: "12px" }}>로딩 중...</div>
+                ) : (
+                  <PlaceInfoWindow place={detailData} />
+                )}
               </InfoWindow>
             )}
           </Marker>
