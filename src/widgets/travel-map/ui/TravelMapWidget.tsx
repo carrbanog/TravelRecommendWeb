@@ -4,6 +4,7 @@ import MyMap from "../../../shared/ui/GoogleMap/MyMap";
 import type { coordinates } from "../../../shared/types/coordinatestype";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { PlaceInfoWindow } from "@/entities/place/ui/PlaceInfoWindow";
+import { usePlaceDetailsQuery } from '@/features/place-details/lib/usePlaceDetailsQuery';
 
 type Props = {
   centerCoords?: coordinates;
@@ -17,7 +18,8 @@ export const TravelMapWidget = React.memo(
     // 현재 마우스가 올라간 장소를 관리하는 상태
     console.log(places, "places in TravelMapWidget");
     const [hoveredPlace, setHoveredPlace] = useState<NearPlace | null>(null);
-
+    const {data: detailData, isLoading: detailLoading} = usePlaceDetailsQuery(hoveredPlace?.placeId || "");
+    console.log(detailData, "detailData in TravelMapWidget");
     if (isLoading) {
       return (
         <div className="w-full h-full flex items-center justify-center bg-slate-100 rounded-lg">

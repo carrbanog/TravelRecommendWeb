@@ -14,6 +14,7 @@ const MyMap = ({ place, children }: MyMapProps) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP, // ✅ 환경변수에서 키 불러오기
+    libraries: ["places"], // ✅ 필요한 라이브러리 추가
   });
 
   if (!isLoaded) {
