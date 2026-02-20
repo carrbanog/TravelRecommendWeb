@@ -12,5 +12,5 @@ export type NearPlace = {
   nearCoordinates: coordinates;
   placeId: string;
   type: string;
-  photos?: PhotoInfo[];
+  // photos?: PhotoInfo[];
 };

@@ -53,7 +53,7 @@ export const fetchNearbyPlaces = async ({
       nearCoordinates: place.geometry.location,
       placeId: place.place_id,
       type: res.type,
-      photos: place.photos,
+      // photos: place.photos,
     }));
     return nearPlaceData;
   }
