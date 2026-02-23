@@ -11,7 +11,7 @@ interface PlaceInfoWindowProps {
 export const PlaceInfoWindow = ({ place }: PlaceInfoWindowProps) => {
   // 데이터가 없으면 아무것도 보여주지 않거나 로딩 메시지 출력
   if (!place)
-    return <div style={{ padding: "8px", fontSize: "12px" }}>로딩 중...</div>;
+    return <div style={{ padding: "8px", fontSize: "12px" }}>정보 없음</div>;
 
   return (
     <div style={{ padding: "8px", maxWidth: "200px" }}>

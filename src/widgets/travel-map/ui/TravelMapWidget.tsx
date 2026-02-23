@@ -1,10 +1,11 @@
-import React, { useState } from "react"; // useState 추가
+import React, { useState, useRef } from "react"; // useState 추가
 import { InfoWindow, Marker } from "@react-google-maps/api"; // InfoWindow 추가
 import MyMap from "../../../shared/ui/GoogleMap/MyMap";
 import type { coordinates } from "../../../shared/types/coordinatestype";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { PlaceInfoWindow } from "@/entities/place/ui/PlaceInfoWindow";
 import { usePlaceDetailsQuery } from "@/features/place-details/lib/usePlaceDetailsQuery";
+import { set } from "date-fns";
 
 type Props = {
   centerCoords?: coordinates;
@@ -16,7 +17,27 @@ type Props = {
 export const TravelMapWidget = React.memo(
   ({ centerCoords, onMarkerClick, places, isLoading }: Props) => {
     const [hoveredPlace, setHoveredPlace] = useState<NearPlace | null>(null);
-    
+
+    const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+    const handleMouseOver = (placeItem: NearPlace) => {
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+      }
+      hoverTimerRef.current = setTimeout(() => {
+        setHoveredPlace(placeItem);
+      }, 400);
+    };
+
+    const handleMouseOut = () => {
+      // 마우스가 떠날 때 0.4초 이내에 나가면 타이머를 취소해서 api호출을 막음
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+        hoverTimerRef.current = null;
+      }
+      console.log("Mouse out:", hoverTimerRef);
+      setHoveredPlace(null);
+    };
 
     const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
       hoveredPlace?.placeId || "",
@@ -38,15 +59,17 @@ export const TravelMapWidget = React.memo(
             position={placeItem.nearCoordinates}
             onClick={() => onMarkerClick(placeItem)}
             // 마우스 오버 시 상태 업데이트
-            onMouseOver={() => setHoveredPlace(placeItem)}
+            onMouseOver={() => handleMouseOver(placeItem)}
             // 마우스 아웃 시 상태 초기화
-            onMouseOut={() => setHoveredPlace(null)}
+            onMouseOut={handleMouseOut}
           >
             {/* 현재 호버된 마커와 이 마커의 데이터가 일치할 때만 InfoWindow 표시 */}
             {hoveredPlace?.placeId === placeItem.placeId && detailData && (
               <InfoWindow>
                 {detailLoading ? (
-                  <div style={{ padding: "8px", fontSize: "12px" }}>로딩 중...</div>
+                  <div style={{ padding: "8px", fontSize: "12px" }}>
+                    로딩 중...
+                  </div>
                 ) : (
                   <PlaceInfoWindow place={detailData} />
                 )}

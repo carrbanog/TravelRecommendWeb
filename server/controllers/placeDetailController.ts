@@ -23,12 +23,10 @@ export const getPlaceDetails = async (req: Request, res: Response) => {
           key: process.env.GOOGLE_MAP_API_KEY, // 환경변수에서 API 키 가져오기
           language: "ko", // 한국어 설명 요청
         },
-      }
+      },
     );
-    
-    console.log("구글 API 응답:", googleResponse.data);
+
     res.status(200).json(googleResponse.data.result);
-    
   } catch (error) {
     console.error("구글 API 호출 중 에러 발생:", error);
     res.status(500).json({ error: "서버 내부 에러" });
