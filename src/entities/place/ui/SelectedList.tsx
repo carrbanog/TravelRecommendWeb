@@ -22,7 +22,6 @@ const SelectedList = React.memo(
 
     return (
       <Card className="flex flex-col h-full border-none shadow-md bg-slate-50/50 overflow-hidden">
-        {/* flex-none: 헤더는 높이가 늘어나지 않도록 고정합니다. */}
         <CardHeader className="flex-none pb-3">
           <CardTitle className="text-lg font-bold flex items-center gap-2 text-slate-800">
             <MapPin className="w-5 h-5 text-primary" />
@@ -35,11 +34,6 @@ const SelectedList = React.memo(
           </CardTitle>
         </CardHeader>
 
-        {/* 핵심 수정 포인트: 
-          1. flex-1: Card 안에서 남은 모든 높이를 차지합니다.
-          2. min-h-0: 자식 콘텐츠(리스트)가 길어져도 부모 박스를 뚫고 나가지 않게 제한합니다.
-          3. flex flex-col: 내부의 ScrollArea가 flex-1을 가질 수 있도록 레이아웃을 잡습니다.
-        */}
         <CardContent className="flex-1 min-h-0 p-4 pt-0 overflow-hidden flex flex-col">
           {hasPlaces ? (
             <ScrollArea className="flex-1 w-full pr-4">

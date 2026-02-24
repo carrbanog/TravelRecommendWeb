@@ -1,8 +1,17 @@
-import { Marker, Polyline } from "@react-google-maps/api";
+import { Marker, Polyline, InfoWindow } from "@react-google-maps/api";
+
+// 2. Features (비즈니스 로직, API 호출 관련)
+import { usePlaceDetailsQuery } from "@/features/place-details/lib/usePlaceDetailsQuery";
+
+// 3. Entities (데이터 모델, 상태 관리, 도메인 UI)
 import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
-import MyMap from "../../../shared/ui/GoogleMap/MyMap";
 import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
 import { TravelDayList } from "../../../entities/travel-plan/ui/TravelDayList";
+import { PlaceInfoWindow } from "@/entities/place/ui/PlaceInfoWindow";
+
+// 4. Shared (공통 훅, 공통 UI, 유틸리티)
+import MyMap from "../../../shared/ui/GoogleMap/MyMap";
+import { useMapHover } from '@/shared/lib/hooks/useMapHover';
 
 interface TravelPathMapWidgetProps {
   onBackClick: () => void;
@@ -13,13 +22,18 @@ export const TravelPathMapWidget = ({
 }: TravelPathMapWidgetProps) => {
   const { planCards } = usePlanCardsStore();
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
-  const colors = ["#FF0000", "#007BFF", "#00C851", "#FF8800"]; // Day-specific polyline colors
-  console.log(planCards);
+  const colors = ["#FF0000", "#007BFF", "#00C851", "#FF8800"]; 
+
+  const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
+
+  const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
+    hoveredPlace?.placeId || "",
+  );
   // selectedPlaces가 비어있을 때 오류가 나지 않도록 초기 중심값 설정
   const initialCenter =
     selectedPlaces.length > 0
       ? selectedPlaces[0].nearCoordinates
-      : { lat: 37.5665, lng: 126.978 }; // Default to Seoul if no places
+      : { lat: 37.5665, lng: 126.978 };
 
   return (
     // 전체 레이아웃을 flex 컨테이너로 변경
@@ -27,13 +41,27 @@ export const TravelPathMapWidget = ({
       {/* 지도 영역 (70%) */}
       <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
         <MyMap place={initialCenter}>
-          {/* Render all selected places as markers */}
           {selectedPlaces.map((place) => (
             <Marker
               key={place.placeId}
               position={place.nearCoordinates}
               title={place.title}
-            />
+              onMouseOver={() => handleMouseOver(place)}
+              onMouseOut={handleMouseOut}
+            >
+              {hoveredPlace?.placeId === place.placeId && detailData && (
+                <InfoWindow>
+                  {detailLoading ? (
+                    <div style={{ padding: "8px", fontSize: "12px" }}>
+                      로딩 중...
+                    </div>
+                  ) : (
+                    <PlaceInfoWindow place={detailData} />
+                  )}
+                </InfoWindow>
+              )}
+            </Marker>
+
           ))}
 
           {planCards.map((card, idx) => {

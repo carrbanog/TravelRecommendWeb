@@ -5,7 +5,8 @@ import type { coordinates } from "../../../shared/types/coordinatestype";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { PlaceInfoWindow } from "@/entities/place/ui/PlaceInfoWindow";
 import { usePlaceDetailsQuery } from "@/features/place-details/lib/usePlaceDetailsQuery";
-import { set } from "date-fns";
+
+import { useMapHover } from "../../../shared/lib/hooks/useMapHover";
 
 type Props = {
   centerCoords?: coordinates;
@@ -16,28 +17,7 @@ type Props = {
 
 export const TravelMapWidget = React.memo(
   ({ centerCoords, onMarkerClick, places, isLoading }: Props) => {
-    const [hoveredPlace, setHoveredPlace] = useState<NearPlace | null>(null);
-
-    const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-    const handleMouseOver = (placeItem: NearPlace) => {
-      if (hoverTimerRef.current) {
-        clearTimeout(hoverTimerRef.current);
-      }
-      hoverTimerRef.current = setTimeout(() => {
-        setHoveredPlace(placeItem);
-      }, 400);
-    };
-
-    const handleMouseOut = () => {
-      // 마우스가 떠날 때 0.4초 이내에 나가면 타이머를 취소해서 api호출을 막음
-      if (hoverTimerRef.current) {
-        clearTimeout(hoverTimerRef.current);
-        hoverTimerRef.current = null;
-      }
-      console.log("Mouse out:", hoverTimerRef);
-      setHoveredPlace(null);
-    };
+    const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
 
     const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
       hoveredPlace?.placeId || "",
@@ -53,9 +33,9 @@ export const TravelMapWidget = React.memo(
 
     return (
       <MyMap place={centerCoords}>
-        {places?.map((placeItem, idx) => (
+        {places?.map((placeItem) => (
           <Marker
-            key={idx}
+            key={placeItem.placeId}
             position={placeItem.nearCoordinates}
             onClick={() => onMarkerClick(placeItem)}
             // 마우스 오버 시 상태 업데이트
