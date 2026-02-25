@@ -11,7 +11,7 @@ import { PlaceInfoWindow } from "@/entities/place/ui/PlaceInfoWindow";
 
 // 4. Shared (공통 훅, 공통 UI, 유틸리티)
 import MyMap from "../../../shared/ui/GoogleMap/MyMap";
-import { useMapHover } from '@/shared/lib/hooks/useMapHover';
+import { useMapHover } from "@/shared/lib/hooks/useMapHover";
 
 interface TravelPathMapWidgetProps {
   onBackClick: () => void;
@@ -22,7 +22,7 @@ export const TravelPathMapWidget = ({
 }: TravelPathMapWidgetProps) => {
   const { planCards } = usePlanCardsStore();
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
-  const colors = ["#FF0000", "#007BFF", "#00C851", "#FF8800"]; 
+  const colors = ["#FF0000", "#007BFF", "#00C851", "#FF8800"];
 
   const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
 
@@ -61,7 +61,6 @@ export const TravelPathMapWidget = ({
                 </InfoWindow>
               )}
             </Marker>
-
           ))}
 
           {planCards.map((card, idx) => {
