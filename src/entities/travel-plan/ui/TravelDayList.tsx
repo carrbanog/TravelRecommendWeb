@@ -16,8 +16,9 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
     <Footprints size={14} />,
     <Car size={14} />,
   ];
+  const locations = places?.map((place) => place.nearCoordinates) || [];
 
-  const { data, isLoading } = useFetchDistanceQuery();
+  const { data, isLoading } = useFetchDistanceQuery(locations);
   console.log("거리 데이터:", data);
 
   return (
