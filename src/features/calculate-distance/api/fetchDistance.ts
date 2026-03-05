@@ -1,8 +1,7 @@
 import { apiClient } from "@/shared/api/apiClient";
-import type { coordinates } from '@/shared/types/coordinatestype';
+import type { coordinates } from "@/shared/types/coordinatestype";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-
+import type { distanceResponse } from "../model/type";
 
 export const useFetchDistanceQuery = (locations: coordinates[]) => {
   return useQuery({
@@ -12,7 +11,13 @@ export const useFetchDistanceQuery = (locations: coordinates[]) => {
   });
 };
 
-export const fetchDistance = async (locations: coordinates[]) => {
-  const res = await axios.post("http://localhost:5000/calculate-distance", {locations});
+export const fetchDistance = async (
+  locations: coordinates[],
+): Promise<distanceResponse> => {
+  const res = await apiClient.post<
+    { locations: coordinates[] },
+    distanceResponse
+  >("/calculate-distance", { locations });
+
   return res;
 };

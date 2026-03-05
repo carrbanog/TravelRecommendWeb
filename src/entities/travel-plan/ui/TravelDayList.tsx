@@ -1,6 +1,13 @@
-import { MapPin, Bus, Footprints, Car, HelpCircle } from "lucide-react"; // 아이콘 라이브러리 사용 가정
-import { Badge } from "@/components/ui/badge"; // shadcn/ui badge
-import { Separator } from "@/components/ui/separator"; // shadcn/ui separator
+import {
+  MapPin,
+  Bus,
+  Footprints,
+  Car,
+  HelpCircle,
+  ExternalLink,
+} from "lucide-react"; // ExternalLink 아이콘 추가
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import type { PlanPlace } from "../../place/model/type";
 import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDistance";
 
@@ -10,21 +17,21 @@ interface TravelDayListProps {
 }
 
 export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
-  // 교통수단 아이콘 배열 (랜덤/임의 표시용)
-
   const locations = places?.map((place) => place.nearCoordinates) || [];
 
-  const { data, isLoading } = useFetchDistanceQuery(locations);
-  console.log("요청한 위치 데이터:", places);
-  console.log("거리 데이터:", data);
+  const { data: routeData, isLoading } = useFetchDistanceQuery(locations);
+
   // mode에 따른 아이콘 렌더링 헬퍼 함수
   const getTransportIcon = (mode: string) => {
     switch (mode) {
       case "transit":
+      case "TRANSIT":
         return <Bus size={14} />;
       case "walking":
+      case "WALKING":
         return <Footprints size={14} />;
       case "driving":
+      case "DRIVING":
         return <Car size={14} />;
       default:
         return <HelpCircle size={14} />;
@@ -44,13 +51,13 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
         <div className="relative pl-2">
           {places.map((place, idx) => {
             // 현재 장소에서 다음 장소로 가는 이동 정보 찾기
-            const routeInfo = data?.data?.distances?.find(
+            const routeInfo = routeData?.distances?.find(
               (d: any) => d.fromIndex === idx,
             );
 
             return (
               <div key={place.id} className="relative">
-                {/* 1. 장소 카드 영역 (기존 코드 유지) */}
+                {/* 1. 장소 카드 영역 */}
                 <div className="flex items-start gap-4 mb-2">
                   <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white border-2 border-blue-500 shadow-sm text-blue-600 font-bold text-xs shrink-0">
                     {idx + 1}
@@ -67,8 +74,10 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
 
                 {/* 2. 이동 경로 정보 (마지막 요소가 아닐 때만) */}
                 {idx < places.length - 1 && (
-                  <div className="flex items-center gap-4 my-1 ml-4 border-l-2 border-dashed border-gray-300 h-12">
-                    <div className="flex items-center gap-2 ml-6 text-xs font-medium text-gray-600 bg-white px-3 py-1.5 border rounded-full shadow-sm">
+                  // ✅ 여러 내용이 들어가도록 flex-col과 gap을 추가하고 높이를 자동(min-h)으로 변경
+                  <div className="flex flex-col gap-2 my-1 ml-4 border-l-2 border-dashed border-gray-300 min-h-[3rem] py-2">
+                    {/* A. 이동 요약 뱃지 (기존) */}
+                    <div className="flex items-center gap-2 ml-6 text-xs font-medium text-gray-600 bg-white px-3 py-1.5 border rounded-full shadow-sm w-fit">
                       {isLoading ? (
                         <span className="text-gray-400">계산 중...</span>
                       ) : routeInfo ? (
@@ -82,6 +91,48 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
                         <span className="text-gray-400">경로 정보 없음</span>
                       )}
                     </div>
+
+                    {/* ✅ B. 서버에서 받은 추가 데이터 (링크 및 상세 스텝) */}
+                    {!isLoading && routeInfo && (
+                      <div className="ml-6 flex flex-col gap-2">
+                        {/* 외부 구글 맵 링크 버튼 */}
+                        {routeInfo.googleMapsUrl && (
+                          <a
+                            href={routeInfo.googleMapsUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-[11px] text-blue-600 bg-blue-50 hover:bg-blue-100 px-2 py-1.5 rounded-md transition-colors w-fit font-medium"
+                          >
+                            <ExternalLink size={12} />
+                            구글 맵으로 길찾기
+                          </a>
+                        )}
+
+                        {/* 상세 스텝(steps) 배열 출력 */}
+                        {routeInfo.steps && routeInfo.steps.length > 0 && (
+                          <div className="flex flex-col gap-1.5 mt-1">
+                            {routeInfo.steps.map(
+                              (step: any, stepIdx: number) => (
+                                <div
+                                  key={stepIdx}
+                                  className="flex items-start gap-1.5 text-[11px] text-gray-500 bg-gray-50 p-1.5 rounded border border-gray-100"
+                                >
+                                  <span className="mt-0.5 text-gray-400">
+                                    {getTransportIcon(step.mode)}
+                                  </span>
+                                  <span>
+                                    {step.instruction}{" "}
+                                    <span className="text-gray-400 font-medium">
+                                      ({step.duration})
+                                    </span>
+                                  </span>
+                                </div>
+                              ),
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
