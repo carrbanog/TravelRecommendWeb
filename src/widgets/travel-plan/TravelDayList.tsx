@@ -92,7 +92,7 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
                       )}
                     </div>
 
-                    {/* ✅ B. 서버에서 받은 추가 데이터 (링크 및 상세 스텝) */}
+                    {/* 경로 상세 정보(이동수단 + 시간)*/}
                     {!isLoading && routeInfo && (
                       <div className="ml-6 flex flex-col gap-2">
                         {/* 상세 스텝(steps) 배열 출력 */}
