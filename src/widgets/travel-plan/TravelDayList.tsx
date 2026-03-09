@@ -1,15 +1,15 @@
-import {
-  MapPin,
-  Bus,
-  Footprints,
-  Car,
-  HelpCircle,
-  ExternalLink,
-} from "lucide-react"; // ExternalLink 아이콘 추가
+// 1. 외부 라이브러리 (React, 서드파티 패키지)
+import { Bus, Car, Footprints, HelpCircle, MapPin } from "lucide-react";
+
+// 2. 공통 UI 컴포넌트 (Shared 계층 / shadcn ui 등)
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import type { PlanPlace } from "../../entities/place/model/type";
+
+// 3. 기능 (Features 계층 - API, 훅 등)
 import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDistance";
+
+// 4. 타입 (Types - 도메인 모델, 응답 타입 등)
+import type { PlanPlace } from "@/entities/place/model/type"; // 상대경로(../../)를 절대경로(@/)로 통일
+import type { RouteStep } from "@/features/calculate-distance/model/type";
 
 interface TravelDayListProps {
   dayIndex: number;
@@ -99,7 +99,7 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
                         {routeInfo.steps && routeInfo.steps.length > 0 && (
                           <div className="flex flex-col gap-1.5 mt-1">
                             {routeInfo.steps.map(
-                              (step: any, stepIdx: number) => (
+                              (step: RouteStep, stepIdx: number) => (
                                 <div
                                   key={stepIdx}
                                   className="flex items-start gap-1.5 text-[11px] text-gray-500 bg-gray-50 p-1.5 rounded border border-gray-100"
