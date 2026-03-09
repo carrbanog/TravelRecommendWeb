@@ -8,7 +8,7 @@ import {
 } from "lucide-react"; // ExternalLink 아이콘 추가
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import type { PlanPlace } from "../../place/model/type";
+import type { PlanPlace } from "../../entities/place/model/type";
 import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDistance";
 
 interface TravelDayListProps {
@@ -95,19 +95,6 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
                     {/* ✅ B. 서버에서 받은 추가 데이터 (링크 및 상세 스텝) */}
                     {!isLoading && routeInfo && (
                       <div className="ml-6 flex flex-col gap-2">
-                        {/* 외부 구글 맵 링크 버튼 */}
-                        {routeInfo.googleMapsUrl && (
-                          <a
-                            href={routeInfo.googleMapsUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-[11px] text-blue-600 bg-blue-50 hover:bg-blue-100 px-2 py-1.5 rounded-md transition-colors w-fit font-medium"
-                          >
-                            <ExternalLink size={12} />
-                            구글 맵으로 길찾기
-                          </a>
-                        )}
-
                         {/* 상세 스텝(steps) 배열 출력 */}
                         {routeInfo.steps && routeInfo.steps.length > 0 && (
                           <div className="flex flex-col gap-1.5 mt-1">

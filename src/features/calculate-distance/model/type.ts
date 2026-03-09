@@ -9,6 +9,6 @@ export type distanceResponse = {
       mode: string;
       instruction: string;
       duration: string;
-    };
+    }[];
   }[];
 };

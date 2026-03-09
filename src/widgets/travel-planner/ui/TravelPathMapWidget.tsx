@@ -6,7 +6,7 @@ import { usePlaceDetailsQuery } from "@/features/place-details/lib/usePlaceDetai
 // 3. Entities (데이터 모델, 상태 관리, 도메인 UI)
 import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
 import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
-import { TravelDayList } from "../../../entities/travel-plan/ui/TravelDayList";
+import { TravelDayList } from "../../travel-plan/TravelDayList";
 import { PlaceInfoWindow } from "@/entities/place/ui/PlaceInfoWindow";
 
 // 4. Shared (공통 훅, 공통 UI, 유틸리티)
