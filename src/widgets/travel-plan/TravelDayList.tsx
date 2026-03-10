@@ -54,7 +54,7 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
             const routeInfo = routeData?.distances?.find(
               (d: any) => d.fromIndex === idx,
             );
-
+            console.log("test", { routeInfo });
             return (
               <div key={place.id} className="relative">
                 {/* 1. 장소 카드 영역 */}
