@@ -71,7 +71,7 @@ export const CreatePostForm = () => {
           ["clean"],
         ],
         handlers: {
-          image: imageHandler,
+          image: imageHandler, // 툴바에서 이미지 버튼 클릭 시 커스텀 핸들러 호출
         },
       },
     }),
