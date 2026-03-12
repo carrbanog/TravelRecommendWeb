@@ -1,40 +1,27 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchPostById } from "../../../entities/post/api/postApi";
 
-// Shadcn UI Imports
+// Entities & Features (FSD 하위 계층)
+import { usePost } from "@/entities/post/model/usePost";
+import { DeletePostButton } from "@/features/post/ui/DeletePostButton";
+
+// Shared (Providers, UI Components, Utils, Icons)
+import { useAuth } from "@/app/providers/AuthProvider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-
-// Icons
-import {
-  User,
-  CalendarDays,
-  Clock,
-  MapPin,
-  Loader2,
-  ArrowLeft,
-} from "lucide-react";
+import { User, ArrowLeft } from "lucide-react";
 
 export const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  
+  // Entity 커스텀 훅 사용
+  const { data: post, isLoading, error } = usePost(id!);
 
-  const {
-    data: post,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["post", id],
-    queryFn: () => fetchPostById(id!),
-    enabled: !!id,
-  });
-
-  // 날짜 포맷팅 헬퍼 함수
+  // 날짜 포맷팅 헬퍼 함수 (필요 시 shared/lib/utils 로 분리 가능)
   const formatDate = (dateString?: string) => {
     if (!dateString) return "";
     return new Date(dateString).toLocaleDateString("ko-KR", {
@@ -45,26 +32,6 @@ export const PostDetail = () => {
     });
   };
 
-  const formatTime = (dateString?: string) => {
-    if (!dateString) return "";
-    return new Date(dateString).toLocaleTimeString("ko-KR", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-  // 로딩 상태
-  // if (isLoading)
-  //   return (
-  //     <div className="flex flex-col items-center justify-center h-[50vh] text-sky-600 gap-2">
-  //       <Loader2 className="w-8 h-8 animate-spin" />
-  //       <p className="font-medium animate-pulse">
-  //         여행기를 불러오는 중입니다...
-  //       </p>
-  //     </div>
-  //   );
-
-  // 에러 상태
   if (error)
     return (
       <div className="flex flex-col items-center justify-center h-[50vh] text-red-500 gap-4">
@@ -74,10 +41,11 @@ export const PostDetail = () => {
         </Button>
       </div>
     );
+
   return (
     <div className="flex flex-col w-full max-w-screen-xl mx-auto py-8 px-4 gap-6">
-      {/* 1. 상단 버튼 영역 (데이터 로딩 전에도 위치 고정) */}
-      <div>
+      {/* 1. 상단 액션 바 */}
+      <div className="flex justify-between items-center">
         <Button
           variant="ghost"
           onClick={() => navigate(-1)}
@@ -85,14 +53,19 @@ export const PostDetail = () => {
         >
           <ArrowLeft className="w-4 h-4 mr-2" /> 목록으로 돌아가기
         </Button>
+
+        {/* Feature: 작성자 본인일 경우에만 삭제 버튼 노출 */}
+        {!isLoading && post?.author === user?.name && (
+          <DeletePostButton postId={id!} />
+        )}
       </div>
 
       <Card className="h-full shadow-lg border-gray-100 bg-white/80 backdrop-blur-sm overflow-hidden">
-        {/* 2. 헤더 영역 스켈레톤 적용 */}
+        {/* 2. 헤더 영역 */}
         <CardHeader className="space-y-6 pb-6 pt-6 bg-slate-50/50">
           <div className="space-y-2">
             {isLoading ? (
-              <Skeleton className="h-10 w-3/4" /> // 제목 자리
+              <Skeleton className="h-10 w-3/4" />
             ) : (
               <CardTitle className="text-3xl font-bold text-slate-900">
                 {post?.title}
@@ -104,9 +77,8 @@ export const PostDetail = () => {
             <div className="flex items-center gap-2">
               {isLoading ? (
                 <div className="flex items-center gap-2">
-                  <Skeleton className="h-8 w-8 rounded-full" />{" "}
-                  {/* 프로필 아이콘 */}
-                  <Skeleton className="h-4 w-20" /> {/* 이름 */}
+                  <Skeleton className="h-8 w-8 rounded-full" />
+                  <Skeleton className="h-4 w-20" />
                 </div>
               ) : (
                 <>
@@ -122,9 +94,8 @@ export const PostDetail = () => {
 
             <div className="flex items-center gap-4">
               {isLoading ? (
-                <Skeleton className="h-4 w-40" /> // 날짜/시간 자리
+                <Skeleton className="h-4 w-40" />
               ) : (
-                /* 기존 날짜 정보 */
                 <div className="text-sm text-slate-500">
                   {formatDate(post?.createdAt)}
                 </div>
@@ -135,7 +106,7 @@ export const PostDetail = () => {
 
         <Separator className="bg-gray-300 mx-2 w-auto" />
 
-        {/* 3. 본문 영역 스켈레톤 (가장 중요) */}
+        {/* 3. 본문 영역 */}
         <CardContent className="p-8 sm:p-10 min-h-[500px]">
           {isLoading ? (
             <div className="space-y-4">
@@ -143,11 +114,9 @@ export const PostDetail = () => {
               <Skeleton className="h-6 w-full" />
               <Skeleton className="h-6 w-[90%]" />
               <div className="py-4">
-                {/* 이미지가 들어갈 자리를 미리 확보하여 출렁거림 방지 */}
                 <Skeleton className="h-[300px] w-3/5 mx-auto" />
               </div>
               <Skeleton className="h-6 w-full" />
-              <Skeleton className="h-6 w-[80%]" />
             </div>
           ) : (
             <div
@@ -160,7 +129,3 @@ export const PostDetail = () => {
     </div>
   );
 };
-
-// 혹시 모를 호환성을 위해 default export도 남겨둡니다.
-// (FSD 구조에서는 위처럼 Named Export를 권장합니다)
-export default PostDetail;

@@ -8,7 +8,7 @@ import { AuthPage } from "../../pages/AuthPage";
 import { AuthProvider } from "../providers/AuthProvider";
 import TravelPathPage from "../../pages/TravelPage/path";
 import { CreatePostPage } from "../../pages/CreatePostPage";
-import PostDetail from "../../features/post/ui/PostDetail";
+import {PostDetail} from "../../widgets/post-detail/PostDetail";
 
 import { Toaster } from "sonner";
 
