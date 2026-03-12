@@ -100,7 +100,8 @@ export const CreatePostForm = () => {
       return;
     }
 
-    const author = user.email.split("@")[0];
+    // const author = user.email.split("@")[0];
+    const author = user.email;
     const newPost: CreatePost = { title, content, author };
 
     // 콘솔 확인용

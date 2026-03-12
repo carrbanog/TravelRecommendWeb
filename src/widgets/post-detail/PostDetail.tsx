@@ -31,7 +31,7 @@ export const PostDetail = () => {
       weekday: "long",
     });
   };
-
+  console.log("현재 로그인한 사용자 정보:", user, post?.author)
   if (error)
     return (
       <div className="flex flex-col items-center justify-center h-[50vh] text-red-500 gap-4">
@@ -55,7 +55,7 @@ export const PostDetail = () => {
         </Button>
 
         {/* Feature: 작성자 본인일 경우에만 삭제 버튼 노출 */}
-        {!isLoading && post?.author === user?.name && (
+        {!isLoading && post?.author === user?.email && (
           <DeletePostButton postId={id!} />
         )}
       </div>

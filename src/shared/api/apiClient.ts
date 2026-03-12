@@ -2,9 +2,6 @@
 import api from "./axiosInstance";
 import axios, { Axios, AxiosError } from "axios";
 import type { AxiosResponse, AxiosRequestConfig } from "axios";
-import { url } from 'node:inspector';
-import { config } from 'node:process';
-import { data } from "react-router-dom";
 
 const handleApiError = (error: AxiosError | Error) => {
   if (axios.isAxiosError(error)) {
