@@ -2,6 +2,8 @@
 import api from "./axiosInstance";
 import axios, { Axios, AxiosError } from "axios";
 import type { AxiosResponse, AxiosRequestConfig } from "axios";
+import { url } from 'node:inspector';
+import { config } from 'node:process';
 import { data } from "react-router-dom";
 
 const handleApiError = (error: AxiosError | Error) => {
@@ -39,4 +41,17 @@ export const apiClient = {
       throw error;
     }
   },
+
+  delete: async <TResponse>(
+    url: string,
+    config?: AxiosRequestConfig
+  ): Promise<TResponse> => {
+    try {
+      const response = await api.delete<TResponse>(url, config);
+      return response.data;
+    } catch (error) {
+      handleApiError(error as AxiosError | Error);
+      throw error;
+    }
+  }
 };

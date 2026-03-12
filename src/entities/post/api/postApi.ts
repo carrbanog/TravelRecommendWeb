@@ -23,9 +23,7 @@ export const createPost = async (
   return res;
 };
 
-export const deletePost = async (id: string) => { 
-  const res = await fetch(`http://localhost:5000/posts/${id}`, {
-    method: "DELETE",
-  });
+export const deletePost = async (id: string) => {
+  const res = await apiClient.delete<void>(`/posts/${id}`);
   return res;
 }
