@@ -1,0 +1,122 @@
+// features/post/create/ui/CreatePostForm.tsx
+import React, { useRef, useState, useMemo, useCallback } from "react";
+import ReactQuill from "react-quill-new";
+import { toast } from "sonner";
+import { Save, Loader2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "../../../../app/providers/AuthProvider";
+
+import { resizeImage } from "../lib/imageResizer";
+import { uploadImageApi } from "../api/postApi";
+import { useCreatePost } from "../model/useCreatePost";
+
+import "react-quill-new/dist/quill.snow.css";
+
+export const CreatePostForm = () => {
+  const { user } = useAuth();
+  const { mutate, isPending } = useCreatePost();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const quillRef = useRef<ReactQuill>(null);
+
+  // 이미지 핸들러: 리사이징 -> 업로드 -> 에디터 삽입
+  const imageHandler = useCallback(() => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+
+      toast.promise(async () => {
+        // 1. 리사이징 (Client Side)
+        const resizedBlob = await resizeImage(file);
+        console.log("Original size:", file, "bytes");
+        console.log("Resized size:", resizedBlob, "bytes");
+        // 2. 업로드 (Server Side)
+        const { url } = await uploadImageApi(resizedBlob);
+        
+        
+        // 3. 에디터에 URL 삽입
+        const editor = quillRef.current?.getEditor();
+        const range = editor?.getSelection();
+        if (editor && range) {
+          editor.insertEmbed(range.index, "image", url);
+          editor.setSelection(range.index + 1);
+        }
+      }, {
+        loading: '이미지 최적화 및 업로드 중...',
+        success: '이미지가 본문에 삽입되었습니다.',
+        error: '이미지 처리에 실패했습니다.',
+      });
+    };
+  }, []);
+
+  const modules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        ["link", "image", "video"],
+        [{ color: [] }, { background: [] }],
+        ["clean"],
+      ],
+      handlers: { image: imageHandler },
+    },
+  }), [imageHandler]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user?.email) return toast.error("로그인이 필요합니다.");
+    if (!title.trim()) return toast.error("제목을 입력해주세요.");
+
+    mutate({ title, content, author: user.email });
+  };
+
+  return (
+    <div className="flex flex-col h-full w-full max-w-screen-xl mx-auto py-8 px-4">
+      {/* 에디터 내부 이미지 스타일링 */}
+      <style>{`.ql-editor img { max-width: 100%; height: auto; display: block; margin: 10px 0; }`}</style>
+
+      <Card className="h-full shadow-lg border-gray-100 bg-white/80 backdrop-blur-sm">
+        <CardHeader className="space-y-1 pb-6">
+          <CardTitle className="text-2xl font-bold text-slate-900">새 여행기 작성</CardTitle>
+          <CardDescription className="text-slate-500">최적화된 이미지 업로드 시스템이 적용되었습니다.</CardDescription>
+        </CardHeader>
+
+        <CardContent>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <Input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="제목을 입력하세요"
+              className="text-lg py-6"
+            />
+            <div className="h-[500px] mb-12">
+              <ReactQuill
+                ref={quillRef}
+                value={content}
+                onChange={setContent}
+                modules={modules}
+                theme="snow"
+                className="h-full"
+                placeholder="여행의 추억을 기록해보세요..."
+              />
+            </div>
+            <div className="flex justify-end pt-4">
+              <Button type="submit" disabled={isPending} className="bg-sky-500 px-8 py-6 text-lg">
+                {isPending ? <Loader2 className="mr-2 animate-spin" /> : <Save className="mr-2" />}
+                저장하기
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+

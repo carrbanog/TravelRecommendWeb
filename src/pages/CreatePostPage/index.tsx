@@ -1,4 +1,4 @@
-import CreatePostForm from "@/features/post/ui/CreatePostForm";
+import {CreatePostForm} from "@/features/post/create/ui/CreatePostForm";
 
 export const CreatePostPage = () => {
   return (

@@ -6,4 +6,5 @@ export const AUTH_ENDPOINTS = {
   LOGOUT: "/logout", // 로그아웃
   NEARBYPLACES: "/nearbyplaces", //근처 여행지 검색
   PROFILE: "/getprofile", //프로필 조회
+  CREATEPOST: "/createpost", // 게시글 생성
 };
