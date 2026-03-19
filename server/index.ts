@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 import signUpRoutes from "./routes/signUpRoutes";
 import loginRoutes from "./routes/loginRoutes";
@@ -17,6 +18,7 @@ import calculateDistanceRoute from "./routes/calculateDistanceRoute";
 dotenv.config();
 
 const app = express();
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
@@ -47,7 +49,6 @@ app.use("/logout", logoutRoutes);
 app.use("/getprofile", authRoutes);
 app.use("/nearbyplaces", nearPlacesRoutes);
 app.use("/createpost", createPostRoutes);
-app.use("/posts", postRoutes);
 app.use("/posts", postRoutes);
 app.use("/placeDetails", placeDetailRoutes);
 app.use("/calculate-distance", calculateDistanceRoute);

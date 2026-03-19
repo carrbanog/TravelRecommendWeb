@@ -48,6 +48,7 @@
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@types/mapbox-gl": "^3.4.1",
+    "@types/multer": "^2.1.0",
     "@types/node": "^25.0.10",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
