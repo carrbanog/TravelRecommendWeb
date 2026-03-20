@@ -39,13 +39,16 @@ export const CreatePostForm = () => {
         console.log("Resized size:", resizedBlob, "bytes");
         // 2. 업로드 (Server Side)
         const { url } = await uploadImageApi(resizedBlob);
-        
+
         
         // 3. 에디터에 URL 삽입
-        const editor = quillRef.current?.getEditor();
-        const range = editor?.getSelection();
+        const editor = quillRef.current?.getEditor(); //직접적인 조작을 할 수 있는 권한 가져오기
+        const range = editor?.getSelection(); // 현재 커서 위치에 이미지 삽입, 삽입 후 커서 위치 조정
         if (editor && range) {
-          editor.insertEmbed(range.index, "image", url);
+          editor.insertEmbed(range.index, "image", url); 
+          // range.index는 현재 커서 위치를 나타냅니다.
+          //image는 퀼에서 제공하는 embed 타입 중 하나로, 이미지를 삽입할 때 사용됩니다.
+          //url은 업로드된 이미지의 URL입니다.
           editor.setSelection(range.index + 1);
         }
       }, {
@@ -75,6 +78,8 @@ export const CreatePostForm = () => {
     if (!title.trim()) return toast.error("제목을 입력해주세요.");
 
     mutate({ title, content, author: user.email });
+    // title, content, author을 newPost로 묶어서 mutate에 전달
+    // mutate에 포함된 데이터가 mutationFn 첫번째 인자로 들어감
   };
 
   return (
