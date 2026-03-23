@@ -8,9 +8,10 @@ import { AuthPage } from "../../pages/AuthPage";
 import { AuthProvider } from "../providers/AuthProvider";
 import TravelPathPage from "../../pages/TravelPage/path";
 import { CreatePostPage } from "../../pages/CreatePostPage";
-import {PostDetail} from "../../widgets/post-detail/PostDetail";
+import {PostDetailPage} from '@/pages/PostDetailPage';
 
 import { Toaster } from "sonner";
+
 
 export const AppRoutes = () => {
   return (
@@ -32,7 +33,7 @@ export const AppRoutes = () => {
               <Route path="/signup" element={<AuthPage />} />
               <Route path="/travel/path" element={<TravelPathPage />} />
               <Route path="/post/create" element={<CreatePostPage />} />
-              <Route path="/post/:id" element={<PostDetail />} />
+              <Route path="/post/:id" element={<PostDetailPage />} />
             </Routes>
           </main>
         </div>

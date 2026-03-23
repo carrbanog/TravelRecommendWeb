@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 // Entities & Features (FSD 하위 계층)
 import { usePost } from "@/entities/post/model/usePost";
 import { DeletePostButton } from "@/features/post/ui/DeletePostButton";
+import { CommentForm } from "@/features/comment/add/ui/CommentForm";
 
 // Shared (Providers, UI Components, Utils, Icons)
 import { useAuth } from "@/app/providers/AuthProvider";
@@ -17,7 +18,7 @@ export const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
-  
+
   // Entity 커스텀 훅 사용
   const { data: post, isLoading, error } = usePost(id!);
 
@@ -31,7 +32,7 @@ export const PostDetail = () => {
       weekday: "long",
     });
   };
-  console.log("포스트 정보:", post?.content)
+  console.log("포스트 정보:", post?.content);
   if (error)
     return (
       <div className="flex flex-col items-center justify-center h-[50vh] text-red-500 gap-4">
@@ -125,6 +126,25 @@ export const PostDetail = () => {
             />
           )}
         </CardContent>
+        <Separator className="bg-gray-300 mx-2 w-auto" />
+
+        {/* 4. 댓글 작성 폼 */}
+        <div className="p-8 sm:px-10 bg-slate-50/30">
+          <h3 className="text-xl font-bold text-slate-900 mb-6">댓글</h3>
+          
+          {/* 댓글 작성 폼 (Feature 계층) */}
+          {user && post ? (
+            <div className="mt-8">
+              <CommentForm postId={post._id} userEmail={user.email} />
+            </div>
+          ) : (
+            <div className="text-center py-10 bg-white rounded-lg border border-dashed border-slate-200">
+              <p className="text-slate-500">
+                로그인하고 여행에 대한 의견을 나눠보세요!
+              </p>
+            </div>
+          )}
+        </div>
       </Card>
     </div>
   );
