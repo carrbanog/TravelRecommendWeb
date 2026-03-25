@@ -30,3 +30,19 @@ export const createComment = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const getCommentsByPostId = async (req: Request, res: Response) => {
+  try {
+    const { postId } = req.params;
+    const comments = await Comment.find({ postId }).sort({ createdAt: -1 });
+    console.log(`게시글 ID ${postId}에 대한 댓글이 조회되었습니다:`, comments);
+    res.status(200).json(comments);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("❌ 에러 발생:", error.message);
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "알 수 없는 에러가 발생했습니다." });
+    }
+  }
+}
