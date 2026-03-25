@@ -1,10 +1,4 @@
-export type Comment = {
-  _id: string;
-  postId: string;
-  content: string;
-  author: string;
-  createdAt: string;
-}
+import type { Comment } from "@/entities/comment/model/type";
 
 export type CreateCommentRequest = {
   content: string;

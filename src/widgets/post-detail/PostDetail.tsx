@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { usePost } from "@/entities/post/model/usePost";
 import { DeletePostButton } from "@/features/post/ui/DeletePostButton";
 import { CommentForm } from "@/features/comment/add/ui/CommentForm";
+import { CommentList } from "@/entities/comment/ui/CommentList";
 
 // Shared (Providers, UI Components, Utils, Icons)
 import { useAuth } from "@/app/providers/AuthProvider";
@@ -21,7 +22,7 @@ export const PostDetail = () => {
 
   // Entity 커스텀 훅 사용
   const { data: post, isLoading, error } = usePost(id!);
-
+  console.log("PostDetail - usePost 결과:", { post, isLoading, error });
   // 날짜 포맷팅 헬퍼 함수 (필요 시 shared/lib/utils 로 분리 가능)
   const formatDate = (dateString?: string) => {
     if (!dateString) return "";
@@ -32,7 +33,7 @@ export const PostDetail = () => {
       weekday: "long",
     });
   };
-  console.log("포스트 정보:", post?.content);
+  console.log("포스트 정보:", post);
   if (error)
     return (
       <div className="flex flex-col items-center justify-center h-[50vh] text-red-500 gap-4">
@@ -136,6 +137,7 @@ export const PostDetail = () => {
           {user && post ? (
             <div className="mt-8">
               <CommentForm postId={post._id} userEmail={user.email} />
+              <CommentList postId={post._id} userEmail={user?.email} />
             </div>
           ) : (
             <div className="text-center py-10 bg-white rounded-lg border border-dashed border-slate-200">
