@@ -14,6 +14,7 @@ import postRoutes from "./routes/postRoutes";
 import logoutRoutes from "./routes/logoutRoutes";
 import placeDetailRoutes from "./routes/placeDetailRoutes";
 import calculateDistanceRoute from "./routes/calculateDistanceRoute";
+import commentRoutes from "./routes/commentRoutes";
 
 dotenv.config();
 
@@ -52,6 +53,7 @@ app.use("/createpost", createPostRoutes);
 app.use("/posts", postRoutes);
 app.use("/placeDetails", placeDetailRoutes);
 app.use("/calculate-distance", calculateDistanceRoute);
+app.use("/comments", commentRoutes)
 
 app.listen(5000, () => {
   console.log("서버 실행 중: http://localhost:5000");
