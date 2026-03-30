@@ -13,7 +13,7 @@ export interface IComment extends Document {
 // 2. 댓글 스키마 정의
 const CommentSchema: Schema = new Schema({
   // 댓글 자체의 고유 ID (uuid 사용)
-  id: { 
+  commentId: { 
     type: String, 
     default: uuidv4 
   },

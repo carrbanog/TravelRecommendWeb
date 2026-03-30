@@ -45,4 +45,24 @@ export const getCommentsByPostId = async (req: Request, res: Response) => {
       res.status(500).json({ message: "알 수 없는 에러가 발생했습니다." });
     }
   }
-}
+};
+
+export const deleteCommentById = async (req: Request, res: Response) => {
+  try {
+    const { postId, commentId } = req.params;
+    // console.log(`댓글 삭제 요청이 들어왔습니다. postId: ${postId}, commentId: ${commentId}`);
+    const comment = await Comment.findOneAndDelete(commentId);
+    console.log(comment)
+    if (!comment) {
+      return res.status(404).json({ message: "댓글을 찾을 수 없습니다." });
+    }
+    res.status(200).json({ message: "댓글이 삭제되었습니다.", content: comment.content });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("❌ 에러 발생:", error.message);
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "알 수 없는 에러가 발생했습니다." });
+    }
+  }
+};
