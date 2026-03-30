@@ -6,6 +6,7 @@ interface Props {
   userEmail: string;
 }
 
+// 댓글 입력 폼 컴포넌트
 export const CommentForm = ({ postId, userEmail }: Props) => {
   const [content, setContent] = useState("");
 

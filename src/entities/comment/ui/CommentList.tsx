@@ -1,12 +1,12 @@
 import { useComments } from "../model/useComments";
 import { CommentItem } from "./CommentItem";
 
-// --- 2. 전체 댓글 리스트 컴포넌트 (Export) ---
 interface CommentListProps {
   postId: string;
   userEmail?: string;
 }
 
+// 전체 댓글 리스트 컴포넌트
 export const CommentList = ({ postId, userEmail }: CommentListProps) => {
   // 엔티티 모델에서 만든 훅 사용
   const { data: comments = [], isLoading, isError } = useComments(postId);
@@ -39,7 +39,7 @@ export const CommentList = ({ postId, userEmail }: CommentListProps) => {
         {comments.length > 0 ? (
           comments.map((comment) => (
             <CommentItem 
-              key={comment.id} 
+              key={comment.commentId} 
               comment={comment} 
               userEmail={userEmail} 
             />
