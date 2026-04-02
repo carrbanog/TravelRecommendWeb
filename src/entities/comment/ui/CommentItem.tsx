@@ -40,7 +40,6 @@ export const CommentItem = ({ comment, userEmail }: ItemProps) => {
         {comment.content}
       </p>
 
-      {/* 나중에 삭제 버튼이 들어갈 자리 */}
       {isMyComment && (
         <div className="flex justify-end mt-2">
           <button className="text-xs text-rose-400 hover:text-rose-600 transition-colors" onClick={handleDelete} disabled={isPending}>

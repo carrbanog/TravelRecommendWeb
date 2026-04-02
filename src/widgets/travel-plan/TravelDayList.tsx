@@ -10,17 +10,20 @@ import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDi
 // 4. 타입 (Types - 도메인 모델, 응답 타입 등)
 import type { PlanPlace } from "@/entities/place/model/type"; // 상대경로(../../)를 절대경로(@/)로 통일
 import type { RouteStep } from "@/features/calculate-distance/model/type";
+import { da } from 'date-fns/locale';
 
 interface TravelDayListProps {
   dayIndex: number;
   places: PlanPlace[] | undefined;
 }
 
+// 각 여행 계획 카드(하루)를 렌더링하는 컴포넌트
 export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
   const locations = places?.map((place) => place.nearCoordinates) || [];
 
   const { data: routeData, isLoading } = useFetchDistanceQuery(locations);
 
+  console.log("TravelDayList Route Data:", routeData, dayIndex, places);
   // mode에 따른 아이콘 렌더링 헬퍼 함수
   const getTransportIcon = (mode: string) => {
     switch (mode) {

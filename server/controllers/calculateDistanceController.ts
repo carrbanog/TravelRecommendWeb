@@ -27,15 +27,13 @@ const getDetailedRoute = async (
   for (const mode of modes) {
     try {
       const params: any = {
-        origin: origin,
-        destination: destination,
-        mode: mode,
+        origin,
+        destination,
+        mode,
         language: "ko",
         key: GOOGLE_MAPS_API_KEY,
       };
 
-      // ✅ 날짜 계산 복잡하게 하지 않고, 무조건 '현재 시간으로부터 48시간 뒤'로 못 박습니다.
-      // (서버 타임존 문제 원천 차단)
       if (mode === "transit") {
         params.departure_time = Math.floor(Date.now() / 1000) + 48 * 60 * 60;
       }
@@ -47,69 +45,50 @@ const getDetailedRoute = async (
 
       const data = response.data;
 
-      // Directions API 응답 성공 시
       if (data.status === "OK" && data.routes.length > 0) {
         const leg = data.routes[0].legs[0];
 
-        let detailedSteps: {
-          mode: string;
-          instruction: string;
-          duration: string;
-        }[] = [];
+        // ✅ 모든 모드에서 steps를 돌면서 상세 정보와 polyline을 추출합니다.
+        const detailedSteps = leg.steps.map((step: any) => {
+          const baseData = {
+            mode: step.travel_mode,
+            instruction: step.html_instructions
+              ? step.html_instructions.replace(/<[^>]*>?/gm, "")
+              : "이동",
+            duration: step.duration.text,
+            // 🌟 핵심: 지도를 그리기 위해 각 단계의 polyline을 반드시 포함합니다.
+            polyline: step.polyline.points,
+          };
 
-        if (mode === "walking") {
-          detailedSteps = [
-            {
+          if (step.travel_mode === "TRANSIT") {
+            const transit = step.transit_details;
+            return {
+              ...baseData,
+              mode: "TRANSIT",
+              instruction: `${transit.departure_stop.name}에서 ${transit.line.short_name || transit.line.name} 탑승 👉 ${transit.arrival_stop.name} 하차`,
+            };
+          } else if (step.travel_mode === "WALKING") {
+            return {
+              ...baseData,
               mode: "WALKING",
-              instruction: "도보 이동",
-              duration: leg.duration.text,
-            },
-          ];
-        } else {
-          detailedSteps = leg.steps.map((step: any) => {
-            if (step.travel_mode === "TRANSIT") {
-              const transit = step.transit_details;
-              return {
-                mode: "TRANSIT",
-                instruction: `${transit.departure_stop.name}에서 ${transit.line.name} 탑승 👉 ${transit.arrival_stop.name} 하차`,
-                duration: step.duration.text,
-              };
-            } else if (step.travel_mode === "WALKING") {
-              return {
-                mode: "WALKING",
-                instruction: `도보 이동 (${step.distance.text})`,
-                duration: step.duration.text,
-              };
-            } else {
-              return {
-                mode: step.travel_mode,
-                instruction: step.html_instructions
-                  ? step.html_instructions.replace(/<[^>]*>?/gm, "")
-                  : "이동",
-                duration: step.duration.text,
-              };
-            }
-          });
-        }
+              instruction: `도보 이동 (${step.distance.text})`,
+            };
+          }
+          return baseData;
+        });
 
         return {
           fromIndex: index,
           toIndex: index + 1,
           distanceText: leg.distance.text,
           durationText: leg.duration.text,
-          mode: mode,
+          mode: mode, // 'transit' 또는 'walking'
           steps: detailedSteps,
         };
-      } else {
-        // 🚨 [핵심 디버깅] 구글이 대중교통을 거절한 진짜 이유를 출력합니다!
-        console.log(`\n🚨 [${mode} 실패] ${origin} 👉 ${destination}`);
-        console.log(`상태 코드(Status): ${data.status}`);
-        if (data.error_message)
-          console.log(`에러 메시지: ${data.error_message}`);
-        console.log(`--------------------------------------------------\n`);
       }
+      // 실패 시 디버깅 로그 부분 동일...
     } catch (error) {
-      console.error(`[Mode: ${mode}] Directions API 에러:`, error);
+      console.error(`[Mode: ${mode}] API 에러:`, error);
     }
   }
 

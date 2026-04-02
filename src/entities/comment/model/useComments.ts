@@ -20,6 +20,7 @@ export const useDeleteComment = (postId: string, commentId: string) => {
     onSuccess: (data) => {
       alert(data.message);
       queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+      // comments와 postID가 일치하는 쿼리를 무효화하여 댓글 목록을 최신 상태로 갱신
     },
     onError: (error) => {
       console.error("댓글 삭제 오류:", error);
