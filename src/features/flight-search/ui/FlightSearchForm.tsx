@@ -49,7 +49,7 @@ export const FlightSearchForm = () => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto bg-white p-2 rounded-xl shadow-2xl border border-slate-200">
+    <div className="w-full max-w-6xl mx-auto my-4 bg-white p-2 rounded-xl shadow-2xl border border-slate-200">
       <div className="flex flex-col md:flex-row items-center gap-1">
         {/* 출발지 */}
         <div className="relative flex-1 w-full">

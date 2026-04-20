@@ -39,6 +39,7 @@ const PostList = () => {
     queryFn: fetchPosts,
   });
 
+  console.log("PostList - useQuery 결과:", { posts, isLoading, error });
   // 검색시 게시판 필터링
   const filteredPosts = posts?.filter((post) =>
     post.title.toLowerCase().includes(searchKeyword.toLowerCase()),
