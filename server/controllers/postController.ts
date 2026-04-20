@@ -15,6 +15,7 @@ export const getAllPosts = async (req: Request, res: Response) => {
     res.status(500).json({ message: "서버 오류" });
   }
 };
+
 export const getPostById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
