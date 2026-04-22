@@ -6,19 +6,19 @@ import { Card, CardContent } from "@/components/ui/card";
 interface PostCardProps {
   id: string;
   title: string;
-  // thumbnail: string;
+  thumbnail: string;
   author: string;
   createdAt?: string;
 }
 // 인기글 카드 컴포넌트: 이미지, 제목, 작성자, 작성일 표시
-export const PopularPostCard = ({ id, title, author, createdAt }: PostCardProps) => {
+export const PopularPostCard = ({ id, title, author, createdAt, thumbnail }: PostCardProps) => {
   return (
     <Link to={`/post/${id}`} className="group block">
       <Card className="overflow-hidden border-none shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
         <CardContent className="p-0">
           {/* 이미지 영역: 4:3 비율 고정 */}
           <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-            {/* <img
+            <img
               src={thumbnail}
               alt={title}
               className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
@@ -26,7 +26,7 @@ export const PopularPostCard = ({ id, title, author, createdAt }: PostCardProps)
               onError={(e) => {
                 (e.target as HTMLImageElement).src = "/api/placeholder/400/300";
               }}
-            /> */}
+            />
             {/* 마우스 호버 시 나타나는 오버레이 */}
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <span className="text-white text-sm font-medium px-4 py-2 border border-white rounded-full backdrop-blur-sm">

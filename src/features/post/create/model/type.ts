@@ -5,6 +5,7 @@ export type Post = {
   content: string;
   author: string;
   createdAt: string;
+  thumbnail?: string; // 본문에서 첫 번째 이미지 URL을 저장하는 필드
   // images?: File[];
 };
 

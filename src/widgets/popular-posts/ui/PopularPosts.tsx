@@ -6,7 +6,7 @@ import { PopularPostCard } from "../../../entities/post/ui/PopularPostCard";
 // 지금은 게시글 4개 순서대로 보여주지만 나중에 인기글 기준이 생기면 usePopularPosts 훅과 fetchPopularPosts API를 수정해서 반영할 예정입니다.
 export const PopularPosts = () => {
   const { data: popularPosts, isLoading, error } = usePopularPosts();
-
+  console.log("🔥 인기 여행기 데이터:", popularPosts);
   if (isLoading) return <div>인기 여행지 불러오는 중...</div>;
   if (error) return <div>인기 여행지를 불러오지 못했습니다.</div>;
   return (
@@ -20,7 +20,7 @@ export const PopularPosts = () => {
             key={post._id}
             id={post._id}
             title={post.title}
-            // thumbnail={extractFirstImageUrl(post.content)}
+            thumbnail={post.thumbnail}
             author={post.author}
             createdAt={post.createdAt}
           />

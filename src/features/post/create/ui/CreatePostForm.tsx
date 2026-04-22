@@ -72,12 +72,21 @@ export const CreatePostForm = () => {
     },
   }), [imageHandler]);
 
+  // 본문에서 첫 번째 이미지 URL 추출 함수
+  const extractFirstImageUrl = (htmlContent: string) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlContent, "text/html");
+  const img = doc.querySelector("img");
+  return img ? img.src : undefined; // 이미지가 없으면 undefined 반환
+};
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!user?.email) return toast.error("로그인이 필요합니다.");
     if (!title.trim()) return toast.error("제목을 입력해주세요.");
+    const thumbnail = extractFirstImageUrl(content);
 
-    mutate({ title, content, author: user.email });
+    mutate({ title, content, author: user.email, thumbnail });
     // title, content, author을 newPost로 묶어서 mutate에 전달
     // mutate에 포함된 데이터가 mutationFn 첫번째 인자로 들어감
   };
