@@ -3,7 +3,7 @@ import { Post } from '../models/Post';
 
 // POST /posts 요청 처리
 export const createPostController = async (req: Request, res: Response) => {
-  const { title, content, author } = req.body;
+  const { title, content, author, thumbnail } = req.body;
 
   try {
     if (!title || !content) {
@@ -11,7 +11,7 @@ export const createPostController = async (req: Request, res: Response) => {
         .status(400)
         .json({ message: "제목과 내용을 모두 입력해주세요" });
     }
-    const newPost = new Post({title, content, author});
+    const newPost = new Post({title, content, author, thumbnail: thumbnail || undefined});
     await newPost.save();
     console.log("세 게시글 저장됨");
     res.status(201).json({
