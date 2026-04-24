@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { User, ArrowLeft } from "lucide-react";
+import "react-quill-new/dist/quill.snow.css";
 
 export const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -46,6 +47,24 @@ export const PostDetail = () => {
 
   return (
     <div className="flex flex-col w-full max-w-screen-xl mx-auto py-8 px-4 gap-6">
+      {/* 에디터 내부 이미지 스타일링 */}
+      <style>{`
+        .ql-editor p {
+          margin-bottom: 1.5rem !important; /* 줄바꿈 간격 강제 부여 */
+          line-height: 1.8;
+        }
+        .ql-editor img {
+          max-width: 100%;
+          height: auto;
+          margin: 2rem 0 !important; /* 이미지 위아래 여백 */
+        }
+        /* 빈 줄(<p><br></p>)이 사라지지 않게 높이 지정 */
+        .ql-editor .ql-video, .ql-editor p:empty::before {
+          content: "";
+          display: block;
+          height: 1.5rem;
+        }
+      `}</style>
       {/* 1. 상단 액션 바 */}
       <div className="flex justify-between items-center">
         <Button
@@ -121,10 +140,12 @@ export const PostDetail = () => {
               <Skeleton className="h-6 w-full" />
             </div>
           ) : (
-            <div
-              className="ql-editor text-lg text-slate-800 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: post?.content || "" }}
-            />
+            <div className="ql-snow">
+              <div
+                className="ql-editor text-lg text-slate-800 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: post?.content || "" }}
+              />
+            </div>
           )}
         </CardContent>
         <Separator className="bg-gray-300 mx-2 w-auto" />
@@ -132,7 +153,7 @@ export const PostDetail = () => {
         {/* 4. 댓글 작성 폼 */}
         <div className="p-8 sm:px-10 bg-slate-50/30">
           <h3 className="text-xl font-bold text-slate-900 mb-6">댓글</h3>
-          
+
           {/* 댓글 작성 폼 (Feature 계층) */}
           {user && post ? (
             <div className="mt-8">

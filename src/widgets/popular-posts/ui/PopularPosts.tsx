@@ -10,7 +10,7 @@ export const PopularPosts = () => {
   if (isLoading) return <div>인기 여행지 불러오는 중...</div>;
   if (error) return <div>인기 여행지를 불러오지 못했습니다.</div>;
   return (
-    <section>
+    <section className='max-w-screen-xl mx-auto my-12 px-6' >
       <h2 className="text-2xl font-bold mb-6 text-slate-800 text-center my-4">
         🔥 실시간 인기 여행기
       </h2>

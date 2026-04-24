@@ -94,12 +94,11 @@ export const CreatePostForm = () => {
   return (
     <div className="flex flex-col h-full w-full max-w-screen-xl mx-auto py-8 px-4">
       {/* 에디터 내부 이미지 스타일링 */}
-      <style>{`.ql-editor img { max-width: 100%; height: auto; display: block; margin: 10px 0; }`}</style>
+      <style>{`.ql-editor img { width: 30%; height: auto; display: block; margin: 10px 0; }`}</style>
 
       <Card className="h-full shadow-lg border-gray-100 bg-white/80 backdrop-blur-sm">
         <CardHeader className="space-y-1 pb-6">
           <CardTitle className="text-2xl font-bold text-slate-900">새 여행기 작성</CardTitle>
-          <CardDescription className="text-slate-500">최적화된 이미지 업로드 시스템이 적용되었습니다.</CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -118,7 +117,6 @@ export const CreatePostForm = () => {
                 modules={modules}
                 theme="snow"
                 className="h-full"
-                placeholder="여행의 추억을 기록해보세요..."
               />
             </div>
             <div className="flex justify-end pt-4">

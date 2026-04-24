@@ -6,5 +6,6 @@ export type Post = {
   content: string;
   author: string;
   createdAt: string;
+  thumbnail: string; // 게시글 대표 이미지 URL
   // images?: File[];
 };
