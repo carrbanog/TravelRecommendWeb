@@ -5,10 +5,16 @@ export const getAllPosts = async (req: Request, res: Response) => {
   try {
     // .select("-content") 를 붙이면 content 필드만 제외하고 모두 가져옵니다.
     // 또는 .select("title author createdAt") 처럼 필요한 것만 명시해도 됩니다.
-    const posts = await Post.find()
+    const limit = req.query.limit ? parseInt(req.query.limit as string) : null
+    let query = Post.find()
       .sort({ createdAt: -1 })
-      .select("-content"); 
+      .select("-content");
 
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    const posts = await query;
     res.status(200).json(posts);
   } catch (error) {
     console.error("Error fetching posts:", error);
