@@ -27,14 +27,14 @@ export const TravelPathMapWidget = ({
   const [activeTab, setActiveTab] = useState(0);
   const colors = ["#FF0000", "#007BFF", "#00C851", "#FF8800"];
 
+  // 마우스를 올린 장소의 위치 정보를 가져오는 훅
   const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
 
-  // ✅ 실제 도로 경로 좌표를 저장할 상태 (key: card.id, value: 좌표 배열)
-
+  // ✅ 위치 정보를 가지고 상세 정보를 가져오는 쿼리 훅
   const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
     hoveredPlace?.placeId || "",
   );
-
+  console.log("Detail Data:", detailData, "Hovered Place:", hoveredPlace);
   // ✅ Directions API 호출 로직
   const { roadPaths } = useRouteDirections(planCards);
   console.log("Road Paths:", roadPaths, "Plan Cards:", planCards, planCards[0]);
@@ -58,7 +58,11 @@ export const TravelPathMapWidget = ({
               onMouseOut={handleMouseOut}
             >
               {hoveredPlace?.placeId === place.placeId && detailData && (
-                <InfoWindow>
+                <InfoWindow
+                  options={{
+                    disableAutoPan: true,
+                  }}
+                >
                   {detailLoading ? (
                     <div className="p-2 text-xs">로딩 중...</div>
                   ) : (
