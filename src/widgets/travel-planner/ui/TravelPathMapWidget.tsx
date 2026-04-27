@@ -60,7 +60,7 @@ export const TravelPathMapWidget = ({
               {hoveredPlace?.placeId === place.placeId && detailData && (
                 <InfoWindow
                   options={{
-                    disableAutoPan: true,
+                    disableAutoPan: true, // 마커에 마우스 올릴 때 지도 자동 이동 방지
                   }}
                 >
                   {detailLoading ? (
