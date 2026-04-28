@@ -7,7 +7,6 @@ export const useMapHover = (delay = 400) => {
   const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseOver = (place: NearPlace) => {
-    console.log("handleMouseOver called with place:", place);
     if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
     hoverTimerRef.current = setTimeout(() => setHoveredPlace(place), delay);
   };

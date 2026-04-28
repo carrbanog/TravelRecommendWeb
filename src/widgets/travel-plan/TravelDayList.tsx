@@ -1,5 +1,6 @@
 // 1. 외부 라이브러리 (React, 서드파티 패키지)
 import { Bus, Car, Footprints, HelpCircle, MapPin } from "lucide-react";
+import React, { memo } from "react";
 
 // 2. 공통 UI 컴포넌트 (Shared 계층 / shadcn ui 등)
 import { Badge } from "@/components/ui/badge";
@@ -18,7 +19,7 @@ interface TravelDayListProps {
 }
 
 // 각 여행 계획 카드(하루)를 렌더링하는 컴포넌트
-export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
+export const TravelDayList = memo(({ dayIndex, places }: TravelDayListProps) => {
   const locations = places?.map((place) => place.nearCoordinates) || [];
 
   const { data: routeData, isLoading } = useFetchDistanceQuery(locations);
@@ -57,7 +58,6 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
             const routeInfo = routeData?.distances?.find(
               (d: any) => d.fromIndex === idx,
             );
-            console.log("test", { routeInfo });
             return (
               <div key={place.id} className="relative">
                 {/* 1. 장소 카드 영역 */}
@@ -136,4 +136,4 @@ export const TravelDayList = ({ dayIndex, places }: TravelDayListProps) => {
       )}
     </div>
   );
-};
+});
