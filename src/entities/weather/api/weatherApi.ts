@@ -3,7 +3,7 @@ import api from "@/shared/api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import type { WeatherData } from "../model/types";
 
-const API_KEY = "88e4565f4c2b694b7c61c279feb21ecc";
+const API_KEY = "9433759d5fe232be55c300dfaf2fc330";
 
 // 쿼리 키를 체계적으로 관리하기 위한 객체
 // 특정 도시의 날씨를 가져올 때는 weatherKeys.city("Seoul") 처럼 사용
@@ -12,15 +12,15 @@ export const weatherKeys = {
   all: ["weather"] as const,
   city: (city: string) => [...weatherKeys.all, city] as const,
 };
-console.log("API_KEY:", API_KEY);
 
 export const useWeatherQuery = (city: string) => {
-  return useQuery({
+  // useQuery<반환할 데이터 타입, 에러 타입>
+  return useQuery<WeatherData, Error>({
     queryKey: weatherKeys.city(city),
     queryFn: () =>
-      apiClient.get(
-        `https://api.weatherapi.com/v1/current.json?key=88e4565f4c2b694b7c61c279feb21ecc&q=${city}&aqi=no`,
-        { withCredentials: false },
+      apiClient.get<WeatherData>(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
+        { withCredentials: false }
       ),
     enabled: !!city,
     staleTime: 1000 * 60 * 5,
