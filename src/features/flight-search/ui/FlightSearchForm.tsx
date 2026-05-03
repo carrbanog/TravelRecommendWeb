@@ -22,7 +22,6 @@ export const FlightSearchForm = () => {
     from: new Date(),
     to: undefined,
   }); //날짜 상태
-  console.log(date);
 
   const handleSearch = () => {
     if (!origin || !destination || !date.from) {

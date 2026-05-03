@@ -25,7 +25,7 @@ const MyMap = ({ place, children }: MyMapProps) => {
     <GoogleMap
       mapContainerStyle={{ width: "100%", height: "100%" }}
       center={mapCenter}
-      zoom={13}
+      zoom={7}
     >
       {children}
     </GoogleMap>
