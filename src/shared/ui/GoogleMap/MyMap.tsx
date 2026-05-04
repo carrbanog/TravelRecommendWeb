@@ -16,6 +16,18 @@ const MyMap = ({ place, children }: MyMapProps) => {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP, // ✅ 환경변수에서 키 불러오기
   });
 
+  const mapOptions = {
+    minZoom: 2, // 너무 작게 축소되지 않도록 설정 (세계 지도가 한 화면에 들어오는 정도)
+    restriction: {
+      latLngBounds: {
+        north: 85,
+        south: -85,
+        west: -180,
+        east: 180,
+      },
+      strictBounds: false, // true로 설정하면 화면을 넘어가는 드래그를 완전히 막습니다.
+    },
+  };
   if (!isLoaded) {
     return <div>Loading Map...</div>; // 스크립트 로딩 전엔 google 객체 없음
   }
@@ -26,6 +38,7 @@ const MyMap = ({ place, children }: MyMapProps) => {
       mapContainerStyle={{ width: "100%", height: "100%" }}
       center={mapCenter}
       zoom={7}
+      options={mapOptions}
     >
       {children}
     </GoogleMap>
