@@ -9,15 +9,12 @@ type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates" | "placeId">;
 
 type SelectedListCardProps = {
   selectedPlaces: SelectedPlace[];
+  onRemovePlace: (placeId: string) => void;
 };
 
-export const SelectedListCard = ({ selectedPlaces }: SelectedListCardProps) => {
+// 지도에서 선택한 여행지를 일차별 카드로 드래그하기 위한 보관함 UI 컴포넌트
+export const SelectedListCard = ({ selectedPlaces, onRemovePlace }: SelectedListCardProps) => {
   console.log("SelectedListCard 렌더링");
-
-  const removePlace = useSelectedPlacesStore((s) => s.removePlace);
-  // const handleRemove = useCallback((placeId: string) => {
-  //   removePlace(placeId);
-  // }, []);
 
   return (
     <section className="flex flex-col h-full bg-white/50 backdrop-blur-sm">
@@ -48,7 +45,7 @@ export const SelectedListCard = ({ selectedPlaces }: SelectedListCardProps) => {
               <DraggableListCard
                 key={place.placeId}
                 place={place}
-                onRemove={removePlace}
+                onRemovePlace={onRemovePlace}
               />
             ))}
           </div>

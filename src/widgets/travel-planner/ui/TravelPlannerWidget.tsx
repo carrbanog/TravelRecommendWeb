@@ -21,6 +21,7 @@ export const TravelPlannerWidget = ({
   onShowPathClick,
 }: TravelPlannerWidgetProps) => {
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
+  const removePlace = useSelectedPlacesStore((s) => s.removePlace);
   const sensors = useSensors(useSensor(PointerSensor));
 
   // 🔹 드래그 중인 아이템 상태 관리 (Overlay용)
@@ -49,7 +50,7 @@ export const TravelPlannerWidget = ({
           {/* 1. 선택 리스트 영역 (비중 확대) 
               min-h-0을 사용하여 내부 자식이 스크롤을 가질 수 있게 함 */}
           <div className="flex-[1.2] min-h-0 flex flex-col border-b border-slate-100">
-            <SelectedListCard selectedPlaces={selectedPlaces} />
+            <SelectedListCard selectedPlaces={selectedPlaces} onRemovePlace={removePlace} />
           </div>
 
           {/* 2. PlanCardList 영역 (가로 스크롤 영역)
@@ -71,7 +72,7 @@ export const TravelPlannerWidget = ({
         </div>
 
         {/* 🔹 DragOverlay: 영역 밖 이동을 가능하게 하는 핵심 */}
-
+        {/* ui컴포넌트가 아닌 카드를 집어 올렸을 때 화면에 보여주는 껍데기 역할 */}
         <DragOverlay zIndex={1000}>
           {activeId && activePlace ? (
             // 🔹 여기서 DraggableListCard(로직 포함) 대신 ListCardUI(UI만) 사용
