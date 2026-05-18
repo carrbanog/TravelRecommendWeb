@@ -7,4 +7,4 @@
    
 4. [https://velog.io/@loopang5954/series/%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%97%AC%ED%96%89%EC%A7%80-%EC%B6%94%EC%B2%9C](https://velog.io/@loopang5954/series/%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%97%AC%ED%96%89%EC%A7%80-%EC%B6%94%EC%B2%9C)
 
-지도 위치 계속 이동하는거 수정, alert shadcn으로 통일, 디자인 수정, 최적화 수정 하기
+지도 위치 계속 이동하는거 수정, alert shadcn으로 통일, 디자인 수정, 최적화 수정 하기, 일본 등 몇몇 국가 경로 지원안해주는거 수정, 지도 zoom 수정, 
