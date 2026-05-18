@@ -3,8 +3,8 @@ import { InfoWindow, Marker } from "@react-google-maps/api"; // InfoWindow 추�
 import MyMap from "../../../shared/ui/GoogleMap/MyMap";
 import type { coordinates } from "../../../shared/types/coordinatestype";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
-import { PlaceInfoWindow } from "@/entities/place/ui/PlaceInfoWindow";
-import { usePlaceDetailsQuery } from "@/features/place-details/lib/usePlaceDetailsQuery";
+import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWindow";
+import { usePlaceDetailsQuery } from "@/entities/place/place-details/lib/usePlaceDetailsQuery";
 
 import { useMapHover } from "../../../shared/lib/hooks/useMapHover";
 
@@ -20,7 +20,7 @@ export const TravelMapWidget = React.memo(
     const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
 
     const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
-      hoveredPlace?.placeId || "",
+      hoveredPlace || "",
     );
 
     if (isLoading) {
@@ -39,12 +39,12 @@ export const TravelMapWidget = React.memo(
             position={placeItem.nearCoordinates}
             onClick={() => onMarkerClick(placeItem)}
             // 마우스 오버 시 상태 업데이트
-            onMouseOver={() => handleMouseOver(placeItem)}
+            onMouseOver={() => handleMouseOver(placeItem.placeId)}
             // 마우스 아웃 시 상태 초기화
             onMouseOut={handleMouseOut}
           >
             {/* 현재 호버된 마커와 이 마커의 데이터가 일치할 때만 InfoWindow 표시 */}
-            {hoveredPlace?.placeId === placeItem.placeId && detailData && (
+            {hoveredPlace === placeItem.placeId && detailData && (
               <InfoWindow>
                 {detailLoading ? (
                   <div style={{ padding: "8px", fontSize: "12px" }}>

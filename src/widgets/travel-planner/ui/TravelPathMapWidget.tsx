@@ -1,14 +1,14 @@
 import { Marker, Polyline, InfoWindow } from "@react-google-maps/api";
 
 // 2. Features
-import { usePlaceDetailsQuery } from "@/features/place-details/lib/usePlaceDetailsQuery";
+import { usePlaceDetailsQuery } from "@/entities/place/place-details/lib/usePlaceDetailsQuery";
 import { useRouteDirections } from "@/features/travel-route/lib/useRouteDirections";
 
 // 3. Entities
 import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
 import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
 import { TravelDayList } from "../../travel-plan/TravelDayList";
-import { PlaceInfoWindow } from "@/entities/place/ui/PlaceInfoWindow";
+import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWindow";
 
 // 4. Shared
 import MyMap from "../../../shared/ui/GoogleMap/MyMap";
@@ -32,7 +32,7 @@ export const TravelPathMapWidget = ({
 
   // ✅ 위치 정보를 가지고 상세 정보를 가져오는 쿼리 훅
   const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
-    hoveredPlace?.placeId || "",
+    hoveredPlace || "",
   );
   console.log("Detail Data:", detailData, "Hovered Place:", hoveredPlace);
   // ✅ Directions API 호출 로직
@@ -54,10 +54,10 @@ export const TravelPathMapWidget = ({
               key={place.placeId}
               position={place.nearCoordinates}
               title={place.title}
-              onMouseOver={() => handleMouseOver(place)}
+              onMouseOver={() => handleMouseOver(place.placeId)}
               onMouseOut={handleMouseOut}
             >
-              {hoveredPlace?.placeId === place.placeId && detailData && (
+              {hoveredPlace === place.placeId && detailData && (
                 <InfoWindow
                   options={{
                     disableAutoPan: true, // 마커에 마우스 올릴 때 지도 자동 이동 방지
