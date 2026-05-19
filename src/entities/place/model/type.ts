@@ -40,7 +40,7 @@ export type SearchParams = {
 
 // 
 export type PlanPlace = {
-  placeId: string;
+  id: string;
   title: string;
   nearCoordinates: coordinates
 }

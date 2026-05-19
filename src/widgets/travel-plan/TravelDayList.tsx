@@ -16,16 +16,20 @@ import { da } from "date-fns/locale";
 interface TravelDayListProps {
   dayIndex: number;
   places: PlanPlace[] | undefined;
+  hoveredPlace: string | null; // 현재 마우스가 올라간 장소의 ID
+  onPlaceHover: (placeId: string) => void; // 장소에 마우스 올렸을 때 호출되는 콜백
+  onPlaceLeave: () => void; // 장소에서 마우스 뗐을 때 호출되는 콜백
 }
 
 // 각 여행 계획 카드(하루)를 렌더링하는 컴포넌트
 export const TravelDayList = memo(
-  ({ dayIndex, places }: TravelDayListProps) => {
+  ({ dayIndex, places, hoveredPlace, onPlaceHover, onPlaceLeave }: TravelDayListProps) => {
     const locations = places?.map((place) => place.nearCoordinates) || [];
 
     const { data: routeData, isLoading } = useFetchDistanceQuery(locations);
 
     console.log("TravelDayList Route Data:", routeData, dayIndex, places);
+    console.log("Hovered Place in TravelDayList:", hoveredPlace);
     // mode에 따른 아이콘 렌더링 헬퍼 함수
     const getTransportIcon = (mode: string) => {
       switch (mode) {
@@ -61,10 +65,15 @@ export const TravelDayList = memo(
                 (d: any) => d.fromIndex === idx,
               );
               return (
-                <div key={place.placeId} className="relative">
+                <div key={place.id} className="relative
+                "
+                onMouseOver={() => onPlaceHover(place.id)}
+                onMouseOut={onPlaceLeave}
+                >
                   {/* 1. 장소 카드 영역 */}
                   <div className="flex items-start gap-4 mb-2">
-                    <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white border-2 border-blue-500 shadow-sm text-blue-600 font-bold text-xs shrink-0">
+                    <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white border-2 border-blue-500 shadow-sm text-blue-600 font-bold text-xs shrink-0"
+                    >
                       {idx + 1}
                     </div>
                     <div className="flex-1 p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-colors shadow-sm">

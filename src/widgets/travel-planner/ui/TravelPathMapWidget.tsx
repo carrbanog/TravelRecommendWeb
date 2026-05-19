@@ -116,6 +116,9 @@ export const TravelPathMapWidget = ({
               key={planCards[activeTab].id}
               dayIndex={activeTab}
               places={planCards[activeTab].places}
+              hoveredPlace={hoveredPlace}
+              onPlaceHover={handleMouseOver}
+              onPlaceLeave={handleMouseOut}
             />
           )}
         </div>
