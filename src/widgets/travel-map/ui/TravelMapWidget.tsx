@@ -17,6 +17,7 @@ type Props = {
 
 export const TravelMapWidget = React.memo(
   ({ centerCoords, onMarkerClick, places, isLoading }: Props) => {
+    console.log("TravelMapWidget 렌더링");
     const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
 
     const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(

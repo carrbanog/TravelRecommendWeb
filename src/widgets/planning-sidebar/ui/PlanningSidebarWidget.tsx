@@ -7,6 +7,7 @@ import SelectedList from "../../../entities/place/ui/SelectedList";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import type { SearchParams } from "../../../entities/place/model/type";
 import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
+import { toast } from 'sonner';
 
 type PlanningSidebarWidgetProps = {
   selectedPlaces: NearPlace[];
@@ -20,15 +21,14 @@ export const PlanningSidebarWidget = React.memo(
     onRemovePlace,
     setPlaceSearch,
   }: PlanningSidebarWidgetProps) => {
-    console.log("PlanningSidebarWidget 렌더링:", { selectedPlaces });
     const tripsDays = useDayPickerStore((state) => state.tripDays);
     const handleNextClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       if (!selectedPlaces || selectedPlaces.length === 0) {
         e.preventDefault();
-        alert("여행지를 하나 이상 선택하세요!");
+        toast.error("최소 한 곳 이상의 여행지를 선택하세요!");
       } else if (tripsDays === 0) {
         e.preventDefault();
-        alert("여행 날짜를 선택하세요!");
+        toast.error("여행 기간을 선택하세요!");
       }
     };
     return (
