@@ -15,10 +15,10 @@ export const TravelPage = () => {
   });
 
   // 검색 시 좌표 반환
-  const { data: coords, isLoading: loadingCoords } = useGeocodeQuery(
+  const { data: geocodeData, isLoading: loadingCoords } = useGeocodeQuery(
     placeSearch.query,
   );
-
+  const coords = geocodeData?.geometry.location
   // 여행지 검색 시 반환한 좌표를 기준으로 주변 여행지 출력
   const { data: nearPlaces, isLoading: isloadingPlaces } = useNearcodeQuery({
     coords,
