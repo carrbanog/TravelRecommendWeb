@@ -11,13 +11,13 @@ export const postLogin = async (req: Request, res: Response) => {
   try {
     const userDoc = await User.findOne({ email });
     if (!userDoc) {
-      return res.status(404).json({ error: "계정이 없습니다." });
+      return res.status(404).json({ message: "계정이 없습니다." });
     }
 
     const passOk = await bcrypt.compare(password, userDoc.password);
 
     if (!passOk) {
-      return res.status(422).json({ error: "비밀번호가 틀렸습니다." });
+      return res.status(422).json({ message: "비밀번호가 틀렸습니다." });
     }
 
     const token = jwt.sign(
@@ -31,9 +31,8 @@ export const postLogin = async (req: Request, res: Response) => {
       sameSite: "strict",
     });
     return res.json({ message: "로그인 성공", userDoc });
-    console.log(`token: ${JSON.stringify(jwt.decode(token))}`);
   } catch (error) {
     console.log("로그인 오류", error);
-    return res.status(500).json({ error: "서버 오류" });
+    return res.status(500).json({ message: "서버에서 오류가 발생했습니다." });
   }
 };

@@ -35,5 +35,6 @@ export const postSignUp = async (req: Request, res: Response) => {
       .json({ message: "회원가입이 완료되었습니다.", user: { email } });
   } catch (error) {
     console.log("회원가입 중 에러 발생", error);
+    return res.status(500).json({ message: "서버에서 오류가 발생했습니다." });
   }
 };
