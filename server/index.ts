@@ -23,13 +23,13 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
-app.use(
-  cors({
-    credentials: true,
-    // 배열 대신 함수를 사용합니다.
-    origin: "http://localhost:5173",
-  }),
-);
+app.use(cors({
+  origin: [
+    'http://localhost:5173', 
+    'https://traveller-delta-topaz.vercel.app'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 const mongoURL = process.env.MONGODB_URL;
 
