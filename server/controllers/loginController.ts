@@ -20,6 +20,8 @@ export const postLogin = async (req: Request, res: Response) => {
       return res.status(422).json({ message: "비밀번호가 틀렸습니다." });
     }
 
+    const isProduction = process.env.NODE_ENV === "production";
+
     const token = jwt.sign(
       { id: userDoc._id, email: userDoc.email },
       process.env.JWT_SECRET as string,
@@ -28,7 +30,8 @@ export const postLogin = async (req: Request, res: Response) => {
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: 60 * 60 * 1000,
-      sameSite: "strict",
+      sameSite: isProduction ? "none" : "lax",
+      secure: isProduction,
     });
     return res.json({ message: "로그인 성공", userDoc });
   } catch (error) {

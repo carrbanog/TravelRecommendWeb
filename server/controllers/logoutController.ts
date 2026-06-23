@@ -10,7 +10,8 @@ export const postLogout = (req: Request, res: Response) => {
     // 1. 쿠키 삭제
     res.clearCookie("token", {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
     });
 
     // 2. 성공 응답 반환
