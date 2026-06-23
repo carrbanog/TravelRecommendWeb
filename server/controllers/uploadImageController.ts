@@ -4,15 +4,20 @@ import { Request, Response } from 'express';
 import multer from 'multer'; 
 
 export const uploadImageController = (req: Request, res: Response) => {
-  // req를 'any'로 잠시 형변환하거나, 아래처럼 file 속성을 명시합니다.
   const file = req.file as Express.Multer.File; 
   console.log("업로드된 파일 정보:", file);
+  
   if (!file) {
     return res.status(400).json({ message: "파일 업로드에 실패했습니다." });
   }
 
-  // 파일이 존재할 때의 로직
-  const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+  // ⭐ 배포 환경(production)인지 로컬 개발 환경인지에 따라 기본 도메인 주소 분기 처리
+  const BASE_URL = process.env.NODE_ENV === 'production'
+    ? 'https://travelrecommendweb-server.onrender.com' // 내 실제 Render 주소
+    : `${req.protocol}://${req.get('host')}`;         // 로컬일 때는 기존대로 localhost:5000
+
+  // 최종 이미지 URL 완성
+  const imageUrl = `${BASE_URL}/uploads/${file.filename}`;
   
   res.status(200).json({ url: imageUrl });
 };
