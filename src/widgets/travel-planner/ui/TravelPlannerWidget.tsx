@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   DndContext,
   PointerSensor,
@@ -9,7 +9,6 @@ import {
 import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
 import { SelectedListCard } from "../../../entities/place/ui/SelectedListCard";
 import { PlanCardList } from "../../../entities/travel-plan/ui/PlanCardList";
-import { DraggableListCard } from "../../../entities/place/ui/DraggableListCard";
 import { handleDragEnd } from "../../../features/plan-itinerary-route/lib/handleDragEnd";
 import { ListCardUI } from "../../../entities/place/ui/DraggableListCard"; // UI 컴포넌트 임포트
 

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "../api/signupApi";
-import axios from "axios";
 import type { UserData } from "../../../../shared/types/usertype";
 import { AUTH_ENDPOINTS } from "../../../../shared/api/endpoints";
 import { toast } from "sonner";

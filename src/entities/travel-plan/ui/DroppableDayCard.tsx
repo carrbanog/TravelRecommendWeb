@@ -1,6 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
 import type { PlanCard } from "../../place/model/type";
-import { Trash2, MapPin, CalendarPlus } from "lucide-react";
+import { Trash2, CalendarPlus } from "lucide-react";
 import { usePlanCardsStore } from "../model/usePlanCardsStore";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";

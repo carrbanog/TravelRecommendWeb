@@ -1,5 +1,3 @@
-import { Description } from "@radix-ui/react-dialog";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 type AuthLayoutProps = {

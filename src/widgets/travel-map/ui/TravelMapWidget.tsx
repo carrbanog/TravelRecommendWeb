@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"; // useState 추가
+import React from "react"; // useState 추가
 import { InfoWindow, Marker } from "@react-google-maps/api"; // InfoWindow 추가
 import MyMap from "../../../shared/ui/GoogleMap/MyMap";
 import type { coordinates } from "../../../shared/types/coordinatestype";

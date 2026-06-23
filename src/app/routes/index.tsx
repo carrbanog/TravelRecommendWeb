@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../../widgets/Header/Header";
 import { HomePage } from "../../pages/HomePage";

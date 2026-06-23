@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 // Entities & Features (FSD 하위 계층)

@@ -1,5 +1,4 @@
 // --- 1. 개별 댓글 아이템 컴포넌트 (Internal Component) ---
-import { deleteCommentApi } from '../api/commentAPi';
 import type { Comment } from "../model/type";
 import { useDeleteComment } from '../model/useComments';
 

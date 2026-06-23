@@ -24,7 +24,7 @@ export const TravelPage = () => {
     coords,
     type: placeSearch.type,
   });
-
+  console.log(isloadingPlaces)
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces); // 추천여행지에서 선택한 리스트 모음
   const addPlace = useSelectedPlacesStore((s) => s.addPlace); // 마커 클릭 시 selectedPlaces에 추가
   const removePlace = useSelectedPlacesStore((s) => s.removePlace); // 제거

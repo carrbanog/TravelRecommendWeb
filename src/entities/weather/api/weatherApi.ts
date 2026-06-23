@@ -1,5 +1,4 @@
 import { apiClient } from "@/shared/api/apiClient";
-import api from "@/shared/api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import type { WeatherData } from "../model/types";
 

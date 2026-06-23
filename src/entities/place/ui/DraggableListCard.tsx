@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import { useDraggable } from "@dnd-kit/core";
 
@@ -7,8 +7,6 @@ import { CSS } from "@dnd-kit/utilities";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 
 import { Trash2, GripVertical, MapPin } from "lucide-react";
-
-import { useSelectedPlacesStore } from "../model/selectedPlacesStore";
 
 import { cn } from "@/lib/utils";
 

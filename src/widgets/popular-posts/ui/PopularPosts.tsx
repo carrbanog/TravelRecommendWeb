@@ -1,4 +1,3 @@
-import React from "react";
 import { usePopularPosts } from "../../../entities/post/model/usePopularPosts";
 import { PopularPostCard } from "../../../entities/post/ui/PopularPostCard";
 

@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import { useProfileQuery } from "../../entities/user/model/useProfileQuery";
-import { useNavigate } from "react-router-dom";
 import { logoutApi } from "../../features/auth/login/api/loginApi";
 type User = {
   name: string;

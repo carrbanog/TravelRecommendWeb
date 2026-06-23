@@ -1,9 +1,9 @@
 // src/pages/travel/TravelPathPage.tsx
-import {
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
+// import {
+//   PointerSensor,
+//   useSensor,
+//   useSensors,
+// } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
 import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
 import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
@@ -37,7 +37,6 @@ const TravelPathPage = () => {
   }, [selectedPlaces, setCenter, navigate]);
 
   // dnd-kit 센서 (PointerSensor 사용)
-  const sensors = useSensors(useSensor(PointerSensor)); //마우스 감지
   console.log("-----------------------------------travel/path 페이지 렌더링-----------------------------------");
   return (
     <div className="h-full w-full">

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useWeatherQuery } from "../../../entities/weather/api/weatherApi";
 
 interface WeatherCardProps {

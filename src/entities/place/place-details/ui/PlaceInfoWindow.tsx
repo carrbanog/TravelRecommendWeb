@@ -2,7 +2,6 @@
 
 import type { PlaceDetailResponse } from "@/entities/place/place-details/model/types";
 import { getPhotoUrl } from "../../../../shared/lib/getPhotoUrl";
-import type { NearPlace } from "../../../../shared/types/nearPlaceType";
 
 interface PlaceInfoWindowProps {
   place: PlaceDetailResponse | null; // null 허용

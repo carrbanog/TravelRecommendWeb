@@ -1,4 +1,3 @@
-import axios from 'axios';
 import api from "../../../shared/api/axiosInstance";
 import type { ProfileData } from '../../../shared/types/usertype';
 import { AUTH_ENDPOINTS } from '../../../shared/api/endpoints';

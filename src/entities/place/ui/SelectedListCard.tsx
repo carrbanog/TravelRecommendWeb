@@ -1,10 +1,7 @@
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
-import { useSelectedPlacesStore } from "../model/selectedPlacesStore";
 import { DraggableListCard } from "./DraggableListCard";
 import { Package, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useCallback } from "react";
-
 type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates" | "placeId">;
 
 type SelectedListCardProps = {

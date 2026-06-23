@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useLogin } from "../model/useLogin"; // 기존에 만드신 훅 경로
 
 // Shadcn UI Components

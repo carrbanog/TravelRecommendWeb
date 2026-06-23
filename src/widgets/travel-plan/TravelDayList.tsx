@@ -1,6 +1,6 @@
 // 1. 외부 라이브러리 (React, 서드파티 패키지)
 import { Bus, Car, Footprints, HelpCircle, MapPin } from "lucide-react";
-import React, { memo } from "react";
+import { memo } from "react";
 
 // 2. 공통 UI 컴포넌트 (Shared 계층 / shadcn ui 등)
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +11,6 @@ import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDi
 // 4. 타입 (Types - 도메인 모델, 응답 타입 등)
 import type { PlanPlace } from "@/entities/place/model/type"; // 상대경로(../../)를 절대경로(@/)로 통일
 import type { RouteStep } from "@/features/calculate-distance/model/type";
-import { da } from "date-fns/locale";
 
 interface TravelDayListProps {
   dayIndex: number;

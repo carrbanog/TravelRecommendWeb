@@ -1,7 +1,7 @@
 // 이 파일서 모든 get, post요청을 관리합니다.
 import api from "./axiosInstance";
-import axios, { Axios, AxiosError } from "axios";
-import type { AxiosResponse, AxiosRequestConfig } from "axios";
+import axios, { AxiosError } from "axios";
+import type { AxiosRequestConfig } from "axios";
 
 export const handleApiError = (error: AxiosError | Error) => {
   // 1. 기본 메시지 세팅

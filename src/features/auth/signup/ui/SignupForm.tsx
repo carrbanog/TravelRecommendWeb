@@ -1,5 +1,4 @@
 import { useSignup } from "../model/useSignup";
-import { AuthButton } from "../../../../shared/ui/AuthButton/AuthButton";
 
 import { Button } from "@/components/ui/button";
 

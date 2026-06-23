@@ -1,4 +1,3 @@
-import { Profiler } from "react";
 
 export const AUTH_ENDPOINTS = {
   SIGNUP: "/signup", //회원가입
