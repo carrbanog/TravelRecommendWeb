@@ -47,7 +47,7 @@ export const TravelPathMapWidget = ({
     <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
       {/* 지도 영역 (70%) */}
       <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
-        <MyMap place={initialCenter}>
+        <MyMap place={initialCenter} zoom={13}>
           {/* 마커 렌더링 */}
           {selectedPlaces.map((place) => (
             <Marker

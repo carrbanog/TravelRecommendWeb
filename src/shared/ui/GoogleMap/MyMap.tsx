@@ -7,10 +7,11 @@ import type { coordinates } from "../../types/coordinatestype";
 
 export type MyMapProps = {
   place?: coordinates; //지도 중간 위치
+  zoom?: number; //지도 확대 비율
   children?: React.ReactNode;
 };
 
-const MyMap = ({ place, children }: MyMapProps) => {
+const MyMap = ({ place, zoom, children }: MyMapProps) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP, // ✅ 환경변수에서 키 불러오기
@@ -37,7 +38,7 @@ const MyMap = ({ place, children }: MyMapProps) => {
     <GoogleMap
       mapContainerStyle={{ width: "100%", height: "100%" }}
       center={mapCenter}
-      zoom={15}
+      zoom={zoom ?? 10}
       options={mapOptions}
     >
       {children}

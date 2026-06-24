@@ -18,7 +18,7 @@ export const WeatherWidget = () => {
     <section className="max-w-screen-2xl mx-auto my-12 px-6">
       <h2 className="text-2xl font-bold mb-4">세계 날씨 지도</h2>
       <div className="h-[500px] w-full rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
-        <MyMap place={undefined}>
+        <MyMap place={undefined} zoom={3}>
           {TARGET_CITIES.map((city) => (
             <WeatherMarker city={city} key={city.id} onSelect={() => setSelectedCity(city)} />
           ))}

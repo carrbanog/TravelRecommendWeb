@@ -33,7 +33,7 @@ export const TravelMapWidget = React.memo(
     }
 
     return (
-      <MyMap place={centerCoords}>
+      <MyMap place={centerCoords} zoom={13}>
         {places?.map((placeItem) => (
           <Marker
             key={placeItem.placeId}
