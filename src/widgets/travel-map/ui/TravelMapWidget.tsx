@@ -46,7 +46,7 @@ export const TravelMapWidget = React.memo(
           >
             {/* 현재 호버된 마커와 이 마커의 데이터가 일치할 때만 InfoWindow 표시 */}
             {hoveredPlace === placeItem.placeId && detailData && (
-              <InfoWindow>
+              <InfoWindow options={{ disableAutoPan: true }}>
                 {detailLoading ? (
                   <div style={{ padding: "8px", fontSize: "12px" }}>
                     로딩 중...
