@@ -18,6 +18,7 @@ type Props = {
 export const TravelMapWidget = React.memo(
   ({ centerCoords, onMarkerClick, places, isLoading }: Props) => {
     console.log("TravelMapWidget 렌더링");
+    console.log("근처 여행지 지도 위젯에서 받음", places)
     const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
 
     const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
