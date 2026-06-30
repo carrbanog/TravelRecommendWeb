@@ -10,7 +10,7 @@ import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPl
 import { SelectedListCard } from "../../../entities/place/ui/SelectedListCard";
 import { PlanCardList } from "../../../entities/travel-plan/ui/PlanCardList";
 import { handleDragEnd } from "../../../features/plan-itinerary-route/lib/handleDragEnd";
-import { ListCardUI } from "../../../entities/place/ui/DraggableListCard"; // UI 컴포넌트 임포트
+import { DragOverlayCard } from "@/entities/place/ui/DragOverlayCard";
 
 interface TravelPlannerWidgetProps {
   onShowPathClick: () => void;
@@ -49,7 +49,10 @@ export const TravelPlannerWidget = ({
           {/* 1. 선택 리스트 영역 (비중 확대) 
               min-h-0을 사용하여 내부 자식이 스크롤을 가질 수 있게 함 */}
           <div className="flex-[1.2] min-h-0 flex flex-col border-b border-slate-100">
-            <SelectedListCard selectedPlaces={selectedPlaces} onRemovePlace={removePlace} />
+            <SelectedListCard
+              selectedPlaces={selectedPlaces}
+              onRemovePlace={removePlace}
+            />
           </div>
 
           {/* 2. PlanCardList 영역 (가로 스크롤 영역)
@@ -73,15 +76,8 @@ export const TravelPlannerWidget = ({
         {/* 🔹 DragOverlay: 영역 밖 이동을 가능하게 하는 핵심 */}
         {/* ui컴포넌트가 아닌 카드를 집어 올렸을 때 화면에 보여주는 껍데기 역할 */}
         <DragOverlay zIndex={1000}>
-          {activeId && activePlace ? (
-            // 🔹 여기서 DraggableListCard(로직 포함) 대신 ListCardUI(UI만) 사용
-            <div className="w-48 transform scale-105 rotate-3 opacity-90 shadow-2xl">
-              <ListCardUI
-                place={activePlace}
-                onRemove={() => {}}
-                isDragging={false} // 오버레이는 그 자체가 드래그 중인 모습이므로 false 처리
-              />
-            </div>
+          {activePlace && activePlace ? (
+            <DragOverlayCard place={activePlace} />
           ) : null}
         </DragOverlay>
       </DndContext>

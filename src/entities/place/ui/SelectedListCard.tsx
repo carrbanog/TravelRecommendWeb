@@ -1,3 +1,4 @@
+import {memo} from "react";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { DraggableListCard } from "./DraggableListCard";
 import { Package, MapPin } from "lucide-react";
