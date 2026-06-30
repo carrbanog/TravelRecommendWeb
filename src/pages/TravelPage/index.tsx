@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useGeocodeQuery } from "../../features/search-plcae/lib/useGeoCodeQuery";
 import { useNearcodeQuery } from "../../features/find-nearby-places/lib/useNearByPlacesQuery";
@@ -14,30 +14,34 @@ export const TravelPage = () => {
     type: "place",
   });
 
-
   const { data: nearPlaces, isLoading: isloadingPlaces } = useNearcodeQuery({
     query: placeSearch.query,
     type: placeSearch.type,
   });
 
-  console.log("여행지 검색 요청", nearPlaces)
-  const centerCoords = nearPlaces?.location ?? undefined; //지도 중앙 위치
+  console.log("여행지 검색 요청", nearPlaces);
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces); // 추천여행지에서 선택한 리스트 모음
   const addPlace = useSelectedPlacesStore((s) => s.addPlace); // 마커 클릭 시 selectedPlaces에 추가
   const removePlace = useSelectedPlacesStore((s) => s.removePlace); // 제거
 
+  const center = useSelectedPlacesStore((s) => s.center);
+  const setCenter = useSelectedPlacesStore((s) => s.setCenter);
+
+  useEffect(() => {
+    if (nearPlaces?.location) {
+      setCenter(nearPlaces.location);
+    }
+  }, [nearPlaces?.location, setCenter]);
   return (
     /**
      * 1. h-screen: 뷰포트 높이 고정
      * 2. overflow-hidden: 페이지 전체 스크롤 방지
      */
-    <div className="h-screen w-full flex flex-col overflow-hidden bg-slate-50">
-      {/* 본문 (지도 + 검색창) */}
-      <main className="flex flex-1 gap-4 p-5 min-h-0">
+      <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
         {/* 지도 영역 (70%) */}
-        <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-md">
+        <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
           <TravelMapWidget
-            centerCoords={centerCoords}
+            centerCoords={center}
             places={nearPlaces?.results}
             onMarkerClick={addPlace}
             isLoading={isloadingPlaces}
@@ -53,6 +57,5 @@ export const TravelPage = () => {
           />
         </div>
       </main>
-    </div>
   );
 };
