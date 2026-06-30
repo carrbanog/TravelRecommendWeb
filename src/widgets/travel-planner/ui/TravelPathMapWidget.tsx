@@ -1,17 +1,12 @@
-import { Marker, Polyline, InfoWindow } from "@react-google-maps/api";
-
-// 2. Features
-import { usePlaceDetailsQuery } from "@/entities/place/place-details/lib/usePlaceDetailsQuery";
+// 1. Features
 import { useRouteDirections } from "@/features/travel-route/lib/useRouteDirections";
+import { TravelPathMapCanvas } from "@/features/travel-route/ui/TravelPathMapCanvas";
 
-// 3. Entities
+// 2. Entities
 import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
-import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
 import { TravelDayList } from "../../travel-plan/TravelDayList";
-import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWindow";
 
-// 4. Shared
-import MyMap from "../../../shared/ui/GoogleMap/MyMap";
+// 3. Shared
 import { useMapHover } from "@/shared/lib/hooks/useMapHover";
 import { useState } from "react";
 
@@ -23,70 +18,27 @@ export const TravelPathMapWidget = ({
   onBackClick,
 }: TravelPathMapWidgetProps) => {
   const { planCards } = usePlanCardsStore();
-  const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
   const [activeTab, setActiveTab] = useState(0);
-  const colors = ["#FF0000", "#007BFF", "#00C851", "#FF8800"];
+  const colors = ["#FF0000", "#007BFF", "#00C851", "#000000"];
 
   // 마우스를 올린 장소의 위치 정보를 가져오는 훅
   const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
-
-  // ✅ 위치 정보를 가지고 상세 정보를 가져오는 쿼리 훅
-  const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
-    hoveredPlace || "",
-  );
-  console.log("Detail Data:", detailData, "Hovered Place:", hoveredPlace);
-  // ✅ Directions API 호출 로직
   const { roadPaths } = useRouteDirections(planCards);
+  const currentRoadPath = planCards[activeTab]
+    ? roadPaths[planCards[activeTab].id]
+    : undefined;
   console.log("Road Paths:", roadPaths, "Plan Cards:", planCards, planCards[0]);
-  const initialCenter =
-    selectedPlaces.length > 0
-      ? selectedPlaces[0].nearCoordinates
-      : { lat: 37.5665, lng: 126.978 };
 
   return (
     <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
       {/* 지도 영역 (70%) */}
       <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
-        <MyMap place={initialCenter} zoom={13}>
-          {/* 마커 렌더링 */}
-          {selectedPlaces.map((place) => (
-            <Marker
-              key={place.placeId}
-              position={place.nearCoordinates}
-              title={place.title}
-              onMouseOver={() => handleMouseOver(place.placeId)}
-              onMouseOut={handleMouseOut}
-            >
-              {hoveredPlace === place.placeId && detailData && (
-                <InfoWindow
-                  options={{
-                    disableAutoPan: true, // 마커에 마우스 올릴 때 지도 자동 이동 방지
-                  }}
-                >
-                  {detailLoading ? (
-                    <div className="p-2 text-xs">로딩 중...</div>
-                  ) : (
-                    <PlaceInfoWindow place={detailData} />
-                  )}
-                </InfoWindow>
-              )}
-            </Marker>
-          ))}
-
-          {/* ✅ 실제 도로 기반 Polyline 렌더링 */}
-          {planCards[activeTab] && roadPaths[planCards[activeTab].id] && (
-            <Polyline
-              key={planCards[activeTab].id}
-              path={roadPaths[planCards[activeTab].id]}
-              options={{
-                // 현재 선택된 날짜의 인덱스에 맞는 색상 적용
-                strokeColor: colors[activeTab % colors.length],
-                strokeWeight: 5,
-                strokeOpacity: 0.8,
-              }}
-            />
-          )}
-        </MyMap>
+        {/* 분리된 Feature 지도 컴포넌트 주입 */}
+        <TravelPathMapCanvas
+          activeTab={activeTab}
+          roadPath={currentRoadPath}
+          colors={colors}
+        />
       </div>
 
       {/* 사이드 정보 영역 (30%) */}
@@ -100,12 +52,11 @@ export const TravelPathMapWidget = ({
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
-                style={{
-                  padding: "8px 16px",
-                  backgroundColor: activeTab === index ? "#3b82f6" : "#e5e7eb",
-                  color: activeTab === index ? "white" : "black",
-                  borderRadius: "4px",
-                }}
+                className={`px-4 py-2 rounded-[4px] font-medium transition-colors ${
+                  activeTab === index
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-black"
+                }`}
               >
                 Day {index + 1}
               </button>

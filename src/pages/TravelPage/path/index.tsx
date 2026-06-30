@@ -31,12 +31,12 @@ const TravelPathPage = () => {
   useEffect(() => {
     if (selectedPlaces.length > 0) {
       setCenter(selectedPlaces[0].nearCoordinates);
+      console.log("travel path page")
     } else {
       navigate("/travel", { replace: true });
     }
   }, [selectedPlaces, setCenter, navigate]);
 
-  // dnd-kit 센서 (PointerSensor 사용)
   console.log("-----------------------------------travel/path 페이지 렌더링-----------------------------------");
   return (
     <div className="h-full w-full">
