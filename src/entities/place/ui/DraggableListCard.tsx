@@ -1,5 +1,4 @@
 import { useDraggable } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { ListCardUI } from "./ListCardUI"; // 분리된 UI 컴포넌트 유지
 
@@ -27,10 +26,10 @@ export const DraggableListCard = ({
   console.log("DraggableListCard 렌더링", transform);
 
   // 드래그가 true로 변하면 undefined로 만들어서 기존 카드를 원래 자리에 고정
-  // const style = isDragging ? DRAGGING_STYLE : undefined;
-  const style = {
-    transform: isDragging ? undefined : CSS.Translate.toString(transform),
-  };
+  const style = isDragging ? DRAGGING_STYLE : undefined;
+  // const style = {
+  //   opacity: isDragging ? 0 : undefined,
+  // };
   return (
     <ListCardUI
       place={place}
