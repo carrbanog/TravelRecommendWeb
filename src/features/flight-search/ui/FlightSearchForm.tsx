@@ -12,6 +12,7 @@ import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { format } from "date-fns";
 import { PopoverContent } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { toast } from "sonner";
 
 import { CITY_MAP } from "@/shared/constants/airport-codes";
 
@@ -25,7 +26,7 @@ export const FlightSearchForm = () => {
 
   const handleSearch = () => {
     if (!origin || !destination || !date.from) {
-      alert("출발지와 도착지를 모두 입력해주세요.");
+      toast.error("출발지와 도착지를 선택해 주세요", {position: "top-right"});
       return;
     }
     // 도시 이름을 공항 코드로 변환하는 함수
@@ -38,7 +39,7 @@ export const FlightSearchForm = () => {
     const formatDate = (date: Date) => format(date, "yyMMdd");
     const outboundDate = formatDate(date.from);
 
-    // 왕복인 경우에만 돌아오는 날짜를 포함, 편도인 경우에는 빈 문자열로 처리 
+    // 왕복인 경우에만 돌아오는 날짜를 포함, 편도인 경우에는 빈 문자열로 처리
     const inboundDate = date.to ? formatDate(date.to) : "";
 
     // 스카이스캐너 URL 조합

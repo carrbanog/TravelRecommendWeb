@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { deletePost } from "@/entities/post/api/postApi";
 import { Button } from "@/components/ui/button";
 import { Trash2, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface DeletePostButtonProps {
   postId: string;
@@ -16,14 +17,14 @@ export const DeletePostButton = ({ postId }: DeletePostButtonProps) => {
     // 명확하게 postId를 인자로 넘기도록 수정
     mutationFn: () => deletePost(postId), 
     onSuccess: () => {
-      alert("게시글이 삭제되었습니다.");
+      toast.success("게시글이 삭제되었습니다.", { position: "top-right" });
       // 삭제된 데이터가 목록에 남지 않도록 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       navigate("/community", { replace: true });
     },
     onError: (error) => {
       console.error("Delete Error:", error);
-      alert("삭제 중 오류가 발생했습니다.");
+      toast.error("삭제 중 오류가 발생했습니다.", { position: "top-right" });
     },
   });
 

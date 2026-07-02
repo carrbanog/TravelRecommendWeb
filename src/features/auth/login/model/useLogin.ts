@@ -39,7 +39,9 @@ export const useLogin = () => {
         email: userDoc.email,
       });
 
-      toast.success(response.message || "로그인이 완료되었습니다.");
+      toast.success(response.message || "로그인이 완료되었습니다.",{
+        position: "top-right",
+      });
 
       navigate("/");
     } catch (error: any) {
