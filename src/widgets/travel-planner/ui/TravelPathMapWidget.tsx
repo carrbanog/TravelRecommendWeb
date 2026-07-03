@@ -1,6 +1,7 @@
 // 1. Features
 import { useRouteDirections } from "@/features/travel-route/lib/useRouteDirections";
 import { TravelPathMapCanvas } from "@/features/travel-route/ui/TravelPathMapCanvas";
+import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDistance"; // 💡 부모로 이동
 
 // 2. Entities
 import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
@@ -20,24 +21,34 @@ export const TravelPathMapWidget = ({
   const { planCards } = usePlanCardsStore();
   const [activeTab, setActiveTab] = useState(0);
   const colors = ["#FF0000", "#007BFF", "#00C851", "#000000"];
-
-  // 마우스를 올린 장소의 위치 정보를 가져오는 훅
   const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
   const { roadPaths } = useRouteDirections(planCards);
+  
   const currentRoadPath = planCards[activeTab]
     ? roadPaths[planCards[activeTab].id]
     : undefined;
-  console.log("Road Paths:", roadPaths, "Plan Cards:", planCards, planCards[0]);
+
+  // 💡 [추가] 현재 선택된 Day의 좌표 목록을 추출하여 부모에서 API 호출
+  const currentPlaces = planCards[activeTab]?.places;
+  const currentLocations = currentPlaces?.map((place) => place.nearCoordinates) || [];
+  const { data: routeData, isLoading: isRouteLoading } = useFetchDistanceQuery(currentLocations);
+
+  console.log(" ------------------------TravelPathMapWidget 렌더링-----------------------");
+  console.log("activeTab:", activeTab, "currentRoadPath:", currentRoadPath, "routeData:", routeData);
 
   return (
     <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
       {/* 지도 영역 (70%) */}
       <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
-        {/* 분리된 Feature 지도 컴포넌트 주입 */}
         <TravelPathMapCanvas
           activeTab={activeTab}
           roadPath={currentRoadPath}
           colors={colors}
+          hoveredPlace={hoveredPlace}
+          onPlaceHover={handleMouseOver}
+          onPlaceLeave={handleMouseOut}
+          // 💡 나중에 지도 컴포넌트(Canvas)에서도 routeData가 필요하다면 아래처럼 쉽게 전달 가능합니다.
+          // routeData={routeData} 
         />
       </div>
 
@@ -66,10 +77,13 @@ export const TravelPathMapWidget = ({
             <TravelDayList
               key={planCards[activeTab].id}
               dayIndex={activeTab}
-              places={planCards[activeTab].places}
+              places={currentPlaces}
               hoveredPlace={hoveredPlace}
               onPlaceHover={handleMouseOver}
               onPlaceLeave={handleMouseOut}
+              // 💡 부모에서 확보한 데이터와 로딩 상태를 Props로 주입
+              routeData={routeData}
+              isLoading={isRouteLoading}
             />
           )}
         </div>

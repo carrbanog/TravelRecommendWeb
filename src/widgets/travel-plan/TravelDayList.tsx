@@ -5,31 +5,36 @@ import { memo } from "react";
 // 2. 공통 UI 컴포넌트 (Shared 계층 / shadcn ui 등)
 import { Badge } from "@/components/ui/badge";
 
-// 3. 기능 (Features 계층 - API, 훅 등)
-import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDistance";
+// 3. 기능 (Features 계층) - 💡 useFetchDistanceQuery 임포트 제거
 
-// 4. 타입 (Types - 도메인 모델, 응답 타입 등)
-import type { PlanPlace } from "@/entities/place/model/type"; // 상대경로(../../)를 절대경로(@/)로 통일
+// 4. 타입 (Types)
+import type { PlanPlace } from "@/entities/place/model/type";
 import type { RouteStep } from "@/features/calculate-distance/model/type";
 
 interface TravelDayListProps {
   dayIndex: number;
   places: PlanPlace[] | undefined;
-  hoveredPlace: string | null; // 현재 마우스가 올라간 장소의 ID
-  onPlaceHover: (placeId: string) => void; // 장소에 마우스 올렸을 때 호출되는 콜백
-  onPlaceLeave: () => void; // 장소에서 마우스 뗐을 때 호출되는 콜백
+  hoveredPlace: string | null;
+  onPlaceHover: (placeId: string) => void;
+  onPlaceLeave: () => void;
+  // 💡 부모로부터 데이터를 받기 위한 Props 타입 명시
+  routeData: any; 
+  isLoading: boolean;
 }
 
-// 각 여행 계획 카드(하루)를 렌더링하는 컴포넌트
 export const TravelDayList = memo(
-  ({ dayIndex, places, hoveredPlace, onPlaceHover, onPlaceLeave }: TravelDayListProps) => {
-    const locations = places?.map((place) => place.nearCoordinates) || [];
+  ({
+    dayIndex,
+    places,
+    hoveredPlace,
+    onPlaceHover,
+    onPlaceLeave,
+    routeData, // 💡 Props로 수신
+    isLoading, // 💡 Props로 수신
+  }: TravelDayListProps) => {
+    
+    // 💡 내부 훅 호출 및 locations 배열 생성 로직 제거 (부모가 처리)
 
-    const { data: routeData, isLoading } = useFetchDistanceQuery(locations);
-
-    console.log("TravelDayList Route Data:", routeData, dayIndex, places);
-    console.log("Hovered Place in TravelDayList:", hoveredPlace);
-    // mode에 따른 아이콘 렌더링 헬퍼 함수
     const getTransportIcon = (mode: string) => {
       switch (mode) {
         case "transit":
@@ -45,6 +50,7 @@ export const TravelDayList = memo(
           return <HelpCircle size={14} />;
       }
     };
+
     return (
       <div className="mb-8">
         <h3 className="text-lg font-bold text-blue-600 flex items-center gap-2 mb-4">
@@ -59,23 +65,21 @@ export const TravelDayList = memo(
         {places && places.length > 0 ? (
           <div className="relative pl-2">
             {places.map((place, idx) => {
-              // 현재 장소에서 다음 장소로 가는 이동 정보 찾기
               const routeInfo = routeData?.distances?.find(
                 (d: any) => d.fromIndex === idx,
               );
               return (
-                <div key={place.id} className="relative
-                "
-                onMouseOver={() => onPlaceHover(place.id)}
-                onMouseOut={onPlaceLeave}
-                >
+                <div key={place.id} className="relative">
                   {/* 1. 장소 카드 영역 */}
                   <div className="flex items-start gap-4 mb-2">
-                    <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white border-2 border-blue-500 shadow-sm text-blue-600 font-bold text-xs shrink-0"
-                    >
+                    <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white border-2 border-blue-500 shadow-sm text-blue-600 font-bold text-xs shrink-0">
                       {idx + 1}
                     </div>
-                    <div className="flex-1 p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-colors shadow-sm">
+                    <div
+                      className="flex-1 p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-colors shadow-sm"
+                      onMouseOver={() => onPlaceHover(place.id)}
+                      onMouseOut={onPlaceLeave}
+                    >
                       <p className="font-semibold text-gray-800 text-sm">
                         {place.title}
                       </p>
@@ -87,9 +91,7 @@ export const TravelDayList = memo(
 
                   {/* 2. 이동 경로 정보 (마지막 요소가 아닐 때만) */}
                   {idx < places.length - 1 && (
-                    // ✅ 여러 내용이 들어가도록 flex-col과 gap을 추가하고 높이를 자동(min-h)으로 변경
                     <div className="flex flex-col gap-2 my-1 ml-4 border-l-2 border-dashed border-gray-300 min-h-[3rem] py-2">
-                      {/* A. 이동 요약 뱃지 (기존) */}
                       <div className="flex items-center gap-2 ml-6 text-xs font-medium text-gray-600 bg-white px-3 py-1.5 border rounded-full shadow-sm w-fit">
                         {isLoading ? (
                           <span className="text-gray-400">계산 중...</span>
@@ -106,10 +108,9 @@ export const TravelDayList = memo(
                         )}
                       </div>
 
-                      {/* 경로 상세 정보(이동수단 + 시간)*/}
+                      {/* 경로 상세 정보 */}
                       {!isLoading && routeInfo && (
                         <div className="ml-6 flex flex-col gap-2">
-                          {/* 상세 스텝(steps) 배열 출력 */}
                           {routeInfo.steps && routeInfo.steps.length > 0 && (
                             <div className="flex flex-col gap-1.5 mt-1">
                               {routeInfo.steps.map(
