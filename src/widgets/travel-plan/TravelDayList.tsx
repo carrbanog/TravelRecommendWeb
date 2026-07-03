@@ -10,15 +10,15 @@ import { Badge } from "@/components/ui/badge";
 // 4. 타입 (Types)
 import type { PlanPlace } from "@/entities/place/model/type";
 import type { RouteStep } from "@/features/calculate-distance/model/type";
+import type { DayRouteData } from "@/features/calculate-distance/model/type";
 
 interface TravelDayListProps {
   dayIndex: number;
   places: PlanPlace[] | undefined;
-  hoveredPlace: string | null;
   onPlaceHover: (placeId: string) => void;
   onPlaceLeave: () => void;
   // 💡 부모로부터 데이터를 받기 위한 Props 타입 명시
-  routeData: any; 
+  routeData: DayRouteData | undefined; 
   isLoading: boolean;
 }
 
@@ -26,7 +26,6 @@ export const TravelDayList = memo(
   ({
     dayIndex,
     places,
-    hoveredPlace,
     onPlaceHover,
     onPlaceLeave,
     routeData, // 💡 Props로 수신
