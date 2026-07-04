@@ -35,7 +35,7 @@ export const TravelPlannerWidget = ({
     handleDragEnd(event);
     setActiveId(null);
   };
-
+  console.log("TravelPlannerWidget 렌더링", selectedPlaces);
   return (
     // 전체 배경 높이 고정 (h-screen 기반)
     <div className="w-full bg-slate-50 p-6 flex justify-center items-start overflow-hidden">
@@ -66,7 +66,7 @@ export const TravelPlannerWidget = ({
             <button
               onPointerDown={(e) => e.stopPropagation()}
               onClick={onShowPathClick}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-12 py-3.5 rounded-full shadow-lg shadow-blue-200 transition-all active:scale-95"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-12 py-3.5 rounded-full shadow-lg shadow-blue-200 transition-all active:scale-95"
             >
               동선 보기
             </button>

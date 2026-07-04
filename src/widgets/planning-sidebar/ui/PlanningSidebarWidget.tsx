@@ -7,12 +7,12 @@ import SelectedList from "../../../entities/place/ui/SelectedList";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import type { SearchParams } from "../../../entities/place/model/type";
 import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 
 type PlanningSidebarWidgetProps = {
+  setPlaceSearch: (params: SearchParams) => void;
   selectedPlaces: NearPlace[];
   onRemovePlace: (placeId: string) => void;
-  setPlaceSearch: (params: SearchParams) => void;
 };
 
 export const PlanningSidebarWidget = React.memo(
