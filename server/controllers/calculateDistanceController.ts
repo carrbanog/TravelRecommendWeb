@@ -49,14 +49,18 @@ const getDetailedRoute = async (
       if (data.status === "OK" && data.routes.length > 0) {
         const leg = data.routes[0].legs[0];
 
-        // 🚨 [핵심 안전장치] 대중교통(transit) 모드로 요청했는데, 
+        // 🚨 [핵심 안전장치] 대중교통(transit) 모드로 요청했는데,
         // 결과 스텝 중에 실제 버스/지하철 탑승(TRANSIT)이 단 하나도 없고 "전부 도보"로만 되어 있다면?
         // 이름만 대중교통인 '사람 걷는 길'이므로 이 응답을 과감히 버리고 다음 루프(driving)로 넘깁니다.
         if (mode === "transit") {
-          const hasTransitVehicle = leg.steps.some((step: any) => step.travel_mode === "TRANSIT");
+          const hasTransitVehicle = leg.steps.some(
+            (step: any) => step.travel_mode === "TRANSIT",
+          );
           if (!hasTransitVehicle) {
-            console.warn(`[구간 ${index}] 대중교통 수단 없음(전부 도보 경로). 다음 차량 모드로 전환합니다.`);
-            continue; 
+            console.warn(
+              `[구간 ${index}] 대중교통 수단 없음(전부 도보 경로). 다음 차량 모드로 전환합니다.`,
+            );
+            continue;
           }
         }
 
@@ -96,22 +100,39 @@ const getDetailedRoute = async (
             }
             return baseData;
           });
-        } 
+        }
         // -------------------------------------------------------------
         // 2️⃣ [DRIVING / WALKING] 대중교통 실패 혹은 미지원 지역인 경우 (일본 등)
         // -------------------------------------------------------------
         else {
+          const distanceInMeters = leg.distance.value; // 미터(m) 단위 정수 (예: 1500, 2300)
+
+          // 🚨 [조건 추가] 현재 탐색 중인 모드가 실제 거리 기준과 맞지 않으면 스킵하고 다음 루프로!
+          // 2km(2000m) 미만인데 driving(차량)이거나, 2km 이상인데 walking(도보)인 경우 건너뜁니다.
+          if (distanceInMeters < 2000 && mode === "driving") {
+            console.log(
+              `[구간 ${index}] 거리가 ${leg.distance.text}(2km 미만)이므로 차량 모드를 패스하고 도보를 탐색합니다.`,
+            );
+            continue;
+          }
+          if (distanceInMeters >= 2000 && mode === "walking") {
+            console.log(
+              `[구간 ${index}] 거리가 ${leg.distance.text}(2km 이상)이므로 도보 모드를 패스합니다.`,
+            );
+            continue;
+          }
+
           const modeLabel = mode === "driving" ? "차량" : "도보";
-          
-          // 자동차나 도보 모드일 때는 자잘한 골목길 안내를 생략하고 UI에 깔끔하게 한 줄로 출력되도록 요약 처리
+
+          // 자동차나 도보 모일 때는 자잘한 골목길 안내를 생략하고 UI에 깔끔하게 한 줄로 출력되도록 요약 처리
           detailedSteps = [
             {
               mode: mode.toUpperCase(), // "DRIVING" 또는 "WALKING"
               instruction: `${modeLabel} 이동 · 약 ${leg.duration.text} (${leg.distance.text})`,
               duration: leg.duration.text,
-              // 지도가 차가 다니는 실제 주행 대로망을 따라 이쁘게 그릴 수 있도록 통짜 경로 주입
-              polyline: data.routes[0].overview_polyline.points, 
-            }
+              // 지도가 차나 사람이 다니는 실제 경로를 따라 이쁘게 그릴 수 있도록 통짜 경로 주입
+              polyline: data.routes[0].overview_polyline.points,
+            },
           ];
         }
 
@@ -127,7 +148,9 @@ const getDetailedRoute = async (
         };
       }
 
-      console.warn(`[Index: ${index}] Mode '${mode}' 결과 없음 (${data.status}). 다음 모드 탐색.`);
+      console.warn(
+        `[Index: ${index}] Mode '${mode}' 결과 없음 (${data.status}). 다음 모드 탐색.`,
+      );
     } catch (error) {
       console.error(`[Mode: ${mode}] API 에러:`, error);
     }
@@ -147,7 +170,7 @@ const getDetailedRoute = async (
 export const calculateDistance = async (req: Request, res: Response) => {
   try {
     const { locations } = req.body;
-    
+
     if (!locations || locations.length < 2) {
       return res.status(200).json({ distances: [] });
     }
