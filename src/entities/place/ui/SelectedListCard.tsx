@@ -1,8 +1,8 @@
-import type { NearPlace } from "../../../shared/types/nearPlaceType";
+import type { SelectedPlace } from "../../../shared/types/nearPlaceType";
 import { DraggableListCard } from "./DraggableListCard";
 import { Package, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates" | "placeId">;
+
 
 type SelectedListCardProps = {
   selectedPlaces: SelectedPlace[];
@@ -12,6 +12,12 @@ type SelectedListCardProps = {
 // 지도에서 선택한 여행지를 일차별 카드로 드래그하기 위한 보관함 UI 컴포넌트
 export const SelectedListCard = ({ selectedPlaces, onRemovePlace }: SelectedListCardProps) => {
   console.log("SelectedListCard 렌더링");
+
+  const sortedPlaces = [...selectedPlaces].sort((a, b) => {
+  if (a.type === "hotel" && b.type !== "hotel") return 1;  // a가 호텔이면 뒤로
+  if (a.type !== "hotel" && b.type === "hotel") return -1; // b가 호텔이면 앞으로
+  return 0; // 나머지는 기존 추가 순서 유지
+});
 
   return (
     <section className="flex flex-col h-full bg-white/50 backdrop-blur-sm">
@@ -38,7 +44,7 @@ export const SelectedListCard = ({ selectedPlaces, onRemovePlace }: SelectedList
       <div className="flex-1 overflow-y-hidden overflow-x-hidden p-6 custom-scrollbar">
         {selectedPlaces.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-            {selectedPlaces.map((place) => (
+            {sortedPlaces.map((place) => (
               <DraggableListCard
                 key={place.placeId}
                 place={place}

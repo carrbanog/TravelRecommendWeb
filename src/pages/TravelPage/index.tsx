@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-import { useGeocodeQuery } from "../../features/search-plcae/lib/useGeoCodeQuery";
 import { useNearcodeQuery } from "../../features/find-nearby-places/lib/useNearByPlacesQuery";
 import { useSelectedPlacesStore } from "../../entities/place/model/selectedPlacesStore";
 import type { SearchParams } from "../../entities/place/model/type";
@@ -13,6 +12,7 @@ export const TravelPage = () => {
     query: "",
     type: "place",
   });
+
 
   const { data: nearPlaces, isLoading: isloadingPlaces } = useNearcodeQuery({
     query: placeSearch.query,
@@ -37,25 +37,25 @@ export const TravelPage = () => {
      * 1. h-screen: 뷰포트 높이 고정
      * 2. overflow-hidden: 페이지 전체 스크롤 방지
      */
-      <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
-        {/* 지도 영역 (70%) */}
-        <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
-          <TravelMapWidget
-            centerCoords={center}
-            places={nearPlaces?.results}
-            onMarkerClick={addPlace}
-            isLoading={isloadingPlaces}
-          />
-        </div>
+    <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
+      {/* 지도 영역 (70%) */}
+      <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
+        <TravelMapWidget
+          centerCoords={center}
+          places={nearPlaces?.results}
+          onMarkerClick={addPlace}
+          isLoading={isloadingPlaces}
+        />
+      </div>
 
-        {/* 사이드 영역 (30%) */}
-        <div className="w-[30%] h-full">
-          <PlanningSidebarWidget
-            selectedPlaces={selectedPlaces}
-            onRemovePlace={removePlace}
-            setPlaceSearch={setPlaceSearch}
-          />
-        </div>
-      </main>
+      {/* 사이드 영역 (30%) */}
+      <div className="w-[30%] h-full">
+        <PlanningSidebarWidget
+          setPlaceSearch={setPlaceSearch}
+          selectedPlaces={selectedPlaces}
+          onRemovePlace={removePlace}
+        />
+      </div>
+    </main>
   );
 };
