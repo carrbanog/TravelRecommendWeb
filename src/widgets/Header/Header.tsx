@@ -119,7 +119,7 @@ const Header = () => {
             <div className="flex items-center gap-2">
               <Button
                 asChild
-                className="rounded-full bg-orange-500 hover:bg-blue-700 text-white px-6 shadow-md shadow-blue-200"
+                className="rounded-full bg-blue-500 hover:bg-blue-700 text-white px-6 shadow-md shadow-blue-200"
               >
                 <Link to="/login">시작하기</Link>
               </Button>
