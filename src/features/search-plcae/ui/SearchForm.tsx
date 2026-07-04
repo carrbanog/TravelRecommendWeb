@@ -24,7 +24,6 @@ const SearchForm = React.memo(({ setPlaceSearch }: SearchFormProps) => {
     const trimmed = inputValue.trim();
     if (!trimmed) return;
     setPlaceSearch({ query: trimmed, type: searchType });
-    setInputValue("");
   };
 
   return (
