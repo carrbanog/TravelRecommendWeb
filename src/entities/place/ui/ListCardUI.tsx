@@ -1,10 +1,8 @@
 import { memo } from "react";
-import { Trash2, MapPin, GripVertical } from "lucide-react";
+import { Trash2, MapPin, Hotel, GripVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { NearPlace } from "../../../shared/types/nearPlaceType";
-
-type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates" | "placeId">;
+import type { SelectedPlace } from "../../../shared/types/nearPlaceType";
 
 interface ListCardUIProps {
   place: SelectedPlace;
@@ -25,7 +23,11 @@ export const ListCardUI = memo(({
   attributes,
   setNodeRef,
 }: ListCardUIProps) => {
-  console.log(`ListCardUI 렌더링: ${place.title}`, style);
+  console.log(`ListCardUI 렌더링: ${place.type}`, style);
+
+  // 🌟 타입에 따른 아이콘 및 스타일 분기 정의
+  const isHotel = place.type === "hotel";
+  const Icon = isHotel ? Hotel : MapPin;
 
   return (
     <div
@@ -35,13 +37,22 @@ export const ListCardUI = memo(({
       {...attributes}
       className={cn(
         "group relative flex flex-col gap-2 bg-white border border-slate-200 rounded-xl p-3 shadow-sm transition-all cursor-grab active:cursor-grabbing",
-        "hover:border-blue-400 hover:shadow-md",
+        // 🌟 호버 시 호텔은 인디고(보라), 여행지는 블루(파랑) 테두리 피드백
+        isHotel ? "hover:border-orange-600 hover:shadow-md" : "hover:border-blue-400 hover:shadow-md",
         isDragging && "opacity-0" // 원본 카드는 드래그 시 투명하게 숨김
       )}
     >
       <div className="flex justify-between items-start">
-        <div className="p-1.5 bg-slate-50 rounded-lg group-hover:bg-blue-50 transition-colors">
-          <MapPin className="w-4 h-4 text-slate-400 group-hover:text-blue-500" />
+        {/* 🌟 아이콘 배경색 분기 처리 */}
+        <div className={cn(
+          "p-1.5 bg-slate-50 rounded-lg transition-colors",
+          isHotel ? "group-hover:bg-indigo-50" : "group-hover:bg-blue-50"
+        )}>
+          {/* 🌟 동적 아이콘 랜더링 및 컬러 분기 처리 */}
+          <Icon className={cn(
+            "w-4 h-4 text-slate-400 transition-colors",
+            isHotel ? "group-hover:text-orange-600" : "group-hover:text-blue-500"
+          )} />
         </div>
 
         <Button
