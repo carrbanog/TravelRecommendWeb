@@ -62,7 +62,7 @@ export const TravelPathMapWidget = ({
                 onClick={() => setActiveTab(index)}
                 className={`px-4 py-2 rounded-[4px] font-medium transition-colors ${
                   activeTab === index
-                    ? "bg-blue-500 text-white"
+                    ? "bg-blue-600 text-white"
                     : "bg-gray-200 text-black"
                 }`}
               >
@@ -84,7 +84,7 @@ export const TravelPathMapWidget = ({
         </div>
         <button
           onClick={onBackClick}
-          className="w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-colors"
+          className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:bg-blue-700 transition-colors"
         >
           계획 수정하기
         </button>

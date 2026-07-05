@@ -66,7 +66,7 @@ export const TravelPlannerWidget = ({
             <button
               onPointerDown={(e) => e.stopPropagation()}
               onClick={onShowPathClick}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-12 py-3.5 rounded-full shadow-lg shadow-blue-200 transition-all active:scale-95"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-12 py-3.5 rounded-full shadow-lg shadow-blue-200 transition-all active:scale-95"
             >
               동선 보기
             </button>

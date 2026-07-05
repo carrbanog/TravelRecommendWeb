@@ -52,14 +52,6 @@ export const TravelDayList = memo(
 
     return (
       <div className="mb-8">
-        <h3 className="text-lg font-bold text-blue-600 flex items-center gap-2 mb-4">
-          <Badge variant="default" className="bg-blue-600">
-            Day {dayIndex + 1}
-          </Badge>
-          <span className="text-gray-400 text-sm font-normal">
-            Step by Step
-          </span>
-        </h3>
 
         {places && places.length > 0 ? (
           <div className="relative pl-2">
@@ -71,7 +63,7 @@ export const TravelDayList = memo(
                 <div key={place.id} className="relative">
                   {/* 1. 장소 카드 영역 */}
                   <div className="flex items-start gap-4 mb-2">
-                    <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white border-2 border-blue-500 shadow-sm text-blue-600 font-bold text-xs shrink-0">
+                    <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white border-2 border-blue-600 shadow-sm text-blue-600 font-bold text-xs shrink-0">
                       {idx + 1}
                     </div>
                     <div

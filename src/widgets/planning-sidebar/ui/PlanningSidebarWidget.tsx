@@ -49,7 +49,7 @@ export const PlanningSidebarWidget = React.memo(
         <Link
           onClick={handleNextClick}
           to="/travel/path"
-          className="block text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-200"
+          className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-200"
         >
           일정 선택
         </Link>
