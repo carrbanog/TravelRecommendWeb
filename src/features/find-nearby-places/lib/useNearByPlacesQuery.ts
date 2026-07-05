@@ -3,12 +3,15 @@ import { fetchNearbyPlaces } from "../../../entities/place/api/placeApi";
 import { toast } from "sonner";
 import type { NearbyPlaceParams } from "../../../entities/place/model/type";
 
-export const useNearcodeQuery = ({ query, type }: NearbyPlaceParams) => {
+
+export const useNearcodeQuery = ({ query }: NearbyPlaceParams) => {
   // console.log(coords, type)
   return useQuery({
-    queryKey: ["nearbyPlaces", query, type],
-    queryFn: () => fetchNearbyPlaces(query || "", type),
+    queryKey: ["nearbyPlaces", query],
+    queryFn: () => fetchNearbyPlaces(query || "",),
     enabled: !!query && !!query.trim(),
+    staleTime: 1000 * 60 * 5, // 5분
+    gcTime: 1000 * 60 * 10, // 10분
     meta: {
       onError: (error: any) => {
         console.error("🚨 주변 장소 조회 중 에러 발생:", error);
