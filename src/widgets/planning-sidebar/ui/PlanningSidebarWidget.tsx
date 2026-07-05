@@ -5,7 +5,7 @@ import { TravelDaysPicker } from "../../../features/select-travel-dates/ui/Trave
 
 import SelectedList from "../../../entities/place/ui/SelectedList";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
-import type { SearchParams } from "../../../entities/place/model/type";
+import type { SearchParams, SearchType } from "../../../entities/place/model/type";
 import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
 import { toast } from "sonner";
 
@@ -13,6 +13,8 @@ type PlanningSidebarWidgetProps = {
   setPlaceSearch: (params: SearchParams) => void;
   selectedPlaces: NearPlace[];
   onRemovePlace: (placeId: string) => void;
+  activeTab: SearchType; // 선택한 탭을 부모에게 전달하는 상태
+  setActiveTab: (tab: SearchType) => void; // 선택한 탭을 부모에게 전달하는 함수
 };
 
 export const PlanningSidebarWidget = React.memo(
@@ -20,6 +22,8 @@ export const PlanningSidebarWidget = React.memo(
     selectedPlaces,
     onRemovePlace,
     setPlaceSearch,
+    setActiveTab,
+    activeTab,
   }: PlanningSidebarWidgetProps) => {
     const tripsDays = useDayPickerStore((state) => state.tripDays);
     const handleNextClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -35,7 +39,7 @@ export const PlanningSidebarWidget = React.memo(
       <div className="w-full h-full flex flex-col justify-between p-4 bg-white shadow-md rounded-2xl overflow-hidden">
         {/* 1번 그룹: 고정 높이 */}
         <div className="flex flex-col gap-4 mb-4">
-          <SearchForm setPlaceSearch={setPlaceSearch} />
+          <SearchForm setPlaceSearch={setPlaceSearch} setActiveTab={setActiveTab} activeTab={activeTab} />
           <TravelDaysPicker />
         </div>
 

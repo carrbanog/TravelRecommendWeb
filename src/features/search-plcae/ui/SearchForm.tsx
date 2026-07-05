@@ -13,17 +13,18 @@ import { Card } from "@/components/ui/card";
 
 interface SearchFormProps {
   setPlaceSearch: (value: SearchParams) => void;
+  activeTab: SearchType;               // 🔹 부모의 activeTab 받아오기
+  setActiveTab: (tab: SearchType) => void; // 🔹 부모의 activeTab 변경 함수 받아오기
 }
 
-const SearchForm = React.memo(({ setPlaceSearch }: SearchFormProps) => {
+const SearchForm = React.memo(({ setPlaceSearch, activeTab, setActiveTab }: SearchFormProps) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [searchType, setSearchType] = useState<SearchType>("place");
-
   const handleDestinationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = inputValue.trim();
     if (!trimmed) return;
-    setPlaceSearch({ query: trimmed, type: searchType });
+    //검색 시 입력 값, 선택한 탭(activeTab)을 부모 컴포넌트로 전달
+    setPlaceSearch({ query: trimmed, type: activeTab });
   };
 
   return (
@@ -32,8 +33,8 @@ const SearchForm = React.memo(({ setPlaceSearch }: SearchFormProps) => {
         {/* 🔹 검색 타입 선택 (Tabs 활용) */}
         <Tabs
           defaultValue="place"
-          value={searchType}
-          onValueChange={(value) => setSearchType(value as SearchType)}
+          value={activeTab} // 🔹 로컬 상태 대신 부모의 activeTab을 바인딩
+          onValueChange={(value) => setActiveTab(value as SearchType)} // 🔹 탭 클릭 시 부모 상태를 바로 변경 (지도 마커 즉시 스위칭)
           className="w-full"
         >
           <TabsList className="grid w-full grid-cols-2 h-11">
@@ -60,7 +61,7 @@ const SearchForm = React.memo(({ setPlaceSearch }: SearchFormProps) => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder={
-                searchType === "place"
+                activeTab === "place" // 🔹 activeTab에 따라 placeholder 변경
                   ? "어디로 떠나고 싶으신가요?"
                   : "머무실 호텔을 입력하세요"
               }
