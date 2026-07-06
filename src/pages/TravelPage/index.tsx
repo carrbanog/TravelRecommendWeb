@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, lazy, Suspense } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { useNearcodeQuery } from "../../features/find-nearby-places/lib/useNearByPlacesQuery";
 import { useSelectedPlacesStore } from "../../entities/place/model/selectedPlacesStore";
