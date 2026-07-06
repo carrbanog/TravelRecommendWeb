@@ -4,13 +4,8 @@ import { useNearcodeQuery } from "../../features/find-nearby-places/lib/useNearB
 import { useSelectedPlacesStore } from "../../entities/place/model/selectedPlacesStore";
 import type { SearchParams, SearchType } from "../../entities/place/model/type";
 import { PlanningSidebarWidget } from "../../widgets/planning-sidebar/ui/PlanningSidebarWidget";
-import { MapSkeleton } from "@/widgets/travel-map/ui/MapSkeleton";
 
-const TravelMapWidget = lazy(() =>
-  import("@/widgets/travel-map/ui/TravelMapWidget").then((module) => ({
-    default: module.TravelMapWidget,
-  })),
-);
+import { TravelMapWidget } from "@/widgets/travel-map/ui/TravelMapWidget";
 
 export const TravelPage = () => {
   console.log("TravelPage 렌더링");
@@ -54,14 +49,12 @@ export const TravelPage = () => {
     <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
       {/* 지도 영역 (70%) */}
       <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
-        <Suspense fallback={<MapSkeleton />}>
-          <TravelMapWidget
-            centerCoords={center}
-            places={displayPlaces}
-            onMarkerClick={addPlace}
-            isLoading={isLoading}
-          />
-        </Suspense>
+        <TravelMapWidget
+          centerCoords={center}
+          places={displayPlaces}
+          onMarkerClick={addPlace}
+          isLoading={isLoading}
+        />
       </div>
 
       {/* 사이드 영역 (30%) */}
