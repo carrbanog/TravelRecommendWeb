@@ -5,6 +5,7 @@ import type { coordinates } from "../../../shared/types/coordinatestype";
 import type { NearPlace } from "../../../shared/types/nearPlaceType";
 import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWindow";
 import { usePlaceDetailsQuery } from "@/entities/place/place-details/lib/usePlaceDetailsQuery";
+import { MapSkeleton } from "./MapSkeleton";
 
 import { useMapHover } from "../../../shared/lib/hooks/useMapHover";
 
@@ -26,11 +27,7 @@ export const TravelMapWidget = React.memo(
     );
 
     if (isLoading) {
-      return (
-        <div className="w-full h-full flex items-center justify-center bg-slate-100 rounded-lg">
-          지도 로딩 중...
-        </div>
-      );
+      return <MapSkeleton />;
     }
 
     return (
