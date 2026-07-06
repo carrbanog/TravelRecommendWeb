@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { AddressType, SearchType } from "../model/type";
+import type { AddressType } from "../model/type";
 import type { NearPlaceApiResponse } from "../model/type";
 import { AUTH_ENDPOINTS } from "../../../shared/api/endpoints";
 import { apiClient } from "../../../shared/api/apiClient";

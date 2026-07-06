@@ -8,7 +8,7 @@ import { TravelDayList } from "../../travel-plan/TravelDayList";
 
 // 3. Shared
 import { useMapHover } from "@/shared/lib/hooks/useMapHover";
-import { useMemo, useState } from "react";
+import {  useState } from "react";
 
 interface TravelPathMapWidgetProps {
   onBackClick: () => void;

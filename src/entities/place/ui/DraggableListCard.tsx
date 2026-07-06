@@ -16,7 +16,7 @@ export const DraggableListCard = ({
   place,
   onRemovePlace,
 }: DraggableListCardProps) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
+  const { attributes, listeners, setNodeRef, isDragging } =
     useDraggable({
       id: place.placeId,
       data: { place, from: "SelectedListCard" },

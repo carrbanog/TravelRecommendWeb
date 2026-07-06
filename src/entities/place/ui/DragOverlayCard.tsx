@@ -1,7 +1,6 @@
 import { ListCardUI } from "./ListCardUI";
-import type { NearPlace } from "../../../shared/types/nearPlaceType";
+import type { SelectedPlace } from "../../../shared/types/nearPlaceType";
 
-type SelectedPlace = Pick<NearPlace, "title" | "nearCoordinates" | "placeId">;
 
 interface DragOverlayCardProps {
   place: SelectedPlace;

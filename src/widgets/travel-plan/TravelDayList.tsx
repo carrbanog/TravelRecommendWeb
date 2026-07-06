@@ -2,12 +2,9 @@
 import { Bus, Car, Footprints, HelpCircle, MapPin } from "lucide-react";
 import { memo } from "react";
 
-// 2. 공통 UI 컴포넌트 (Shared 계층 / shadcn ui 등)
-import { Badge } from "@/components/ui/badge";
+// 2. 기능 (Features 계층) - 💡 useFetchDistanceQuery 임포트 제거
 
-// 3. 기능 (Features 계층) - 💡 useFetchDistanceQuery 임포트 제거
-
-// 4. 타입 (Types)
+// 3. 타입 (Types)
 import type { PlanPlace } from "@/entities/place/model/type";
 import type { RouteStep } from "@/features/calculate-distance/model/type";
 import type { DayRouteData } from "@/features/calculate-distance/model/type";
@@ -24,7 +21,6 @@ interface TravelDayListProps {
 
 export const TravelDayList = memo(
   ({
-    dayIndex,
     places,
     onPlaceHover,
     onPlaceLeave,
