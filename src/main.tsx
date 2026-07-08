@@ -5,6 +5,13 @@ import "./app/styles/global.css";
 import { QueryClient, QueryClientProvider, QueryCache } from "@tanstack/react-query";
 import "./index.css";
 
+// 배포 환경에서 console.log, console.warn, console.error를 무력화합니다.
+if (import.meta.env.PROD) {
+  console.log = () => {};
+  console.warn = () => {};
+  console.error = () => {}; 
+}
+
 // ✨ 전역 에러 핸들링 허브가 장착된 QueryClient 설정
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
