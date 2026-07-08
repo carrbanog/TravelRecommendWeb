@@ -1,12 +1,16 @@
 import { create } from "zustand";
 import type { NearPlace } from "@/shared/types/nearPlaceType";
 import type { coordinates } from "@/shared/types/coordinatestype";
+import type { PlaceSearchResult } from './type';
+
 
 type SelectedPlacesState = {
   selectedPlaces: NearPlace[];
   selectedHotels: NearPlace[];
   lastCoords?: coordinates;
   center: coordinates;
+  rememberedData: PlaceSearchResult | null;
+  setRememberedData: (places: PlaceSearchResult) => void;
   addPlace: (place: NearPlace) => void;
   removePlace: (place: string) => void;
   addHotel: (hotel: NearPlace) => void;
@@ -46,4 +50,7 @@ export const useSelectedPlacesStore = create<SelectedPlacesState>((set) => ({
 
   setLastCoords: (coords) => set({ lastCoords: coords }),
   setCenter: (coords) => set({ center: coords }),
+
+  rememberedData: null,
+  setRememberedData: (places) => set({ rememberedData: places }),
 }));

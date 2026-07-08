@@ -13,24 +13,19 @@ export type AddressType = {
   place_id: string;
 };
 
-// export type NearPlaceApiResponse = {
-//   type: string;
-//   results: {
-//     name: string;
-//     geometry: {
-//       location: {
-//         lat: number;
-//         lng: number;
-//       };
-//     };
-//     place_id: string;
-//   }
-// };
+// 서버에서 반환되는 근처 여행지 데이터의 타입 정의
 export type NearPlaceApiResponse = {
   location: coordinates | null;
   places: NearPlace[];
   hotels: NearPlace[];
 }
+
+// 뒤로가기 시 검색어를 기억하기 위해 상태에 저장할 타입 정의
+export type PlaceSearchResult = {
+  location: coordinates | null;
+  places: NearPlace[];
+  hotels: NearPlace[];
+}; 
 
 export type NearbyPlaceParams = {
   query?: string;

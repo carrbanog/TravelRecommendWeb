@@ -5,7 +5,6 @@ import { useSelectedPlacesStore } from "@/entities/place/model/selectedPlacesSto
 import type { SearchParams, SearchType } from "@/entities/place/model/type";
 import { PlanningSidebarWidget } from "@/widgets/planning-sidebar/ui/PlanningSidebarWidget";
 import { MapSkeleton } from "@/widgets/travel-map/ui/MapSkeleton";
-
 const TravelMapWidget = lazy(() =>
   import("@/widgets/travel-map/ui/TravelMapWidget").then((module) => ({
     default: module.TravelMapWidget,
@@ -17,6 +16,15 @@ export const TravelPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeTab, setActiveTab] = useState<SearchType>("place");
 
+  const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces); // 추천여행지에서 선택한 리스트 모음
+  const addPlace = useSelectedPlacesStore((s) => s.addPlace); // 마커 클릭 시 selectedPlaces에 추가
+  const removePlace = useSelectedPlacesStore((s) => s.removePlace); // 제거
+
+  const center = useSelectedPlacesStore((s) => s.center);
+  const setCenter = useSelectedPlacesStore((s) => s.setCenter);
+  const rememberedData = useSelectedPlacesStore((s) => s.rememberedData);
+  const setRememberedData = useSelectedPlacesStore((s) => s.setRememberedData);
+
   const handlePlaceSearch = (params: SearchParams) => {
     // 검색 시 입력 값을 state에 저장
     setSearchQuery(params.query);
@@ -25,19 +33,21 @@ export const TravelPage = () => {
   const { data: nearbyData, isLoading } = useNearbyPlacesQuery({
     query: searchQuery,
   });
+  useEffect(() => {
+    if (nearbyData) {
+      setRememberedData(nearbyData);
+    }
+  }, [nearbyData, setRememberedData]);
+
+  const currentData = nearbyData || rememberedData;
+  
   const displayPlaces = useMemo(() => {
-    if (activeTab === "place") return nearbyData?.places || [];
-    if (activeTab === "hotel") return nearbyData?.hotels || [];
+    if (activeTab === "place") return currentData?.places || [];
+    if (activeTab === "hotel") return currentData?.hotels || [];
     return [];
   }, [activeTab, nearbyData?.places, nearbyData?.hotels]);
 
-  console.log("여행지 검색 요청", nearbyData, searchQuery, activeTab);
-  const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces); // 추천여행지에서 선택한 리스트 모음
-  const addPlace = useSelectedPlacesStore((s) => s.addPlace); // 마커 클릭 시 selectedPlaces에 추가
-  const removePlace = useSelectedPlacesStore((s) => s.removePlace); // 제거
-
-  const center = useSelectedPlacesStore((s) => s.center);
-  const setCenter = useSelectedPlacesStore((s) => s.setCenter);
+  console.log("여행지 검색 요청", "nearbyData", nearbyData, );
 
   // 지도 중심 값 설정
   useEffect(() => {
