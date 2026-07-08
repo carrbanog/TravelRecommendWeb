@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/app/providers/AuthProvider";
 
 // Shadcn UI Components
@@ -14,11 +14,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Icons
-import { Map, Users, LogOut, User as UserIcon, Plane } from "lucide-react";
+import { Map, Users, LogOut, Plane } from "lucide-react";
 
 const Header = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
