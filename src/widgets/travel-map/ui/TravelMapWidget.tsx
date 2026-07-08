@@ -9,7 +9,7 @@ import { MapSkeleton } from "./MapSkeleton";
 
 import { useMapHover } from "@/shared/lib/hooks/useMapHover";
 
-type Props = {
+type TravelMapWidgetProps = {
   centerCoords?: coordinates;
   onMarkerClick: (place: NearPlace) => void;
   places?: NearPlace[];
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const TravelMapWidget = React.memo(
-  ({ centerCoords, onMarkerClick, places, isLoading }: Props) => {
+  ({ centerCoords, onMarkerClick, places, isLoading }: TravelMapWidgetProps) => {
     console.log("TravelMapWidget 렌더링");
     console.log("근처 여행지 지도 위젯에서 받음", places)
     const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
