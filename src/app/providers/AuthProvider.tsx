@@ -37,9 +37,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    if (data) {
-      // console.log("Setting user from profile data:", data);
+    if (data && data.user) {
       setUser({ name: data.user.name, email: data.user.email });
+    } else {
+      setUser(null);
     }
   }, [data]);
 

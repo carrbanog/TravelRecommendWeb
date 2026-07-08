@@ -9,7 +9,7 @@ export const getProfile = async (req: Request, res: Response) => {
     const token = req.cookies.token;
     // console.log("Token from cookies:", token);
     if (!token) {
-      return res.status(401).json({ message: "인증 토큰이 없습니다." });
+      return res.status(200).json({ message: "인증 토큰이 없습니다." });
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as unknown as JwtPayload & {
@@ -25,6 +25,6 @@ export const getProfile = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("프로필 조회 중 오류 발생:", error);
-    return res.status(500).json({ message: "서버 오류" });
+    return res.status(200).json({ user: null, message: "인증이 유효하지 않습니다." });
   }
 };
