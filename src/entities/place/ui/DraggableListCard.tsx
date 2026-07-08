@@ -10,7 +10,6 @@ type DraggableListCardProps = {
 
 const DRAGGING_STYLE = { opacity: 0 };
 
-//useDraggable의 transform이랑 style의 transform은 별개
 
 export const DraggableListCard = ({
   place,

@@ -64,11 +64,11 @@ const SelectedList = React.memo(
             </ScrollArea>
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center text-center border-2 border-dashed border-slate-200 rounded-xl px-4">
-              <p className="text-slate-400 text-sm font-medium">
+              <p className="text-slate-500 text-sm font-medium">
                 아직 선택된 장소가 없습니다.
               </p>
-              <p className="text-slate-300 text-xs mt-1">
-                원하는 장소를 리스트에서 추가해보세요.
+              <p className="text-slate-400 text-xs mt-1">
+                원하는 장소의 마커를 클릭하여 리스트에 추가해보세요.
               </p>
             </div>
           )}

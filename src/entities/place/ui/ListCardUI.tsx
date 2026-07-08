@@ -39,7 +39,6 @@ export const ListCardUI = memo(({
         "group relative flex flex-col gap-2 bg-white border border-slate-200 rounded-xl p-3 shadow-sm transition-all cursor-grab active:cursor-grabbing",
         // 🌟 호버 시 호텔은 인디고(보라), 여행지는 블루(파랑) 테두리 피드백
         isHotel ? "hover:border-orange-600 hover:shadow-md" : "hover:border-blue-400 hover:shadow-md",
-        isDragging && "opacity-0" // 원본 카드는 드래그 시 투명하게 숨김
       )}
     >
       <div className="flex justify-between items-start">
