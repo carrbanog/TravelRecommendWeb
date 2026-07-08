@@ -1,6 +1,6 @@
 // src/entities/post/model/usePopularPosts.ts
 import { useQuery } from "@tanstack/react-query";
-import { fetchPopularPosts } from "../api/postApi";
+import { fetchPopularPosts } from "@/entities/post/api/postApi";
 
 export const usePopularPosts = () => {
   return useQuery({

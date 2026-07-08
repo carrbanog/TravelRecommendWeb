@@ -1,6 +1,6 @@
 import {useQuery} from '@tanstack/react-query';
-import {getProfile} from '../api/getProfile';
-import type { ProfileData } from '../../../shared/types/usertype';
+import {getProfile} from '@/entities/user/api/getProfile';
+import type { ProfileData } from '@/shared/types/usertype';
 
 export const useProfileQuery = () => {
   return useQuery<ProfileData>({

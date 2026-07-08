@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import type { NearPlace } from "../../../shared/types/nearPlaceType";
-import type { coordinates } from "../../../shared/types/coordinatestype";
+import type { NearPlace } from "@/shared/types/nearPlaceType";
+import type { coordinates } from "@/shared/types/coordinatestype";
 
 type SelectedPlacesState = {
   selectedPlaces: NearPlace[];

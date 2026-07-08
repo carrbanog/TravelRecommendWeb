@@ -1,11 +1,15 @@
-
+// 1. External Libraries (외부 라이브러리)
 import { useEffect, useState } from "react";
-import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
-import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
 import { useNavigate } from "react-router-dom";
-import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
-import { TravelPlannerWidget } from '../../../widgets/travel-planner/ui/TravelPlannerWidget';
-import { TravelPathMapWidget } from '../../../widgets/travel-planner/ui/TravelPathMapWidget';
+
+// 2. Entities Layer (내부 도메인/데이터 상태 관리)
+import { useSelectedPlacesStore } from "@/entities/place/model/selectedPlacesStore";
+import { useDayPickerStore } from "@/entities/travel-plan/model/useDayPickerStore";
+import { usePlanCardsStore } from "@/entities/travel-plan/model/usePlanCardsStore";
+
+// 3. Widgets Layer (상위 UI 컴포넌트)
+import { TravelPathMapWidget } from '@/widgets/travel-planner/ui/TravelPathMapWidget';
+import { TravelPlannerWidget } from '@/widgets/travel-planner/ui/TravelPlannerWidget';
 
 const TravelPathPage = () => {
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);

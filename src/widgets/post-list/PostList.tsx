@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { PenLine, MapPin } from "lucide-react";
 
 // FSD Imports
-import { fetchPosts } from "../../entities/post/api/postApi";
-import type { Post } from "../../entities/post/model/postTypes";
+import { fetchPosts } from "@/entities/post/api/postApi";
+import type { Post } from "@/entities/post/model/postTypes";
 
 // Shadcn UI Imports
 import {

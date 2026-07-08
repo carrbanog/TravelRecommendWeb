@@ -1,4 +1,4 @@
-import { useSignup } from "../model/useSignup";
+import { useSignup } from "@/features/auth/signup/model/useSignup";
 
 import { Button } from "@/components/ui/button";
 

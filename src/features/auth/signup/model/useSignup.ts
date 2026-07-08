@@ -1,9 +1,14 @@
+// 1. External Libraries (외부 라이브러리 및 React)
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signUp } from "../api/signupApi";
-import type { UserData } from "../../../../shared/types/usertype";
-import { AUTH_ENDPOINTS } from "../../../../shared/api/endpoints";
 import { toast } from "sonner";
+
+// 2. Features or Entities Layer
+import { signUp } from "@/features/auth/signup/api/signupApi";
+
+// 3. Shared Layer (공통 타입 및 설정 정보)
+import { AUTH_ENDPOINTS } from "@/shared/api/endpoints";
+import type { UserData } from "@/shared/types/usertype";
 export const useSignup = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

@@ -1,4 +1,4 @@
-import type { Comment } from "../../../entities/comment/model/type";
+import type { Comment } from "@/entities/comment/model/type";
 
 interface CommentDeleteBtnProps {
   comment: Comment;

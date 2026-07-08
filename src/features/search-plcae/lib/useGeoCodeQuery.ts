@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchMapCode } from "../../../entities/place/api/placeApi";
+import { fetchMapCode } from "@/entities/place/api/placeApi";
 import { toast } from "sonner";
 
 export const useGeocodeQuery = (placeSearch: string) => {

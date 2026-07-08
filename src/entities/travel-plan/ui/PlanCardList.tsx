@@ -1,6 +1,6 @@
 import { memo } from "react";
-import { DroppableDayCard } from "./DroppableDayCard";
-import { usePlanCardsStore } from "../model/usePlanCardsStore";
+import { DroppableDayCard } from "@/entities/travel-plan/ui/DroppableDayCard";
+import { usePlanCardsStore } from "@/entities/travel-plan/model/usePlanCardsStore";
 import { CalendarDays, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 

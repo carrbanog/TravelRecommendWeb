@@ -2,9 +2,7 @@
 import { Bus, Car, Footprints, HelpCircle, MapPin } from "lucide-react";
 import { memo } from "react";
 
-// 2. 기능 (Features 계층) - 💡 useFetchDistanceQuery 임포트 제거
-
-// 3. 타입 (Types)
+// 2, 타입 (Types)
 import type { PlanPlace } from "@/entities/place/model/type";
 import type { RouteStep } from "@/features/calculate-distance/model/type";
 import type { DayRouteData } from "@/features/calculate-distance/model/type";

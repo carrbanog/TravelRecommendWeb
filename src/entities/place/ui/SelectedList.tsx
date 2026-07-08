@@ -1,5 +1,5 @@
 import React from "react";
-import type { NearPlace } from "../../../shared/types/nearPlaceType";
+import type { NearPlace } from "@/shared/types/nearPlaceType";
 import { Trash2, MapPin } from "lucide-react";
 
 // shadcn 컴포넌트 임포트

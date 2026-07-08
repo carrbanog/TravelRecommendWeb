@@ -1,9 +1,9 @@
 import axios from "axios";
-import type { AddressType } from "../model/type";
-import type { NearPlaceApiResponse } from "../model/type";
-import { AUTH_ENDPOINTS } from "../../../shared/api/endpoints";
-import { apiClient } from "../../../shared/api/apiClient";
-import { handleApiError } from "../../../shared/api/apiClient";
+import type { AddressType } from "@/entities/place/model/type";
+import type { NearPlaceApiResponse } from "@/entities/place/model/type";
+import { AUTH_ENDPOINTS } from "@/shared/api/endpoints";
+import { apiClient } from "@/shared/api/apiClient";
+import { handleApiError } from "@/shared/api/apiClient";
 
 // 도시이름, 좌표 반환
 export const fetchMapCode = async (

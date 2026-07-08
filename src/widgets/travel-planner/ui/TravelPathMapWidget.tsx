@@ -3,8 +3,8 @@ import { TravelPathMapCanvas } from "@/features/travel-route/ui/TravelPathMapCan
 import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDistance"; // 💡 부모로 이동
 
 // 2. Entities
-import { usePlanCardsStore } from "../../../entities/travel-plan/model/usePlanCardsStore";
-import { TravelDayList } from "../../travel-plan/TravelDayList";
+import { usePlanCardsStore } from "@/entities/travel-plan/model/usePlanCardsStore";
+import { TravelDayList } from "@/widgets/travel-plan/TravelDayList";
 
 // 3. Shared
 import { useMapHover } from "@/shared/lib/hooks/useMapHover";

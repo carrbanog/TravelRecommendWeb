@@ -1,4 +1,4 @@
-import { useWeatherQuery } from "../../../entities/weather/api/weatherApi";
+import { useWeatherQuery } from "@/entities/weather/api/weatherApi";
 
 interface WeatherCardProps {
   cityName: string;  // API 요청용 영문 이름 (예: "Seoul")

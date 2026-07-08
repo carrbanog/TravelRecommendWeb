@@ -1,6 +1,6 @@
 import { apiClient } from "@/shared/api/apiClient";
 import { useQuery } from "@tanstack/react-query";
-import type { WeatherData } from "../model/types";
+import type { WeatherData } from "@/entities/weather/model/types";
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 

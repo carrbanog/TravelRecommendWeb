@@ -4,7 +4,7 @@ import { useSelectedPlacesStore } from "@/entities/place/model/selectedPlacesSto
 import { usePlaceDetailsQuery } from "@/entities/place/place-details/lib/usePlaceDetailsQuery";
 import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWindow";
 import MyMap from "@/shared/ui/GoogleMap/MyMap";
-import { DayRoutePolyline } from "./DayRoutePolyline";
+import { DayRoutePolyline } from "@/features/travel-route/ui/DayRoutePolyline";
 import type { PlanPlace } from "@/entities/place/model/type";
 import type { DayRouteData } from "@/features/calculate-distance/model/type";
 

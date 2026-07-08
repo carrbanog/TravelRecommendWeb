@@ -1,5 +1,5 @@
 // 이 파일서 모든 get, post요청을 관리합니다.
-import api from "./axiosInstance";
+import api from "@/shared/api/axiosInstance";
 import axios, { AxiosError } from "axios";
 import type { AxiosRequestConfig } from "axios";
 

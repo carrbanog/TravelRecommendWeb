@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginApi } from "../api/loginApi";
-import { useAuth } from "../../../../app/providers/AuthProvider";
-import type { LoginResponse } from "./type";
+import { loginApi } from "@/features/auth/login/api/loginApi";
+import { useAuth } from "@/app/providers/AuthProvider";
+import type { LoginResponse } from "@/features/auth/login/model/type";
 import { toast } from "sonner";
 import axios from "axios"; // 🔥 Axios 에러 타입 검증을 위해 임포트 추가
 

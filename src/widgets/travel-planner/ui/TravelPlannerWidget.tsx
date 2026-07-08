@@ -1,16 +1,21 @@
+// 1. External Libraries & Core Hooks (외부 라이브러리 및 React)
 import { useState } from "react";
 import {
   DndContext,
   PointerSensor,
   useSensor,
   useSensors,
-  DragOverlay, // 필수 추가
+  DragOverlay,
 } from "@dnd-kit/core";
-import { useSelectedPlacesStore } from "../../../entities/place/model/selectedPlacesStore";
-import { SelectedListCard } from "../../../entities/place/ui/SelectedListCard";
-import { PlanCardList } from "../../../entities/travel-plan/ui/PlanCardList";
-import { handleDragEnd } from "../../../features/plan-itinerary-route/lib/handleDragEnd";
+
+// 2. Features Layer (드래그 앤 드롭 비즈니스 로직)
+import { handleDragEnd } from "@/features/plan-itinerary-route/lib/handleDragEnd";
+
+// 3. Entities Layer (도메인 데이터 상태 및 컴포넌트)
+import { useSelectedPlacesStore } from "@/entities/place/model/selectedPlacesStore";
 import { DragOverlayCard } from "@/entities/place/ui/DragOverlayCard";
+import { SelectedListCard } from "@/entities/place/ui/SelectedListCard";
+import { PlanCardList } from "@/entities/travel-plan/ui/PlanCardList";
 
 interface TravelPlannerWidgetProps {
   onShowPathClick: () => void;

@@ -1,7 +1,7 @@
 // 마커에 마우스를 올리면 디테일한 정보를 보여주는 컴포넌트
 
 import type { PlaceDetailResponse } from "@/entities/place/place-details/model/types";
-import { getPhotoUrl } from "../../../../shared/lib/getPhotoUrl";
+import { getPhotoUrl } from "@/shared/lib/getPhotoUrl";
 
 interface PlaceInfoWindowProps {
   place: PlaceDetailResponse | null; // null 허용

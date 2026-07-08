@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo, lazy, Suspense } from "react";
 
-import { useNearcodeQuery } from "../../features/find-nearby-places/lib/useNearByPlacesQuery";
-import { useSelectedPlacesStore } from "../../entities/place/model/selectedPlacesStore";
-import type { SearchParams, SearchType } from "../../entities/place/model/type";
-import { PlanningSidebarWidget } from "../../widgets/planning-sidebar/ui/PlanningSidebarWidget";
+import { useNearbyPlacesQuery } from "@/features/find-nearby-places/lib/useNearByPlacesQuery";
+import { useSelectedPlacesStore } from "@/entities/place/model/selectedPlacesStore";
+import type { SearchParams, SearchType } from "@/entities/place/model/type";
+import { PlanningSidebarWidget } from "@/widgets/planning-sidebar/ui/PlanningSidebarWidget";
 import { MapSkeleton } from "@/widgets/travel-map/ui/MapSkeleton";
 
 const TravelMapWidget = lazy(() =>
@@ -22,7 +22,7 @@ export const TravelPage = () => {
     setSearchQuery(params.query);
   };
   //검색어를 입력하면 여행지, 호텔, 좌표를 가져오는 쿼리 실행
-  const { data: nearbyData, isLoading } = useNearcodeQuery({
+  const { data: nearbyData, isLoading } = useNearbyPlacesQuery({
     query: searchQuery,
   });
   const displayPlaces = useMemo(() => {

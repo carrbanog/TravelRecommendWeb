@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Trash2, MapPin, Hotel, GripVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { SelectedPlace } from "../../../shared/types/nearPlaceType";
+import type { SelectedPlace } from "@/shared/types/nearPlaceType";
 
 interface ListCardUIProps {
   place: SelectedPlace;
@@ -17,7 +17,6 @@ interface ListCardUIProps {
 export const ListCardUI = memo(({
   place,
   onRemovePlace,
-  isDragging = false,
   style,
   listeners,
   attributes,

@@ -1,6 +1,6 @@
 import { AUTH_ENDPOINTS } from "@/shared/api/endpoints";
-import { apiClient } from "../../../../shared/api/apiClient";
-import type { CreatePostResponse, CreatePost } from "../model/type";
+import { apiClient } from "@/shared/api/apiClient";
+import type { CreatePostResponse, CreatePost } from "@/features/post/create/model/type";
 
 // 게시글 생성과 관련된 API 호출 함수
 export const createPostApi = async (

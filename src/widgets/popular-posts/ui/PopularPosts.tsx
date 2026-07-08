@@ -1,5 +1,5 @@
-import { usePopularPosts } from "../../../entities/post/model/usePopularPosts";
-import { PopularPostCard } from "../../../entities/post/ui/PopularPostCard";
+import { usePopularPosts } from "@/entities/post/model/usePopularPosts";
+import { PopularPostCard } from "@/entities/post/ui/PopularPostCard";
 
 // 메인 페이지에서 인기 여행지를 보여주는 컴포넌트
 // 지금은 게시글 4개 순서대로 보여주지만 나중에 인기글 기준이 생기면 usePopularPosts 훅과 fetchPopularPosts API를 수정해서 반영할 예정입니다.

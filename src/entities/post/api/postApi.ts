@@ -1,5 +1,5 @@
-import { apiClient } from "../../../shared/api/apiClient";
-import type { Post } from "../model/postTypes";
+import { apiClient } from "@/shared/api/apiClient";
+import type { Post } from "@/entities/post/model/postTypes";
 
 export const fetchPosts = async (): Promise<Post[]> => {
   const res = await apiClient.get<Post[]>("/posts");

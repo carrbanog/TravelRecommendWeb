@@ -1,6 +1,6 @@
 // --- 1. 개별 댓글 아이템 컴포넌트 (Internal Component) ---
-import type { Comment } from "../model/type";
-import { useDeleteComment } from '../model/useComments';
+import type { Comment } from "@/entities/comment/model/type";
+import { useDeleteComment } from '@/entities/comment/model/useComments';
 
 interface ItemProps {
   comment: Comment;

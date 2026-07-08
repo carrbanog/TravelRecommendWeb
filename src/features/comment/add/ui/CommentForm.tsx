@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCreateComment } from '../model/useCreateComment';
+import { useCreateComment } from '@/features/comment/add/model/useCreateComment';
 
 interface Props {
   postId: string;

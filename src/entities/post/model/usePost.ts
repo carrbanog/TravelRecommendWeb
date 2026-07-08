@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchPostById } from "../api/postApi";
+import { fetchPostById } from "@/entities/post/api/postApi";
 
 export const usePost = (id: string) => {
   return useQuery({

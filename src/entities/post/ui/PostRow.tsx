@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { CalendarDays, User } from "lucide-react";
 
-import type { Post } from "../model/postTypes";
+import type { Post } from "@/entities/post/model/postTypes";
 interface PostRowProps {
   post: Post;
 }

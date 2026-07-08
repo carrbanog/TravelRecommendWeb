@@ -1,13 +1,13 @@
 import React from "react"; // useState 추가
 import { InfoWindow, Marker } from "@react-google-maps/api"; // InfoWindow 추가
-import MyMap from "../../../shared/ui/GoogleMap/MyMap";
-import type { coordinates } from "../../../shared/types/coordinatestype";
-import type { NearPlace } from "../../../shared/types/nearPlaceType";
+import MyMap from "@/shared/ui/GoogleMap/MyMap";
+import type { coordinates } from "@/shared/types/coordinatestype";
+import type { NearPlace } from "@/shared/types/nearPlaceType";
 import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWindow";
 import { usePlaceDetailsQuery } from "@/entities/place/place-details/lib/usePlaceDetailsQuery";
 import { MapSkeleton } from "./MapSkeleton";
 
-import { useMapHover } from "../../../shared/lib/hooks/useMapHover";
+import { useMapHover } from "@/shared/lib/hooks/useMapHover";
 
 type Props = {
   centerCoords?: coordinates;

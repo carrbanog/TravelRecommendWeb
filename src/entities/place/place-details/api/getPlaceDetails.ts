@@ -1,4 +1,4 @@
-import type { PlaceDetailResponse } from '../model/types';
+import type { PlaceDetailResponse } from "@/entities/place/place-details/model/types";
 import { apiClient } from '@/shared/api/apiClient';
 
 // 마우스를 올리면 세부 정보를 보여주는 API

@@ -2,7 +2,7 @@ import { format, differenceInDays } from "date-fns";
 import { ko } from "date-fns/locale"; // 한국어 설정
 import { Calendar as CalendarIcon, CalendarRange } from "lucide-react";
 import type { DateRange } from "react-day-picker";
-import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
+import { useDayPickerStore } from "@/entities/travel-plan/model/useDayPickerStore";
 
 // shadcn ui
 import { cn } from "@/lib/utils";

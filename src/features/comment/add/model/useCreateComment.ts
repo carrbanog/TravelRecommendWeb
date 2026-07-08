@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createCommentApi } from '../api/commentApi';
+import { createCommentApi } from '@/features/comment/add/api/commentApi';
 
 // 댓글 생성 훅
 export const useCreateComment = (postId: string, userEmail: string) => {

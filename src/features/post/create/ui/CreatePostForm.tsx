@@ -1,17 +1,21 @@
-// features/post/create/ui/CreatePostForm.tsx
+// 1. External Libraries & Icons (외부 라이브러리 및 아이콘)
 import React, { useRef, useState, useMemo, useCallback } from "react";
 import ReactQuill from "react-quill-new";
-import { toast } from "sonner";
 import { Save, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+// 2. Shared/Global Components & Context (전역 라이브러리 및 글로벌 상태)
+import { useAuth } from "@/app/providers/AuthProvider";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "../../../../app/providers/AuthProvider";
 
-import { resizeImage } from "../lib/imageResizer";
-import { uploadImageApi } from "../api/postApi";
-import { useCreatePost } from "../model/useCreatePost";
+// 3. Relative Internal Imports
+import { resizeImage } from "@/features/post/create/lib/imageResizer";
+import { uploadImageApi } from "@/features/post/create/api/postApi";
+import { useCreatePost } from "@/features/post/create/model/useCreatePost";
 
+// 4. Styles
 import "react-quill-new/dist/quill.snow.css";
 
 export const CreatePostForm = () => {
@@ -32,53 +36,58 @@ export const CreatePostForm = () => {
       const file = input.files?.[0];
       if (!file) return;
 
-      toast.promise(async () => {
-        // 1. 리사이징 (Client Side)
-        const resizedBlob = await resizeImage(file);
-        console.log("Original size:", file, "bytes");
-        console.log("Resized size:", resizedBlob, "bytes");
-        // 2. 업로드 (Server Side)
-        const { url } = await uploadImageApi(resizedBlob);
+      toast.promise(
+        async () => {
+          // 1. 리사이징 (Client Side)
+          const resizedBlob = await resizeImage(file);
+          console.log("Original size:", file, "bytes");
+          console.log("Resized size:", resizedBlob, "bytes");
+          // 2. 업로드 (Server Side)
+          const { url } = await uploadImageApi(resizedBlob);
 
-        
-        // 3. 에디터에 URL 삽입
-        const editor = quillRef.current?.getEditor(); //직접적인 조작을 할 수 있는 권한 가져오기
-        const range = editor?.getSelection(); // 현재 커서 위치에 이미지 삽입, 삽입 후 커서 위치 조정
-        if (editor && range) {
-          editor.insertEmbed(range.index, "image", url); 
-          // range.index는 현재 커서 위치를 나타냅니다.
-          //image는 퀼에서 제공하는 embed 타입 중 하나로, 이미지를 삽입할 때 사용됩니다.
-          //url은 업로드된 이미지의 URL입니다.
-          editor.setSelection(range.index + 1);
-        }
-      }, {
-        loading: '이미지 최적화 및 업로드 중...',
-        success: '이미지가 본문에 삽입되었습니다.',
-        error: '이미지 처리에 실패했습니다.',
-      });
+          // 3. 에디터에 URL 삽입
+          const editor = quillRef.current?.getEditor(); //직접적인 조작을 할 수 있는 권한 가져오기
+          const range = editor?.getSelection(); // 현재 커서 위치에 이미지 삽입, 삽입 후 커서 위치 조정
+          if (editor && range) {
+            editor.insertEmbed(range.index, "image", url);
+            // range.index는 현재 커서 위치를 나타냅니다.
+            //image는 퀼에서 제공하는 embed 타입 중 하나로, 이미지를 삽입할 때 사용됩니다.
+            //url은 업로드된 이미지의 URL입니다.
+            editor.setSelection(range.index + 1);
+          }
+        },
+        {
+          loading: "이미지 최적화 및 업로드 중...",
+          success: "이미지가 본문에 삽입되었습니다.",
+          error: "이미지 처리에 실패했습니다.",
+        },
+      );
     };
   }, []);
 
-  const modules = useMemo(() => ({
-    toolbar: {
-      container: [
-        [{ header: [1, 2, 3, false] }],
-        ["bold", "italic", "underline", "strike"],
-        ["link", "image", "video"],
-        [{ color: [] }, { background: [] }],
-        ["clean"],
-      ],
-      handlers: { image: imageHandler },
-    },
-  }), [imageHandler]);
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, false] }],
+          ["bold", "italic", "underline", "strike"],
+          ["link", "image", "video"],
+          [{ color: [] }, { background: [] }],
+          ["clean"],
+        ],
+        handlers: { image: imageHandler },
+      },
+    }),
+    [imageHandler],
+  );
 
   // 본문에서 첫 번째 이미지 URL 추출 함수
   const extractFirstImageUrl = (htmlContent: string) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlContent, "text/html");
-  const img = doc.querySelector("img");
-  return img ? img.src : undefined; // 이미지가 없으면 undefined 반환
-};
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, "text/html");
+    const img = doc.querySelector("img");
+    return img ? img.src : undefined; // 이미지가 없으면 undefined 반환
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,7 +107,9 @@ export const CreatePostForm = () => {
 
       <Card className="h-full shadow-lg border-gray-100 bg-white/80 backdrop-blur-sm">
         <CardHeader className="space-y-1 pb-6">
-          <CardTitle className="text-2xl font-bold text-slate-900">새 여행기 작성</CardTitle>
+          <CardTitle className="text-2xl font-bold text-slate-900">
+            새 여행기 작성
+          </CardTitle>
         </CardHeader>
 
         <CardContent>
@@ -120,8 +131,16 @@ export const CreatePostForm = () => {
               />
             </div>
             <div className="flex justify-end pt-4">
-              <Button type="submit" disabled={isPending} className="bg-sky-500 px-8 py-6 text-lg">
-                {isPending ? <Loader2 className="mr-2 animate-spin" /> : <Save className="mr-2" />}
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="bg-sky-500 px-8 py-6 text-lg"
+              >
+                {isPending ? (
+                  <Loader2 className="mr-2 animate-spin" />
+                ) : (
+                  <Save className="mr-2" />
+                )}
                 저장하기
               </Button>
             </div>
@@ -131,4 +150,3 @@ export const CreatePostForm = () => {
     </div>
   );
 };
-

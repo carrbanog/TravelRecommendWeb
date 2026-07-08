@@ -1,4 +1,8 @@
+// 1. External Libraries & Icons (외부 라이브러리, 날짜 유틸, 아이콘)
 import { useState } from "react";
+import { format } from "date-fns";
+import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
+import { toast } from "sonner";
 import {
   PlaneTakeoff,
   ArrowRightLeft,
@@ -6,14 +10,14 @@ import {
   CalendarIcon,
   Search,
 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
-import { format } from "date-fns";
-import { PopoverContent } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { toast } from "sonner";
 
+// 2. Global Components
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { PopoverContent } from "@/components/ui/popover";
+
+// 3. Shared Layer (프로젝트 공통 상수)
 import { CITY_MAP } from "@/shared/constants/airport-codes";
 
 export const FlightSearchForm = () => {

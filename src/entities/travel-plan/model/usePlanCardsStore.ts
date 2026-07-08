@@ -2,7 +2,7 @@ import { create } from "zustand";
 import type {
   PlanCard,
   PlanPlace,
-} from "../../place/model/type";
+} from "@/entities/place/model/type";
 
 type PlanCardsState = {
   planCards: PlanCard[];

@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchNearbyPlaces } from "../../../entities/place/api/placeApi";
+import { fetchNearbyPlaces } from "@/entities/place/api/placeApi";
 import { toast } from "sonner";
-import type { NearbyPlaceParams } from "../../../entities/place/model/type";
+import type { NearbyPlaceParams } from "@/entities/place/model/type";
 
 
-export const useNearcodeQuery = ({ query }: NearbyPlaceParams) => {
+export const useNearbyPlacesQuery = ({ query }: NearbyPlaceParams) => {
   // console.log(coords, type)
   return useQuery({
     queryKey: ["nearbyPlaces", query],

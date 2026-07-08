@@ -1,5 +1,5 @@
-import { useComments } from "../model/useComments";
-import { CommentItem } from "./CommentItem";
+import { useComments } from "@/entities/comment/model/useComments";
+import { CommentItem } from "@/entities/comment/ui/CommentItem";
 
 interface CommentListProps {
   postId: string;

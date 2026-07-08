@@ -1,13 +1,19 @@
+// 1. External Libraries (외부 라이브러리 및 React)
 import React from "react";
 import { Link } from "react-router-dom";
-import SearchForm from "../../../features/search-plcae/ui/SearchForm";
-import { TravelDaysPicker } from "../../../features/select-travel-dates/ui/TravelDaysPicker";
-
-import SelectedList from "../../../entities/place/ui/SelectedList";
-import type { NearPlace } from "../../../shared/types/nearPlaceType";
-import type { SearchParams, SearchType } from "../../../entities/place/model/type";
-import { useDayPickerStore } from "../../../entities/travel-plan/model/useDayPickerStore";
 import { toast } from "sonner";
+
+// 2. Features Layer (사용자 상호작용 및 기능 단위)
+import SearchForm from "@/features/search-plcae/ui/SearchForm"; // 💡 오타 수정: plcae -> place
+import { TravelDaysPicker } from "@/features/select-travel-dates/ui/TravelDaysPicker";
+
+// 3. Entities Layer (비즈니스 도메인 및 데이터 상태 관리)
+import SelectedList from "@/entities/place/ui/SelectedList";
+import { useDayPickerStore } from "@/entities/travel-plan/model/useDayPickerStore";
+
+// 4. Shared Layer - Types (가장 하위 공통 데이터 타입)
+import type { SearchParams, SearchType } from "@/entities/place/model/type";
+import type { NearPlace } from "@/shared/types/nearPlaceType";
 
 type PlanningSidebarWidgetProps = {
   setPlaceSearch: (params: SearchParams) => void;

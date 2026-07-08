@@ -1,7 +1,7 @@
-import type { LoginResponse } from "../../login/model/type";
-import type { LoginData } from "../../../../shared/types/usertype";
-import { AUTH_ENDPOINTS } from "../../../../shared/api/endpoints";
-import { apiClient } from "../../../../shared/api/apiClient";
+import type { LoginResponse } from "@/features/auth/login/model/type";
+import type { LoginData } from "@/shared/types/usertype";
+import { AUTH_ENDPOINTS } from "@/shared/api/endpoints";
+import { apiClient } from "@/shared/api/apiClient";
 
 // export const loginApi = async (data: LoginData): Promise<LoginResponse> => {
 //   const response = await api.post<LoginResponse>(AUTH_ENDPOINTS.LOGIN, data);

@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "../../widgets/Header/Header";
-import { HomePage } from "../../pages/HomePage";
-import { TravelPage } from "../../pages/TravelPage";
-import { CommunityPage } from "../../pages/CommunityPage";
-import { AuthPage } from "../../pages/AuthPage";
-import { AuthProvider } from "../providers/AuthProvider";
-import TravelPathPage from "../../pages/TravelPage/path";
-import { CreatePostPage } from "../../pages/CreatePostPage";
+import Header from "@/widgets/Header/Header";
+import { HomePage } from "@/pages/HomePage";
+import { TravelPage } from "@/pages/TravelPage";
+import { CommunityPage } from "@/pages/CommunityPage";
+import { AuthPage } from "@/pages/AuthPage";
+import { AuthProvider } from "@/app/providers/AuthProvider";
+import TravelPathPage from "@/pages/TravelPage/path";
+import { CreatePostPage } from "@/pages/CreatePostPage";
 import {PostDetailPage} from '@/pages/PostDetailPage';
 
 import { Toaster } from "sonner";

@@ -1,6 +1,6 @@
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
-import type { Comment } from "./type";
-import { deleteCommentApi, fetchCommentsApi } from '../api/commentAPi';
+import type { Comment } from "@/entities/comment/model/type";
+import { deleteCommentApi, fetchCommentsApi } from "@/entities/comment/api/commentAPi";
 import { toast } from "sonner";
 
 

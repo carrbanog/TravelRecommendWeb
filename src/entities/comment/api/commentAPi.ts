@@ -1,5 +1,5 @@
 import { apiClient } from "@/shared/api/apiClient";
-import type { Comment, DeleteResponse } from "../model/type";
+import type { Comment, DeleteResponse } from "@/entities/comment/model/type";
 
 // 특정 게시물의 댓글을 가져오는 API 함수
 export const fetchCommentsApi = async (postId: string): Promise<Comment[]> => {

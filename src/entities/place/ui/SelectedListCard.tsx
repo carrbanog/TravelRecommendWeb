@@ -1,5 +1,5 @@
-import type { SelectedPlace } from "../../../shared/types/nearPlaceType";
-import { DraggableListCard } from "./DraggableListCard";
+import type { SelectedPlace } from "@/shared/types/nearPlaceType";
+import { DraggableListCard } from "@/entities/place/ui/DraggableListCard";
 import { Package, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 

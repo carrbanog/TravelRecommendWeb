@@ -1,7 +1,7 @@
 import { apiClient } from "@/shared/api/apiClient";
 import type { coordinates } from "@/shared/types/coordinatestype";
 import { useQuery } from "@tanstack/react-query";
-import type { distanceResponse } from "../model/type";
+import type { distanceResponse } from "@/features/calculate-distance/model/type";
 
 export const useFetchDistanceQuery = (locations: coordinates[]) => {
   return useQuery({

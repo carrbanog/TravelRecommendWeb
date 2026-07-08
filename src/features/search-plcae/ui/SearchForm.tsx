@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import type {
   SearchParams,
   SearchType,
-} from "../../../entities/place/model/type";
+} from "@/entities/place/model/type";
 import { Search, MapPin, Hotel } from "lucide-react";
 
 // shadcn 컴포넌트 임포트

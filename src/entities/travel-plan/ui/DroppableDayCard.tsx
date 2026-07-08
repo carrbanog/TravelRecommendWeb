@@ -1,10 +1,14 @@
+import { memo } from 'react';
 import { useDroppable } from "@dnd-kit/core";
-import type { PlanCard } from "../../place/model/type";
 import { Trash2, CalendarPlus } from "lucide-react";
-import { usePlanCardsStore } from "../model/usePlanCardsStore";
+
+// 2. Entities Layer (비즈니스 도메인 / 데이터 상태 관리)
+import type { PlanCard } from "@/entities/place/model/type";
+import { usePlanCardsStore } from "@/entities/travel-plan/model/usePlanCardsStore";
+
+// 3. Shared Layer - UI & Utilities (가장 하위 공통 레이어)
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { memo } from 'react';
 
 type DroppableDayCardProps = {
   card: PlanCard;

@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { createPostApi } from "../api/postApi";
-import type { CreatePost } from "./type";
+import { createPostApi } from "@/features/post/create/api/postApi";
+import type { CreatePost } from "@/features/post/create/model/type";
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();

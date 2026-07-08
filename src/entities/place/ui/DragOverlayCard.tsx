@@ -1,5 +1,5 @@
-import { ListCardUI } from "./ListCardUI";
-import type { SelectedPlace } from "../../../shared/types/nearPlaceType";
+import { ListCardUI } from "@/entities/place/ui/ListCardUI";
+import type { SelectedPlace } from "@/shared/types/nearPlaceType";
 
 
 interface DragOverlayCardProps {

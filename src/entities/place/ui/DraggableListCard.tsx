@@ -1,6 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
-import type { SelectedPlace } from "../../../shared/types/nearPlaceType";
-import { ListCardUI } from "./ListCardUI"; // 분리된 UI 컴포넌트 유지
+import type { SelectedPlace } from "@/shared/types/nearPlaceType";
+import { ListCardUI } from "@/entities/place/ui/ListCardUI"; // 분리된 UI 컴포넌트 유지
 
 
 type DraggableListCardProps = {
