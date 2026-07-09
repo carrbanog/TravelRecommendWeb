@@ -20,47 +20,59 @@ import { PopoverContent } from "@/components/ui/popover";
 // 3. Shared Layer (프로젝트 공통 상수)
 import { CITY_MAP } from "@/shared/constants/airport-codes";
 
+// ... 상단 import 생략 ...
+
 export const FlightSearchForm = () => {
-  const [origin, setOrigin] = useState(""); //출발지 상태
-  const [destination, setDestination] = useState(""); //도착지 상태
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
   const [date, setDate] = useState<{ from: Date; to: Date | undefined }>({
     from: new Date(),
     to: undefined,
-  }); //날짜 상태
+  });
+const handleSearchDirectly = () => {
+    // 1. 배포 환경에서 함수가 실행되는지 확인하는 가장 확실한 방법
+    alert("1. 클릭 이벤트 진입 성공");
 
+    try {
+      // 2. 외부 변수나 함수를 거치지 않고 가장 단순한 주소로 먼저 이동 시도
+      const testUrl = "https://www.skyscanner.co.kr";
+      
+      alert("2. 이동 시도 주소: " + testUrl);
+      
+      // _self 이동의 가장 원초적인 방법
+      window.location.href = testUrl;
+    } catch (error) {
+      // 혹시나 잡히지 않는 에러가 있다면 alert로 강제 출력
+      alert("에러 발생: " + String(error));
+    }
+  };
+  
   const handleSearch = () => {
     if (!origin || !destination || !date.from) {
       toast.error("출발지와 도착지를 선택해 주세요", { position: "top-right" });
       return;
     }
-    // 도시 이름을 공항 코드로 변환하는 함수
+
     const getCode = (city: string) =>
-      CITY_MAP[city.trim()] || city.trim().toUpperCase(); //소문자로 입력한 경우  대문자로 수정
+      CITY_MAP[city.trim()] || city.trim().toUpperCase();
 
     const originCode = getCode(origin);
     const destinationCode = getCode(destination);
 
     const formatDate = (date: Date) => format(date, "yyMMdd");
     const outboundDate = formatDate(date.from);
-
-    // 왕복인 경우에만 돌아오는 날짜를 포함, 편도인 경우에는 빈 문자열로 처리
     const inboundDate = date.to ? formatDate(date.to) : "";
 
-    // 스카이스캐너 URL 조합
     const skyscannerUrl = `https://www.skyscanner.co.kr/transport/flights/${originCode}/${destinationCode}/${outboundDate}/${inboundDate}/`;
 
-    window.open(skyscannerUrl, "_self");
+    // 유저의 onClick 이벤트와 직접 연결되어 배포 환경에서도 안전하게 새 창이 열립니다.
+    window.open(skyscannerUrl, "_blank");
   };
 
   return (
     <search className="w-full max-w-6xl mx-auto my-4 bg-white p-2 rounded-xl shadow-2xl border border-slate-200">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSearch();
-        }}
-        className="flex flex-col md:flex-row items-center gap-1"
-      >
+      {/* 1. form 태그를 div로 변경 (onSubmit 제거) */}
+      <div className="flex flex-col md:flex-row items-center gap-1">
         <fieldset className="flex-1 w-full flex flex-col md:flex-row items-center gap-1 border-none p-0 m-0">
           <legend className="sr-only">항공권 일정 및 목적지 검색</legend>
 
@@ -72,7 +84,6 @@ export const FlightSearchForm = () => {
               className="pl-10 h-14 border focus-visible:ring-0 text-base font-bold text-slate-700"
               value={origin}
               onChange={(e) => setOrigin(e.target.value)}
-              required
             />
           </div>
 
@@ -89,7 +100,6 @@ export const FlightSearchForm = () => {
               className="pl-10 h-14 border focus-visible:ring-0 text-base font-bold text-slate-700"
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
-              required
             />
           </div>
 
@@ -136,14 +146,23 @@ export const FlightSearchForm = () => {
           </div>
         </fieldset>
 
+        {/* 2. type="submit" 대신 type="button"과 onClick 이벤트 부여 */}
         <Button
-          type="submit"
+          type="button"
+          onClick={handleSearch}
           className="w-full md:w-auto h-14 px-6 bg-[#0071eb] hover:bg-[#005bbd] text-white font-black rounded-lg flex gap-2 shrink-0"
         >
           <Search className="w-5 h-5" />
           <span>항공권 검색</span>
         </Button>
-      </form>
+      </div>
+      <Button
+          type="button"
+          onClick={handleSearchDirectly} // 임시 다이어트 함수 바인딩
+          className="w-full md:w-auto h-14 px-6 bg-[#0071eb] text-white font-black rounded-lg shrink-0"
+        >
+          <span>항공권 검색 테스트</span>
+        </Button>
     </search>
   );
 };
