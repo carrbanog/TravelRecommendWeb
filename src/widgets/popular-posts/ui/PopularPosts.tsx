@@ -17,16 +17,15 @@ export const PopularPosts = () => {
   }
 
   return (
-<section className="max-w-screen-xl mx-auto my-12 px-6">
+    <section className="max-w-screen-xl mx-auto my-12 px-6">
       <header className="mb-6 text-center my-4">
         <h2 className="text-2xl font-bold text-slate-800">
           🔥 실시간 인기 여행기
         </h2>
       </header>
 
-      {/* 1. 로딩 중일 때 스켈레톤 카드 리스트 노출 */}
       {isLoading ? (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-0 m-0 list-none animate-pulse">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-0 m-0 list-none">
           {Array.from({ length: 4 }).map((_, idx) => (
             <li key={`post-skeleton-${idx}`}>
               <PopularPostCardSkeleton />
@@ -34,19 +33,17 @@ export const PopularPosts = () => {
           ))}
         </ul>
       ) : !popularPosts || popularPosts.length === 0 ? (
-        // 2. 데이터가 비어있을 때
-        <div className="text-center py-12 text-slate-500 border border-dashed border-slate-200 rounded-xl">
+        <div className="text-center py-12 text-slate-500 border border-dashed border-slate-200 rounded-xl h-[420px] flex flex-col justify-center">
           <p className="text-lg font-medium">
-            `아직 등록된 인기 여행기가 없습니다.`
+            아직 등록된 인기 여행기가 없습니다.
           </p>
           <p className="text-sm text-slate-400 mt-1">
             첫 번째 여행기의 주인공이 되어보세요!
           </p>
         </div>
       ) : (
-        // 3. 데이터 로드 성공 시 실제 카드 리스트 노출
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-0 m-0 list-none">
-          {popularPosts.map((post) => (
+          {popularPosts.slice(0, 4).map((post) => (
             <li key={post._id}>
               <PopularPostCard
                 id={post._id}
