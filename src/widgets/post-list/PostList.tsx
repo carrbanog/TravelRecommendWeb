@@ -63,7 +63,7 @@ const PostList = () => {
     );
 
   return (
-    <div className="container max-w-screen-xl mx-auto py-8 h-full flex flex-col gap-6">
+    <section className="container max-w-screen-xl mx-auto py-8 h-full flex flex-col gap-6">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <PostSearch onSearch={setSearchKeyword} />
 
@@ -119,7 +119,7 @@ const PostList = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };
 

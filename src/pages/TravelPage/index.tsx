@@ -8,7 +8,7 @@ import type { SearchParams, SearchType } from "@/entities/place/model/type";
 
 // [Widgets Layer]
 import { PlanningSidebarWidget } from "@/widgets/planning-sidebar/ui/PlanningSidebarWidget";
-import { MapSkeleton } from "@/widgets/travel-map/ui/MapSkeleton";
+import { MapSkeleton } from "@/shared/ui/GoogleMap/MapSkeleton";
 
 // Lazy Loaded Widgets
 const TravelMapWidget = lazy(() =>

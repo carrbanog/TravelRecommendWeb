@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 
-import {PostDetailSkeleton} from "@/widgets/post-detail/PostDetailSkeleton";
+import { PostDetailSkeleton } from "@/widgets/post-detail/PostDetailSkeleton";
 
 // Entities & Features (FSD 하위 계층)
 import { usePost } from "@/entities/post/model/usePost";
@@ -45,20 +45,27 @@ export const PostDetail = () => {
       </div>
     );
 
-    if (isLoading) {
+  if (isLoading) {
     return <PostDetailSkeleton />;
   }
 
   return (
-<div className="flex flex-col w-full max-w-screen-xl mx-auto py-8 px-4 gap-6">
+    <section className="flex flex-col w-full max-w-screen-xl mx-auto py-8 px-4 gap-6">
       <style>{`
         .ql-editor p { margin-bottom: 1.5rem !important; line-height: 1.8; }
         .ql-editor img { max-width: 100%; height: auto; margin: 2rem 0 !important; }
         .ql-editor .ql-video, .ql-editor p:empty::before { content: ""; display: block; height: 1.5rem; }
       `}</style>
 
-      <nav className="flex justify-between items-center" aria-label="게시글 액션">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="text-slate-500">
+      <nav
+        className="flex justify-between items-center"
+        aria-label="게시글 액션"
+      >
+        <Button
+          variant="ghost"
+          onClick={() => navigate(-1)}
+          className="text-slate-500"
+        >
           <ArrowLeft className="w-4 h-4 mr-2" /> 목록으로 돌아가기
         </Button>
 
@@ -82,11 +89,16 @@ export const PostDetail = () => {
                   <div className="p-1.5 rounded-full bg-sky-100 text-sky-600">
                     <User className="w-4 h-4" />
                   </div>
-                  <span className="font-medium text-slate-700">{post?.author}</span>
+                  <span className="font-medium text-slate-700">
+                    {post?.author}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <time dateTime={post?.createdAt} className="text-sm text-slate-500">
+                  <time
+                    dateTime={post?.createdAt}
+                    className="text-sm text-slate-500"
+                  >
                     {formatDate(post?.createdAt)}
                   </time>
                 </div>
@@ -104,10 +116,13 @@ export const PostDetail = () => {
               />
             </div>
           </CardContent>
-          
+
           <Separator className="bg-gray-300 mx-2 w-auto" />
 
-          <section className="p-8 sm:px-10 bg-slate-50/30" aria-label="댓글 섹션">
+          <section
+            className="p-8 sm:px-10 bg-slate-50/30"
+            aria-label="댓글 섹션"
+          >
             <h3 className="text-xl font-bold text-slate-900 mb-6">댓글</h3>
 
             {user && post ? (
@@ -117,12 +132,14 @@ export const PostDetail = () => {
               </div>
             ) : (
               <div className="text-center py-10 bg-white rounded-lg border border-dashed border-slate-200">
-                <p className="text-slate-500">로그인하고 여행에 대한 의견을 나눠보세요!</p>
+                <p className="text-slate-500">
+                  로그인하고 여행에 대한 의견을 나눠보세요!
+                </p>
               </div>
             )}
           </section>
         </article>
       </Card>
-    </div>
+    </section>
   );
 };

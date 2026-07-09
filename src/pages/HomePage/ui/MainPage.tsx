@@ -4,10 +4,10 @@ import { WeatherWidget } from '@/widgets/weather/ui/WeatherWidget';
 
 export const MainPage = () => {
   return (
-    <div>
+    <main>
       <FlightSearchForm />
       <PopularPosts />
       <WeatherWidget />
-    </div>
+    </main>
   );
 };

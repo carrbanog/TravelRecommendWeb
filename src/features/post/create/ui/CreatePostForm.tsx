@@ -101,7 +101,7 @@ export const CreatePostForm = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-full max-w-screen-xl mx-auto py-8 px-4">
+    <section className="flex flex-col h-full w-full max-w-screen-xl mx-auto py-8 px-4">
       {/* 에디터 내부 이미지 스타일링 */}
       <style>{`.ql-editor img { width: 30%; height: auto; display: block; margin: 10px 0; }`}</style>
 
@@ -147,6 +147,6 @@ export const CreatePostForm = () => {
           </form>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 };
