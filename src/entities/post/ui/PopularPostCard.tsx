@@ -39,7 +39,7 @@ export const PopularPostCard = ({
           </div>
 
           <div className="p-5 flex-1 flex flex-col justify-between">
-            <header>
+            <header className="min-h-[56px]">
               <h3 className="font-bold text-slate-800 text-lg line-clamp-2 group-hover:text-sky-600 transition-colors mb-3">
                 {title}
               </h3>
