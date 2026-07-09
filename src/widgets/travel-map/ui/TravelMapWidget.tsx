@@ -5,7 +5,7 @@ import type { coordinates } from "@/shared/types/coordinatestype";
 import type { NearPlace } from "@/shared/types/nearPlaceType";
 import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWindow";
 import { usePlaceDetailsQuery } from "@/entities/place/place-details/lib/usePlaceDetailsQuery";
-import { MapSkeleton } from "./MapSkeleton";
+import { MapSkeleton } from "../../../shared/ui/GoogleMap/MapSkeleton";
 
 import { useMapHover } from "@/shared/lib/hooks/useMapHover";
 

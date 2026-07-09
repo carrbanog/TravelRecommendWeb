@@ -1,3 +1,4 @@
+import { useState, Suspense } from "react";
 // 1. Features
 import { TravelPathMapCanvas } from "@/features/travel-route/ui/TravelPathMapCanvas";
 import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDistance"; // 💡 부모로 이동
@@ -8,7 +9,8 @@ import { TravelDayList } from "@/widgets/travel-plan/TravelDayList";
 
 // 3. Shared
 import { useMapHover } from "@/shared/lib/hooks/useMapHover";
-import {  useState } from "react";
+import { MapSkeleton } from "@/shared/ui/GoogleMap/MapSkeleton";
+
 
 interface TravelPathMapWidgetProps {
   onBackClick: () => void;
@@ -24,7 +26,8 @@ export const TravelPathMapWidget = ({
 
   const todayPlan = planCards[activeTab]; // 현재 선택된 Day의 여행 계획
   const todayPlaces = planCards[activeTab]?.places; // 현재 선택된 Day의 여행지 정보
-  const todayLocations = todayPlaces?.map((place) => place.nearCoordinates) || []; // 현재 선택된 Day의 여행지 좌표만 추출
+  const todayLocations =
+    todayPlaces?.map((place) => place.nearCoordinates) || []; // 현재 선택된 Day의 여행지 좌표만 추출
   const { data: routeData, isLoading: isRouteLoading } =
     useFetchDistanceQuery(todayLocations);
 
@@ -37,16 +40,18 @@ export const TravelPathMapWidget = ({
     <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
       {/* 지도 영역 (70%) */}
       <section className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
-        <TravelPathMapCanvas
-          activeTab={activeTab}
-          colors={colors}
-          hoveredPlace={hoveredPlace}
-          onPlaceHover={handleMouseOver}
-          onPlaceLeave={handleMouseOut}
-          dayIndex={todayPlan?.id}
-          places={todayPlaces}
-          routeData={routeData}
-        />
+        <Suspense fallback={<MapSkeleton />}>
+          <TravelPathMapCanvas
+            activeTab={activeTab}
+            colors={colors}
+            hoveredPlace={hoveredPlace}
+            onPlaceHover={handleMouseOver}
+            onPlaceLeave={handleMouseOut}
+            dayIndex={todayPlan?.id}
+            places={todayPlaces}
+            routeData={routeData}
+          />
+        </Suspense>
       </section>
 
       {/* 사이드 정보 영역 (30%) */}
