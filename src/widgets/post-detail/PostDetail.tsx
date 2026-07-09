@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 
-import { PostDetailSkeleton } from "@/widgets/post-detail/PostDetailSkeleton";
 
 // Entities & Features (FSD 하위 계층)
 import { usePost } from "@/entities/post/model/usePost";
@@ -45,10 +45,6 @@ export const PostDetail = () => {
       </div>
     );
 
-  if (isLoading) {
-    return <PostDetailSkeleton />;
-  }
-
   return (
     <section className="flex flex-col w-full max-w-screen-xl mx-auto py-8 px-4 gap-6">
       <style>{`
@@ -57,6 +53,7 @@ export const PostDetail = () => {
         .ql-editor .ql-video, .ql-editor p:empty::before { content: ""; display: block; height: 1.5rem; }
       `}</style>
 
+      {/* 상단 내비게이션 바: 로딩 중에도 항상 노출 */}
       <nav
         className="flex justify-between items-center"
         aria-label="게시글 액션"
@@ -75,70 +72,81 @@ export const PostDetail = () => {
       </nav>
 
       <Card className="h-full shadow-lg border-gray-100 bg-white/80 backdrop-blur-sm overflow-hidden">
-        <article>
-          <CardHeader className="space-y-6 pb-6 pt-6 bg-slate-50/50">
-            <header>
-              <div className="space-y-2">
-                <CardTitle className="text-3xl font-bold text-slate-900">
-                  {post?.title}
-                </CardTitle>
-              </div>
+        {isLoading ? (
+          /* 카드 내부 로딩 영역 */
+          <div className="flex flex-col items-center justify-center min-h-[600px] gap-3">
+            <Loader2 className="h-10 w-10 animate-spin text-primary" />
+            <p className="text-sm text-slate-400 font-medium">
+              여행기 불러오는 중...
+            </p>
+          </div>
+        ) : (
+          /* 실제 콘텐츠 영역 */
+          <article>
+            <CardHeader className="space-y-6 pb-6 pt-6 bg-slate-50/50">
+              <header>
+                <div className="space-y-2">
+                  <CardTitle className="text-3xl font-bold text-slate-900">
+                    {post?.title}
+                  </CardTitle>
+                </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-6">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-full bg-sky-100 text-sky-600">
-                    <User className="w-4 h-4" />
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-6">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 rounded-full bg-sky-100 text-sky-600">
+                      <User className="w-4 h-4" />
+                    </div>
+                    <span className="font-medium text-slate-700">
+                      {post?.author}
+                    </span>
                   </div>
-                  <span className="font-medium text-slate-700">
-                    {post?.author}
-                  </span>
+
+                  <div className="flex items-center gap-4">
+                    <time
+                      dateTime={post?.createdAt}
+                      className="text-sm text-slate-500"
+                    >
+                      {formatDate(post?.createdAt)}
+                    </time>
+                  </div>
                 </div>
+              </header>
+            </CardHeader>
 
-                <div className="flex items-center gap-4">
-                  <time
-                    dateTime={post?.createdAt}
-                    className="text-sm text-slate-500"
-                  >
-                    {formatDate(post?.createdAt)}
-                  </time>
+            <Separator className="bg-gray-300 mx-2 w-auto" />
+
+            <CardContent className="p-8 sm:p-10 min-h-[500px]">
+              <div className="ql-snow">
+                <div
+                  className="ql-editor text-lg text-slate-800 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: post?.content || "" }}
+                />
+              </div>
+            </CardContent>
+
+            <Separator className="bg-gray-300 mx-2 w-auto" />
+
+            <section
+              className="p-8 sm:px-10 bg-slate-50/30"
+              aria-label="댓글 섹션"
+            >
+              <h3 className="text-xl font-bold text-slate-900 mb-6">댓글</h3>
+
+              {user && post ? (
+                <div className="mt-8 space-y-6">
+                  <CommentForm postId={post._id} userEmail={user.email} />
+                  <CommentList postId={post._id} userEmail={user?.email} />
                 </div>
-              </div>
-            </header>
-          </CardHeader>
-
-          <Separator className="bg-gray-300 mx-2 w-auto" />
-
-          <CardContent className="p-8 sm:p-10 min-h-[500px]">
-            <div className="ql-snow">
-              <div
-                className="ql-editor text-lg text-slate-800 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: post?.content || "" }}
-              />
-            </div>
-          </CardContent>
-
-          <Separator className="bg-gray-300 mx-2 w-auto" />
-
-          <section
-            className="p-8 sm:px-10 bg-slate-50/30"
-            aria-label="댓글 섹션"
-          >
-            <h3 className="text-xl font-bold text-slate-900 mb-6">댓글</h3>
-
-            {user && post ? (
-              <div className="mt-8 space-y-6">
-                <CommentForm postId={post._id} userEmail={user.email} />
-                <CommentList postId={post._id} userEmail={user?.email} />
-              </div>
-            ) : (
-              <div className="text-center py-10 bg-white rounded-lg border border-dashed border-slate-200">
-                <p className="text-slate-500">
-                  로그인하고 여행에 대한 의견을 나눠보세요!
-                </p>
-              </div>
-            )}
-          </section>
-        </article>
+              ) : (
+                <div className="text-center py-10 bg-white rounded-lg border border-dashed border-slate-200">
+                  <p className="text-slate-500">
+                    로그인하고 여행에 대한 의견을 나눠보세요!
+                  </p>
+                </div>
+              )}
+            </section>
+          </article>
+        )}
       </Card>
     </section>
   );
