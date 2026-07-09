@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, lazy, Suspense } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 // [Features & Entities Layer]
@@ -8,13 +8,8 @@ import type { SearchParams, SearchType } from "@/entities/place/model/type";
 
 // [Widgets Layer]
 import { PlanningSidebarWidget } from "@/widgets/planning-sidebar/ui/PlanningSidebarWidget";
+import { TravelMapWidget } from "@/widgets/travel-map/ui/TravelMapWidget";
 
-// Lazy Loaded Widgets
-const TravelMapWidget = lazy(() =>
-  import("@/widgets/travel-map/ui/TravelMapWidget").then((module) => ({
-    default: module.TravelMapWidget,
-  })),
-);
 
 export const TravelPage = () => {
   const navigate = useNavigate();
