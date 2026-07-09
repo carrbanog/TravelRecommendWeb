@@ -46,29 +46,49 @@ const handleSearchDirectly = () => {
       alert("에러 발생: " + String(error));
     }
   };
-  
-  const handleSearch = () => {
-    if (!origin || !destination || !date.from) {
-      toast.error("출발지와 도착지를 선택해 주세요", { position: "top-right" });
-      return;
-    }
 
-    const getCode = (city: string) =>
-      CITY_MAP[city.trim()] || city.trim().toUpperCase();
+const handleSearch = () => {
+  // 1. 데이터 방어 체크
+  if (!origin || !destination || !date || !date.from) {
+    toast.error("출발지, 도착지, 날짜를 모두 선택해 주세요", { position: "top-right" });
+    return;
+  }
 
-    const originCode = getCode(origin);
-    const destinationCode = getCode(destination);
-
-    const formatDate = (date: Date) => format(date, "yyMMdd");
-    const outboundDate = formatDate(date.from);
-    const inboundDate = date.to ? formatDate(date.to) : "";
-
-    const skyscannerUrl = `https://www.skyscanner.co.kr/transport/flights/${originCode}/${destinationCode}/${outboundDate}/${inboundDate}/`;
-
-    // 유저의 onClick 이벤트와 직접 연결되어 배포 환경에서도 안전하게 새 창이 열립니다.
-    window.open(skyscannerUrl, "_blank");
+  // 2. 도시 코드로 변환
+  const getCode = (city: string) => {
+    const trimmed = city.trim();
+    return CITY_MAP[trimmed] || trimmed.toUpperCase();
   };
 
+  const originCode = getCode(origin);
+  const destinationCode = getCode(destination);
+
+  // 3. [핵심] date-fns 대신 순수 JS로 'yyMMdd' 포맷팅 구현 (배포 환경에서 100% 안전)
+  const formatToYYMMDD = (targetDate: Date) => {
+    const yy = String(targetDate.getFullYear()).slice(-2); // 2026 -> "26"
+    const mm = String(targetDate.getMonth() + 1).padStart(2, "0"); // 7 -> "07"
+    const dd = String(targetDate.getDate()).padStart(2, "0");
+    return `${yy}${mm}${dd}`;
+  };
+
+  let outboundDate = "";
+  let inboundDate = "";
+
+  try {
+    outboundDate = formatToYYMMDD(date.from);
+    inboundDate = date.to ? formatToYYMMDD(date.to) : "";
+  } catch (error) {
+    // 혹시나 날짜 객체 자체가 꼬였을 경우를 대비한 안전장치
+    alert("날짜 계산 중 오류가 발생했습니다. 다시 선택해 주세요.");
+    return;
+  }
+
+  // 4. 스카이스캐너 URL 조합
+  const skyscannerUrl = `https://www.skyscanner.co.kr/transport/flights/${originCode}/${destinationCode}/${outboundDate}/${inboundDate}/`;
+
+  // 5. handleSearchDirectly에서 검증된 가장 확실한 이동 방식 사용
+  window.location.href = skyscannerUrl;
+};
   return (
     <search className="w-full max-w-6xl mx-auto my-4 bg-white p-2 rounded-xl shadow-2xl border border-slate-200">
       {/* 1. form 태그를 div로 변경 (onSubmit 제거) */}
