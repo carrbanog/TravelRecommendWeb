@@ -18,7 +18,7 @@ export const AuthLayout = ({
   mode,
 }: AuthLayoutProps) => {
   return (
-    <div className="flex w-full h-[calc(100vh-5rem)] overflow-hidden">
+    <div className="flex w-full h-full overflow-hidden">
       {/* 왼쪽 영역 */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-white p-10">
         {/* 로그인, 회원가입 탭 버튼 */}
@@ -58,8 +58,8 @@ export const AuthLayout = ({
       </div>
       <div className="md:w-1/2 md:block hidden">
         <img
-          src="../../../../public/img/login/loginBackground.jpg"
-          alt=""
+          src="/img/login/loginBackground.jpg"
+          alt="여행 느낌나는 로그인 이미지"
           className="w-full h-full object-cover"
         />
       </div>
