@@ -49,7 +49,7 @@ export const FlightSearchForm = () => {
     // 스카이스캐너 URL 조합
     const skyscannerUrl = `https://www.skyscanner.co.kr/transport/flights/${originCode}/${destinationCode}/${outboundDate}/${inboundDate}/`;
 
-    window.open(skyscannerUrl, "_blank");
+    window.open(skyscannerUrl, "_self");
   };
 
   return (
