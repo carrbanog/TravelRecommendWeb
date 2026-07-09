@@ -2,6 +2,7 @@ import React from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 
 import type { coordinates } from "@/shared/types/coordinatestype";
+import { MapSkeleton } from './MapSkeleton';
 
 //나중에 경로 지정할 때 마커 분리 생각하기
 
@@ -30,7 +31,7 @@ const MyMap = ({ place, zoom, children }: MyMapProps) => {
     },
   };
   if (!isLoaded) {
-    return <div>Loading Map...</div>; // 스크립트 로딩 전엔 google 객체 없음
+    return <MapSkeleton />; // 스크립트 로딩 전엔 google 객체 없음
   }
   const defaultCoords: coordinates = { lat: 37.5665, lng: 126.989 };
   const mapCenter = place ?? defaultCoords; //지도 기본 위치 지정

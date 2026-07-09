@@ -8,7 +8,6 @@ import type { SearchParams, SearchType } from "@/entities/place/model/type";
 
 // [Widgets Layer]
 import { PlanningSidebarWidget } from "@/widgets/planning-sidebar/ui/PlanningSidebarWidget";
-import { MapSkeleton } from "@/shared/ui/GoogleMap/MapSkeleton";
 
 // Lazy Loaded Widgets
 const TravelMapWidget = lazy(() =>
@@ -116,14 +115,12 @@ export const TravelPage = () => {
     <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
       {/* 지도 영역 (70%) */}
       <section className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
-        <Suspense fallback={<MapSkeleton />}>
           <TravelMapWidget
             centerCoords={center}
             places={displayPlaces}
             onMarkerClick={addPlace}
             isLoading={isLoading}
           />
-        </Suspense>
       </section>
 
       {/* 사이드 영역 (30%) */}

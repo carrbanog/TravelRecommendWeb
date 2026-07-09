@@ -1,4 +1,4 @@
-import { useState, Suspense } from "react";
+import { useState } from "react";
 // 1. Features
 import { TravelPathMapCanvas } from "@/features/travel-route/ui/TravelPathMapCanvas";
 import { useFetchDistanceQuery } from "@/features/calculate-distance/api/fetchDistance"; // 💡 부모로 이동
@@ -9,7 +9,6 @@ import { TravelDayList } from "@/widgets/travel-plan/TravelDayList";
 
 // 3. Shared
 import { useMapHover } from "@/shared/lib/hooks/useMapHover";
-import { MapSkeleton } from "@/shared/ui/GoogleMap/MapSkeleton";
 
 
 interface TravelPathMapWidgetProps {
@@ -40,7 +39,6 @@ export const TravelPathMapWidget = ({
     <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
       {/* 지도 영역 (70%) */}
       <section className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
-        <Suspense fallback={<MapSkeleton />}>
           <TravelPathMapCanvas
             activeTab={activeTab}
             colors={colors}
@@ -51,7 +49,6 @@ export const TravelPathMapWidget = ({
             places={todayPlaces}
             routeData={routeData}
           />
-        </Suspense>
       </section>
 
       {/* 사이드 정보 영역 (30%) */}
