@@ -1,6 +1,6 @@
 // --- 1. 개별 댓글 아이템 컴포넌트 (Internal Component) ---
 import type { Comment } from "@/entities/comment/model/type";
-import { useDeleteComment } from '@/entities/comment/model/useComments';
+import { useDeleteComment } from "@/entities/comment/model/useComments";
 
 interface ItemProps {
   comment: Comment;
@@ -11,15 +11,18 @@ interface ItemProps {
 export const CommentItem = ({ comment, userEmail }: ItemProps) => {
   const isMyComment = userEmail === comment.author;
   // console.log("Rendering CommentItem:", comment, "isMyComment:", isMyComment);
-  const {mutate: deleteMutate, isPending} = useDeleteComment(comment.postId, comment.commentId);
+  const { mutate: deleteMutate, isPending } = useDeleteComment(
+    comment.postId,
+    comment.commentId,
+  );
   const handleDelete = () => {
-    if(window.confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+    if (window.confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
       deleteMutate();
     }
-  }
+  };
   return (
-    <div className="py-4 border-b border-slate-100 last:border-0">
-      <div className="flex justify-between items-start mb-2">
+    <article className="py-4 border-b border-slate-100 last:border-0">
+      <header className="flex justify-between items-start mb-2">
         <div className="flex items-center gap-2">
           <span className="font-semibold text-sm text-slate-700">
             {comment.author}
@@ -30,22 +33,29 @@ export const CommentItem = ({ comment, userEmail }: ItemProps) => {
             </span>
           )}
         </div>
-        <span className="text-xs text-slate-400">
+        <time
+          dateTime={new Date(comment.createdAt).toISOString()}
+          className="text-xs text-slate-400"
+        >
           {new Date(comment.createdAt).toLocaleDateString()}
-        </span>
-      </div>
-      
+        </time>
+      </header>
+
       <p className="text-slate-600 text-sm whitespace-pre-wrap leading-relaxed">
         {comment.content}
       </p>
 
       {isMyComment && (
         <div className="flex justify-end mt-2">
-          <button className="text-xs text-rose-400 hover:text-rose-600 transition-colors" onClick={handleDelete} disabled={isPending}>
+          <button
+            className="text-xs text-rose-400 hover:text-rose-600 transition-colors"
+            onClick={handleDelete}
+            disabled={isPending}
+          >
             삭제
           </button>
         </div>
       )}
-    </div>
+    </article>
   );
 };

@@ -36,7 +36,7 @@ export const TravelPathMapWidget = ({
   return (
     <main className="h-full w-full flex gap-4 p-4 bg-gray-50">
       {/* 지도 영역 (70%) */}
-      <div className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
+      <section className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
         <TravelPathMapCanvas
           activeTab={activeTab}
           colors={colors}
@@ -47,15 +47,15 @@ export const TravelPathMapWidget = ({
           places={todayPlaces}
           routeData={routeData}
         />
-      </div>
+      </section>
 
       {/* 사이드 정보 영역 (30%) */}
-      <div className="w-[30%] h-full flex flex-col gap-4">
+      <aside className="w-[30%] h-full flex flex-col gap-4">
         <div className="flex-1 p-6 bg-white rounded-lg shadow-xl overflow-y-auto">
           <h2 className="text-2xl font-bold mb-4 text-gray-800">
             여행 경로 정보 🗺️
           </h2>
-          <div className="flex gap-2 mb-4">
+          <nav className="flex gap-2 mb-4">
             {planCards.map((_, index) => (
               <button
                 key={index}
@@ -69,7 +69,7 @@ export const TravelPathMapWidget = ({
                 Day {index + 1}
               </button>
             ))}
-          </div>
+          </nav>
           {planCards[activeTab] && (
             <TravelDayList
               key={planCards[activeTab].id}
@@ -88,7 +88,7 @@ export const TravelPathMapWidget = ({
         >
           계획 수정하기
         </button>
-      </div>
+      </aside>
     </main>
   );
 };

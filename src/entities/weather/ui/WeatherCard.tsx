@@ -31,7 +31,7 @@ export const WeatherCard = ({ cityName, label, bgImage }: WeatherCardProps) => {
   const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
   return (
-    <div
+    <article
       className="group relative h-44 w-full cursor-pointer overflow-hidden rounded-3xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
     >
       {/* 배경 이미지와 다크 오버레이 */}
@@ -77,6 +77,6 @@ export const WeatherCard = ({ cityName, label, bgImage }: WeatherCardProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 };

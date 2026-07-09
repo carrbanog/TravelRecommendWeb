@@ -48,13 +48,13 @@ export const TravelDayList = memo(
       <div className="mb-8">
 
         {places && places.length > 0 ? (
-          <div className="relative pl-2">
+          <ol className="relative pl-2">
             {places.map((place, idx) => {
               const routeInfo = routeData?.distances?.find(
                 (d: any) => d.fromIndex === idx,
               );
               return (
-                <div key={place.id} className="relative">
+                <li key={place.id} className="relative">
                   {/* 1. 장소 카드 영역 */}
                   <div className="flex items-start gap-4 mb-2">
                     <div className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-white border-2 border-blue-600 shadow-sm text-blue-600 font-bold text-xs shrink-0">
@@ -97,10 +97,10 @@ export const TravelDayList = memo(
                       {!isLoading && routeInfo && (
                         <div className="ml-6 flex flex-col gap-2">
                           {routeInfo.steps && routeInfo.steps.length > 0 && (
-                            <div className="flex flex-col gap-1.5 mt-1">
+                            <ol className="flex flex-col gap-1.5 mt-1">
                               {routeInfo.steps.map(
                                 (step: RouteStep, stepIdx: number) => (
-                                  <div
+                                  <li
                                     key={stepIdx}
                                     className="flex items-start gap-1.5 text-[11px] text-gray-500 bg-gray-50 p-1.5 rounded border border-gray-100"
                                   >
@@ -113,19 +113,19 @@ export const TravelDayList = memo(
                                         ({step.duration})
                                       </span>
                                     </span>
-                                  </div>
+                                  </li>
                                 ),
                               )}
-                            </div>
+                            </ol>
                           )}
                         </div>
                       )}
                     </div>
                   )}
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ol>
         ) : (
           <div className="text-center py-6 bg-gray-50 rounded-lg border border-dashed border-gray-300">
             <p className="text-gray-400 text-sm">계획된 장소가 없습니다.</p>

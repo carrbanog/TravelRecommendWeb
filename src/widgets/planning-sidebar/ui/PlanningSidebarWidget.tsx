@@ -42,28 +42,31 @@ export const PlanningSidebarWidget = React.memo(
       }
     };
     return (
-      <div className="w-full h-full flex flex-col justify-between p-4 bg-white shadow-md rounded-2xl overflow-hidden">
-        {/* 1번 그룹: 고정 높이 */}
-        <div className="flex flex-col gap-4 mb-4">
-          <SearchForm setPlaceSearch={setPlaceSearch} setActiveTab={setActiveTab} activeTab={activeTab} />
+      <aside className="w-full h-full flex flex-col justify-between p-4 bg-white shadow-md rounded-2xl overflow-hidden">
+        <fieldset className="flex flex-col gap-4 mb-4 border-none p-0 m-0">
+          <legend className="sr-only">여행지 검색 및 기간 조건 설정</legend>
+          <SearchForm
+            setPlaceSearch={setPlaceSearch}
+            setActiveTab={setActiveTab}
+            activeTab={activeTab}
+          />
           <TravelDaysPicker />
-        </div>
+        </fieldset>
 
-        {/* 2번 그룹: 핵심 수정 부분! 
-          flex-1과 min-h-0을 주어야 자식의 height: 100%가 부모의 남은 공간을 인식합니다. */}
         <div className="flex-1 min-h-0 overflow-hidden mb-4">
           <SelectedList place={selectedPlaces} onRemovePlace={onRemovePlace} />
         </div>
 
-        {/* 3번 그룹: 고정 높이 */}
-        <Link
-          onClick={handleNextClick}
-          to="/travel/path"
-          className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-200"
-        >
-          일정 선택
-        </Link>
-      </div>
+        <footer>
+          <Link
+            onClick={handleNextClick}
+            to="/travel/path"
+            className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all duration-200"
+          >
+            일정 선택
+          </Link>
+        </footer>
+      </aside>
     );
   },
 );

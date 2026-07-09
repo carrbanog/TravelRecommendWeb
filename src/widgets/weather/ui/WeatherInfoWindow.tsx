@@ -20,18 +20,18 @@ export const WeatherInfoWindow = ({ city, onClose }: WeatherInfoWindowProps) => 
       onCloseClick={onClose} // ✅ 여기서 onClose를 호출해야 에러 없이 창이 닫힘
     >
       {/* 스타일을 위한 div 컨테이너 추가 */}
-      <div className="p-2 min-w-[150px] text-gray-800">
+      <article className="p-2 min-w-[150px] text-gray-800">
         <h3 className="text-sm font-bold text-blue-600 mb-1">{city.name}</h3>
         <div className="flex items-center gap-2">
           <span className="text-2xl font-black">{Math.round(data.main.temp)}°C</span>
           <img 
             src={`https://openweathermap.org/img/wn/${data.weather[0].icon}.png`} 
-            alt="weather icon" 
+            alt={`${data.weather[0].description} 날씨 아이콘`}
             className="w-8 h-8"
           />
         </div>
         <p className="text-xs text-gray-500 mt-1 capitalize">{data.weather[0].description}</p>
-      </div>
+      </article>
     </InfoWindowF>
   );
 };

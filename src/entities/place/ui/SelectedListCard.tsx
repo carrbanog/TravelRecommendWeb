@@ -3,26 +3,27 @@ import { DraggableListCard } from "@/entities/place/ui/DraggableListCard";
 import { Package, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-
 type SelectedListCardProps = {
   selectedPlaces: SelectedPlace[];
   onRemovePlace: (placeId: string) => void;
 };
 
 // 지도에서 선택한 여행지를 일차별 카드로 드래그하기 위한 보관함 UI 컴포넌트
-export const SelectedListCard = ({ selectedPlaces, onRemovePlace }: SelectedListCardProps) => {
+export const SelectedListCard = ({
+  selectedPlaces,
+  onRemovePlace,
+}: SelectedListCardProps) => {
   console.log("SelectedListCard 렌더링");
 
   const sortedPlaces = [...selectedPlaces].sort((a, b) => {
-  if (a.type === "hotel" && b.type !== "hotel") return 1;  // a가 호텔이면 뒤로
-  if (a.type !== "hotel" && b.type === "hotel") return -1; // b가 호텔이면 앞으로
-  return 0; // 나머지는 기존 추가 순서 유지
-});
+    if (a.type === "hotel" && b.type !== "hotel") return 1; // a가 호텔이면 뒤로
+    if (a.type !== "hotel" && b.type === "hotel") return -1; // b가 호텔이면 앞으로
+    return 0; // 나머지는 기존 추가 순서 유지
+  });
 
   return (
     <section className="flex flex-col h-full bg-white/50 backdrop-blur-sm">
-      {/* 섹션 헤더: 보관함 상태 표시 */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white/80 sticky top-0 z-10">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white/80 sticky top-0 z-10">
         <div className="flex items-center gap-2">
           <div className="p-1.5 bg-blue-50 rounded-lg">
             <Package className="w-5 h-5 text-blue-600" />
@@ -38,20 +39,21 @@ export const SelectedListCard = ({ selectedPlaces, onRemovePlace }: SelectedList
         <p className="text-xs text-slate-400 font-medium">
           카드를 아래 일차별 카드로 드래그하세요
         </p>
-      </div>
+      </header>
 
       {/* 카드 그리드 영역 */}
       <div className="flex-1 overflow-y-hidden overflow-x-hidden p-6 custom-scrollbar">
         {selectedPlaces.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 p-0 m-0 list-none">
             {sortedPlaces.map((place) => (
-              <DraggableListCard
-                key={place.placeId}
-                place={place}
-                onRemovePlace={onRemovePlace}
-              />
+              <li key={place.placeId}>
+                <DraggableListCard
+                  place={place}
+                  onRemovePlace={onRemovePlace}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         ) : (
           <div className="h-full flex flex-col items-center justify-center py-20 text-slate-300">
             <MapPin className="w-12 h-12 mb-3 opacity-20" />

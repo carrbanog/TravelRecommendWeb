@@ -64,12 +64,9 @@ const PostList = () => {
 
   return (
     <div className="container max-w-screen-xl mx-auto py-8 h-full flex flex-col gap-6">
-      {/* 상단 헤더 영역: 제목과 글쓰기 버튼 배치 */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        {/* 검색form */}
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <PostSearch onSearch={setSearchKeyword} />
 
-        {/* 글 작성 버튼 */}
         <Button
           onClick={() => navigate("/post/create")}
           disabled={!user}
@@ -77,9 +74,8 @@ const PostList = () => {
         >
           <PenLine className="w-4 h-4 mr-2" /> 새 여행기 작성
         </Button>
-      </div>
+      </header>
 
-      {/* 메인 테이블 카드 */}
       <Card className="border-gray-100 shadow-lg bg-white/80 backdrop-blur-sm overflow-hidden">
         <CardContent className="p-0">
           <div className="overflow-auto">
@@ -108,7 +104,10 @@ const PostList = () => {
                     <TableCell colSpan={3} className="h-64 text-center">
                       <div className="flex flex-col items-center justify-center gap-3 text-gray-400">
                         <div className="p-4 rounded-full bg-gray-50">
-                          <MapPin className="w-8 h-8 text-gray-300" />
+                          <MapPin
+                            className="w-8 h-8 text-gray-300"
+                            aria-hidden="true"
+                          />
                         </div>
                         <p>아직 등록된 여행기가 없습니다.</p>
                       </div>

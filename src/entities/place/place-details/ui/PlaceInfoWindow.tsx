@@ -8,31 +8,34 @@ interface PlaceInfoWindowProps {
 }
 
 export const PlaceInfoWindow = ({ place }: PlaceInfoWindowProps) => {
-  // 데이터가 없으면 아무것도 보여주지 않거나 로딩 메시지 출력
-  if (!place)
-    return <div style={{ padding: "8px", fontSize: "12px" }}>정보 없음</div>;
+if (!place) {
+    return (
+      <div className="p-2 text-xs text-slate-500 font-medium">
+        정보 없음
+      </div>
+    );
+  }
 
   return (
-    <div style={{ padding: "8px", maxWidth: "200px" }}>
+    <article className="p-2 max-w-[220px] bg-white rounded-lg antialiased">
+      
       {place.photos && place.photos.length > 0 && (
         <img
           src={getPhotoUrl(place.photos[0].photo_reference)}
-          alt={place.name}
-          style={{
-            width: "100%",
-            height: "120px",
-            borderRadius: "4px",
-            objectFit: "cover",
-            marginBottom: "8px",
-          }}
+          alt={`${place.name} 전경`} // 💡 alt 텍스트를 조금 더 구체화하여 접근성 향상
+          className="w-full h-[120px] rounded-md object-cover mb-2.5 shadow-sm"
         />
       )}
-      <h4 style={{ margin: "0 0 4px 0", fontSize: "14px" }}>{place.name}</h4>
+      
+      <h4 className="m-0 text-sm font-bold text-slate-900 tracking-tight leading-snug">
+        {place.name}
+      </h4>
+      
       {place.editorial_summary?.overview && (
-        <p style={{ fontSize: "13px", color: "#666", marginTop: "4px" }}>
+        <p className="mt-1 text-xs text-slate-500 leading-relaxed line-clamp-3">
           {place.editorial_summary.overview}
         </p>
       )}
-    </div>
+    </article>
   );
 };

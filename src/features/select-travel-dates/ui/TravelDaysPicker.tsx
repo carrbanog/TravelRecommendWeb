@@ -47,59 +47,69 @@ export const TravelDaysPicker = () => {
 
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-slate-100 p-4 transition-all hover:shadow-lg">
-      <div className="flex flex-col gap-3">
-        {/* 헤더 부분 */}
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-2 font-bold text-slate-700 text-sm">
-            <CalendarRange className="w-4 h-4 text-blue-600" />
-            여행 기간
-          </label>
+      <fieldset className="flex flex-col gap-3 border-none p-0 m-0">
+        <legend className="sr-only">여행 일정 선택</legend>
+
+        <header className="flex items-center justify-between">
+          <div className="flex items-center gap-2 font-bold text-slate-700 text-sm">
+            <CalendarRange
+              className="w-4 h-4 text-blue-600"
+              aria-hidden="true"
+            />
+            <span>여행 기간</span>
+          </div>
           {tripDays > 0 && (
             <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
               {tripDays}일간의 여정
             </span>
           )}
-        </div>
+        </header>
 
-        {/* Popover + Calendar 결합 */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              id="date"
-              variant={"outline"}
-              className={cn(
-                "w-full h-11 justify-start text-left font-normal border-slate-200 hover:bg-slate-50 transition-all",
-                !startDate && "text-slate-400",
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4 text-slate-500" />
-              {startDate ? (
-                endDate ? (
-                  <>
-                    {format(startDate, "M월 d일", { locale: ko })} -{" "}
-                    {format(endDate, "M월 d일", { locale: ko })}
-                  </>
+        <div>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                id="date"
+                type="button"
+                variant="outline"
+                className={cn(
+                  "w-full h-11 justify-start text-left font-normal border-slate-200 hover:bg-slate-50 transition-all",
+                  !startDate && "text-slate-400",
+                )}
+                aria-label="여행 시작일 및 종료일 선택"
+              >
+                <CalendarIcon
+                  className="mr-2 h-4 w-4 text-slate-500"
+                  aria-hidden="true"
+                />
+                {startDate ? (
+                  endDate ? (
+                    <>
+                      {format(startDate, "M월 d일", { locale: ko })} -{" "}
+                      {format(endDate, "M월 d일", { locale: ko })}
+                    </>
+                  ) : (
+                    format(startDate, "M월 d일", { locale: ko })
+                  )
                 ) : (
-                  format(startDate, "M월 d일", { locale: ko })
-                )
-              ) : (
-                <span>여행 날짜를 선택하세요</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="range"
-              defaultMonth={startDate || new Date()}
-              selected={dateRange}
-              onSelect={handleSelect}
-              numberOfMonths={2} // 두 달씩 보여주면 훨씬 전문적입니다
-              locale={ko}
-              className="rounded-md border shadow-md bg-white"
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
+                  <span>여행 날짜를 선택하세요</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="range"
+                defaultMonth={startDate || new Date()}
+                selected={dateRange}
+                onSelect={handleSelect}
+                numberOfMonths={2}
+                locale={ko}
+                className="rounded-md border shadow-md bg-white"
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+      </fieldset>
     </div>
   );
 };
