@@ -1,3 +1,11 @@
 /* html {
   scrollbar-gutter: stable;
 } */
+.gm-style .gm-style-iw-c button.gm-ui-hover-effect {
+  display: none !important;
+}
+
+/* 추가 팁: 우측 패딩(X버튼이 있던 자리)을 초기화하여 콘텐츠가 중앙에 예쁘게 위치하도록 정돈 */
+.gm-style .gm-style-iw-d {
+  padding-right: 0 !important;
+}
