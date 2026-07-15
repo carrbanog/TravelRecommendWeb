@@ -25,8 +25,6 @@ export const TravelPage = () => {
   const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
   const addPlace = useSelectedPlacesStore((s) => s.addPlace);
   const removePlace = useSelectedPlacesStore((s) => s.removePlace);
-  const center = useSelectedPlacesStore((s) => s.center);
-  const setCenter = useSelectedPlacesStore((s) => s.setCenter);
   const rememberedData = useSelectedPlacesStore((s) => s.rememberedData);
   const setRememberedData = useSelectedPlacesStore((s) => s.setRememberedData);
 
@@ -61,14 +59,6 @@ export const TravelPage = () => {
       setRememberedData(nearbyData);
     }
   }, [nearbyData, setRememberedData]);
-
-  // 지도 중심좌표 동기화
-  useEffect(() => {
-    const targetLocation = nearbyData?.location || null;
-    if (targetLocation) {
-      setCenter(targetLocation);
-    }
-  }, [nearbyData?.location, setCenter]);
 
   // ==========================================
   // 4. Handlers
@@ -111,7 +101,6 @@ export const TravelPage = () => {
       {/* 지도 영역 (70%) */}
       <section className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
           <TravelMapWidget
-            centerCoords={center}
             places={displayPlaces}
             onMarkerClick={addPlace}
             isLoading={isLoading}

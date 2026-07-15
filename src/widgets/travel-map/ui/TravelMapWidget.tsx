@@ -1,52 +1,62 @@
-import React from "react"; // useState 추가
-import { InfoWindow, Marker } from "@react-google-maps/api"; // InfoWindow 추가
-import MyMap from "@/shared/ui/GoogleMap/MyMap";
-import type { coordinates } from "@/shared/types/coordinatestype";
-import type { NearPlace } from "@/shared/types/nearPlaceType";
-import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWindow";
-import { usePlaceDetailsQuery } from "@/entities/place/place-details/lib/usePlaceDetailsQuery";
-import { MapSkeleton } from "../../../shared/ui/GoogleMap/MapSkeleton";
+import React, { useEffect } from "react";
+import { InfoWindow, Marker } from "@react-google-maps/api";
 
+// [Entities Layer]
+import { useSelectedPlacesStore } from "@/entities/place/model/selectedPlacesStore";
+import { usePlaceDetailsQuery } from "@/entities/place/place-details/lib/usePlaceDetailsQuery";
+import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWindow";
+
+// [Shared Layer]
+import MyMap from "@/shared/ui/GoogleMap/MyMap";
+import { MapSkeleton } from "@/shared/ui/GoogleMap/MapSkeleton";
 import { useMapHover } from "@/shared/lib/hooks/useMapHover";
+import type { NearPlace } from "@/shared/types/nearPlaceType";
 
 type TravelMapWidgetProps = {
-  centerCoords?: coordinates;
   onMarkerClick: (place: NearPlace) => void;
   places?: NearPlace[];
   isLoading: boolean;
 };
 
 export const TravelMapWidget = React.memo(
-  ({ centerCoords, onMarkerClick, places, isLoading }: TravelMapWidgetProps) => {
-    console.log("TravelMapWidget 렌더링");
-    console.log("근처 여행지 지도 위젯에서 받음", places)
-    const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
+  ({ onMarkerClick, places, isLoading }: TravelMapWidgetProps) => {
+    const center = useSelectedPlacesStore((s) => s.center);
+    const setCenter = useSelectedPlacesStore((s) => s.setCenter);
 
+    const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
     const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
-      hoveredPlace || "",
+      hoveredPlace || ""
     );
+
+    // 지도 중앙값
+    useEffect(() => {
+      if (places && places.length > 0) {
+        const firstPlaceCoordinates = places[0].nearCoordinates;
+        if (firstPlaceCoordinates) {
+          setCenter(firstPlaceCoordinates);
+        }
+      }
+    }, [places, setCenter]);
 
     if (isLoading) {
       return <MapSkeleton />;
     }
 
     return (
-      <MyMap place={centerCoords} zoom={13}>
+      <MyMap place={center} zoom={12}>
         {places?.map((placeItem) => (
           <Marker
             key={placeItem.placeId}
             position={placeItem.nearCoordinates}
             onClick={() => onMarkerClick(placeItem)}
-            // 마우스 오버 시 상태 업데이트
             onMouseOver={() => handleMouseOver(placeItem.placeId)}
-            // 마우스 아웃 시 상태 초기화
             onMouseOut={handleMouseOut}
           >
             {/* 현재 호버된 마커와 이 마커의 데이터가 일치할 때만 InfoWindow 표시 */}
             {hoveredPlace === placeItem.placeId && detailData && (
               <InfoWindow options={{ disableAutoPan: true }}>
                 {detailLoading ? (
-                  <div style={{ padding: "8px", fontSize: "12px" }}>
+                  <div className="p-2 text-xs text-slate-500">
                     로딩 중...
                   </div>
                 ) : (
@@ -58,5 +68,7 @@ export const TravelMapWidget = React.memo(
         ))}
       </MyMap>
     );
-  },
+  }
 );
+
+TravelMapWidget.displayName = "TravelMapWidget";
