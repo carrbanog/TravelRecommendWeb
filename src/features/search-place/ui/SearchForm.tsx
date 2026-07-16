@@ -12,19 +12,19 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 
 interface SearchFormProps {
-  setPlaceSearch: (value: SearchParams) => void;
+  handlePlaceSearch: (value: SearchParams) => void;
   activeTab: SearchType;               // 🔹 부모의 activeTab 받아오기
   setActiveTab: (tab: SearchType) => void; // 🔹 부모의 activeTab 변경 함수 받아오기
 }
 
-const SearchForm = React.memo(({ setPlaceSearch, activeTab, setActiveTab }: SearchFormProps) => {
+const SearchForm = React.memo(({ handlePlaceSearch, activeTab, setActiveTab }: SearchFormProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const handleDestinationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = inputValue.trim();
     if (!trimmed) return;
     //검색 시 입력 값, 선택한 탭(activeTab)을 부모 컴포넌트로 전달
-    setPlaceSearch({ query: trimmed, type: activeTab });
+    handlePlaceSearch({ query: trimmed, type: activeTab });
   };
 
   return (

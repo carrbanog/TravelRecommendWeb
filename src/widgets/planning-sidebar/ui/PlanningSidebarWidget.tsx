@@ -16,13 +16,13 @@ import { useDayPickerStore } from "@/entities/travel-plan/model/useDayPickerStor
 import type { SearchParams, SearchType } from "@/entities/place/model/type";
 
 type PlanningSidebarWidgetProps = {
-  setPlaceSearch: (params: SearchParams) => void;
+  handlePlaceSearch: (params: SearchParams) => void;
   activeTab: SearchType;
   setActiveTab: (tab: SearchType) => void;
 };
 
 export const PlanningSidebarWidget = React.memo(
-  ({ setPlaceSearch, activeTab, setActiveTab }: PlanningSidebarWidgetProps) => {
+  ({ handlePlaceSearch, activeTab, setActiveTab }: PlanningSidebarWidgetProps) => {
     const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
     const removePlace = useSelectedPlacesStore((s) => s.removePlace);
     
@@ -44,7 +44,7 @@ export const PlanningSidebarWidget = React.memo(
         <fieldset className="flex flex-col gap-4 mb-4 border-none p-0 m-0">
           <legend className="sr-only">여행지 검색 및 기간 조건 설정</legend>
           <SearchForm
-            setPlaceSearch={setPlaceSearch}
+            handlePlaceSearch={handlePlaceSearch}
             setActiveTab={setActiveTab}
             activeTab={activeTab}
           />
