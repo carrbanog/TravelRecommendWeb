@@ -1,45 +1,20 @@
-import { useState, useEffect, useMemo } from "react";
-
-// [Features & Entities Layer]
-import { useNearbyPlacesQuery } from "@/features/find-nearby-places/lib/useNearByPlacesQuery";
-import { useSelectedPlacesStore } from "@/entities/place/model/selectedPlacesStore";
-import type { SearchParams, SearchType } from "@/entities/place/model/type";
-
 // [Widgets Layer]
 import { PlanningSidebarWidget } from "@/widgets/planning-sidebar/ui/PlanningSidebarWidget";
 import { TravelMapWidget } from "@/widgets/travel-map/ui/TravelMapWidget";
+// [Shared & Local Hooks/UI]
+import {useTravelPageState} from "./lib/useTravelPageState"
 import { useMediaQuery } from "@/shared/lib/hooks/useMediaQuery";
 import { MobileBlockGuard } from "./MobileBlockGuard";
 
 export const TravelPage = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [activeTab, setActiveTab] = useState<SearchType>("place");
-
-  const rememberedData = useSelectedPlacesStore((s) => s.rememberedData);
-  const setRememberedData = useSelectedPlacesStore((s) => s.setRememberedData);
-
-  const { data: nearbyData, isLoading } = useNearbyPlacesQuery({
-    query: searchQuery,
-  });
-  const currentData = nearbyData || rememberedData;
-
-  const displayPlaces = useMemo(() => {
-    if (activeTab === "place") return currentData?.places || [];
-    if (activeTab === "hotel") return currentData?.hotels || [];
-    return [];
-  }, [activeTab, currentData]);
-
-  // 쿼리 결과 스토어 백업
-  useEffect(() => {
-    if (nearbyData) {
-      setRememberedData(nearbyData);
-    }
-  }, [nearbyData, setRememberedData]);
-
-  const handlePlaceSearch = (params: SearchParams) => {
-    setSearchQuery(params.query);
-  };
+  const {
+    activeTab,
+    setActiveTab,
+    displayPlaces,
+    isLoading,
+    handlePlaceSearch,
+  } = useTravelPageState();
 
   if (isMobile) {
     return <MobileBlockGuard />;
