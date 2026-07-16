@@ -17,7 +17,7 @@ type TravelMapWidgetProps = {
   isLoading: boolean;
 };
 
-export const TravelMapWidget = React.memo(
+const TravelMapWidget = React.memo(
   ({ places, isLoading }: TravelMapWidgetProps) => {
     const center = useSelectedPlacesStore((s) => s.center);
     const setCenter = useSelectedPlacesStore((s) => s.setCenter);
@@ -71,3 +71,4 @@ export const TravelMapWidget = React.memo(
 );
 
 TravelMapWidget.displayName = "TravelMapWidget";
+export default TravelMapWidget;
