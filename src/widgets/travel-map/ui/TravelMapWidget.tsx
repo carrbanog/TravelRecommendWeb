@@ -13,16 +13,15 @@ import { useMapHover } from "@/shared/lib/hooks/useMapHover";
 import type { NearPlace } from "@/shared/types/nearPlaceType";
 
 type TravelMapWidgetProps = {
-  onMarkerClick: (place: NearPlace) => void;
   places?: NearPlace[];
   isLoading: boolean;
 };
 
 export const TravelMapWidget = React.memo(
-  ({ onMarkerClick, places, isLoading }: TravelMapWidgetProps) => {
+  ({ places, isLoading }: TravelMapWidgetProps) => {
     const center = useSelectedPlacesStore((s) => s.center);
     const setCenter = useSelectedPlacesStore((s) => s.setCenter);
-
+    const addPlace = useSelectedPlacesStore((s) => s.addPlace);
     const { hoveredPlace, handleMouseOver, handleMouseOut } = useMapHover(400);
     const { data: detailData, isLoading: detailLoading } = usePlaceDetailsQuery(
       hoveredPlace || ""
@@ -48,7 +47,7 @@ export const TravelMapWidget = React.memo(
           <Marker
             key={placeItem.placeId}
             position={placeItem.nearCoordinates}
-            onClick={() => onMarkerClick(placeItem)}
+            onClick={() => addPlace(placeItem)}
             onMouseOver={() => handleMouseOver(placeItem.placeId)}
             onMouseOut={handleMouseOut}
           >

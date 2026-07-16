@@ -16,9 +16,6 @@ export const TravelPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeTab, setActiveTab] = useState<SearchType>("place");
 
-  const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
-  const addPlace = useSelectedPlacesStore((s) => s.addPlace);
-  const removePlace = useSelectedPlacesStore((s) => s.removePlace);
   const rememberedData = useSelectedPlacesStore((s) => s.rememberedData);
   const setRememberedData = useSelectedPlacesStore((s) => s.setRememberedData);
 
@@ -54,7 +51,6 @@ export const TravelPage = () => {
       <section className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
         <TravelMapWidget
           places={displayPlaces}
-          onMarkerClick={addPlace}
           isLoading={isLoading}
         />
       </section>
@@ -63,8 +59,6 @@ export const TravelPage = () => {
       <div className="w-[30%] h-full">
         <PlanningSidebarWidget
           setPlaceSearch={handlePlaceSearch}
-          selectedPlaces={selectedPlaces}
-          onRemovePlace={removePlace}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />

@@ -1,37 +1,33 @@
-// 1. External Libraries (외부 라이브러리 및 React)
+// 1. External Libraries
 import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
-// 2. Features Layer (사용자 상호작용 및 기능 단위)
-import SearchForm from "@/features/search-plcae/ui/SearchForm"; // 💡 오타 수정: plcae -> place
+// 2. Features Layer
+import SearchForm from "@/features/search-place/ui/SearchForm";
 import { TravelDaysPicker } from "@/features/select-travel-dates/ui/TravelDaysPicker";
 
-// 3. Entities Layer (비즈니스 도메인 및 데이터 상태 관리)
+// 3. Entities Layer
 import SelectedList from "@/entities/place/ui/SelectedList";
+import { useSelectedPlacesStore } from "@/entities/place/model/selectedPlacesStore"; // 💡 추가: 장소 전역 스토어
 import { useDayPickerStore } from "@/entities/travel-plan/model/useDayPickerStore";
 
-// 4. Shared Layer - Types (가장 하위 공통 데이터 타입)
+// 4. Shared Layer & Types
 import type { SearchParams, SearchType } from "@/entities/place/model/type";
-import type { NearPlace } from "@/shared/types/nearPlaceType";
 
 type PlanningSidebarWidgetProps = {
   setPlaceSearch: (params: SearchParams) => void;
-  selectedPlaces: NearPlace[];
-  onRemovePlace: (placeId: string) => void;
-  activeTab: SearchType; // 선택한 탭을 부모에게 전달하는 상태
-  setActiveTab: (tab: SearchType) => void; // 선택한 탭을 부모에게 전달하는 함수
+  activeTab: SearchType;
+  setActiveTab: (tab: SearchType) => void;
 };
 
 export const PlanningSidebarWidget = React.memo(
-  ({
-    selectedPlaces,
-    onRemovePlace,
-    setPlaceSearch,
-    setActiveTab,
-    activeTab,
-  }: PlanningSidebarWidgetProps) => {
-    const tripsDays = useDayPickerStore((state) => state.tripDays);
+  ({ setPlaceSearch, activeTab, setActiveTab }: PlanningSidebarWidgetProps) => {
+    const selectedPlaces = useSelectedPlacesStore((s) => s.selectedPlaces);
+    const removePlace = useSelectedPlacesStore((s) => s.removePlace);
+    
+    const tripsDays = useDayPickerStore((s) => s.tripDays);
+
     const handleNextClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       if (!selectedPlaces || selectedPlaces.length === 0) {
         e.preventDefault();
@@ -41,8 +37,10 @@ export const PlanningSidebarWidget = React.memo(
         toast.error("여행 기간을 선택하세요!");
       }
     };
+
     return (
       <aside className="w-full h-full flex flex-col justify-between p-4 bg-white shadow-md rounded-2xl overflow-hidden">
+        {/* 상단: 조건 설정 영역 */}
         <fieldset className="flex flex-col gap-4 mb-4 border-none p-0 m-0">
           <legend className="sr-only">여행지 검색 및 기간 조건 설정</legend>
           <SearchForm
@@ -53,10 +51,12 @@ export const PlanningSidebarWidget = React.memo(
           <TravelDaysPicker />
         </fieldset>
 
+        {/* 중단: 선택된 여행지 리스트 영역 */}
         <div className="flex-1 min-h-0 overflow-hidden mb-4">
-          <SelectedList place={selectedPlaces} onRemovePlace={onRemovePlace} />
+          <SelectedList place={selectedPlaces} onRemovePlace={removePlace} />
         </div>
 
+        {/* 하단: 일정 수립 단계 이동 푸터 */}
         <footer>
           <Link
             onClick={handleNextClick}
@@ -68,5 +68,7 @@ export const PlanningSidebarWidget = React.memo(
         </footer>
       </aside>
     );
-  },
+  }
 );
+
+PlanningSidebarWidget.displayName = "PlanningSidebarWidget";
