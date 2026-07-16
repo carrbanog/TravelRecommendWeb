@@ -31,14 +31,18 @@ export const TravelPage = () => {
       {/* 지도 영역 (70%) */}
       <section className="w-[70%] h-full rounded-lg overflow-hidden shadow-xl">
         <Suspense fallback={<MapSkeleton />}>
-          <TravelMapWidget places={displayPlaces} isLoading={isLoading} />
+          {isLoading ? (
+            <MapSkeleton />
+          ) : (
+            <TravelMapWidget places={displayPlaces} />
+          )}
         </Suspense>
       </section>
 
       {/* 사이드 영역 (30%) */}
       <div className="w-[30%] h-full">
         <PlanningSidebarWidget
-          setPlaceSearch={handlePlaceSearch}
+          handlePlaceSearch={handlePlaceSearch}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />

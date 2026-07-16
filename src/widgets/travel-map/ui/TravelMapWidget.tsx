@@ -8,17 +8,15 @@ import { PlaceInfoWindow } from "@/entities/place/place-details/ui/PlaceInfoWind
 
 // [Shared Layer]
 import MyMap from "@/shared/ui/GoogleMap/MyMap";
-import { MapSkeleton } from "@/shared/ui/GoogleMap/MapSkeleton";
 import { useMapHover } from "@/shared/lib/hooks/useMapHover";
 import type { NearPlace } from "@/shared/types/nearPlaceType";
 
 type TravelMapWidgetProps = {
   places?: NearPlace[];
-  isLoading: boolean;
 };
 
 const TravelMapWidget = React.memo(
-  ({ places, isLoading }: TravelMapWidgetProps) => {
+  ({ places }: TravelMapWidgetProps) => {
     const center = useSelectedPlacesStore((s) => s.center);
     const setCenter = useSelectedPlacesStore((s) => s.setCenter);
     const addPlace = useSelectedPlacesStore((s) => s.addPlace);
@@ -37,9 +35,6 @@ const TravelMapWidget = React.memo(
       }
     }, [places, setCenter]);
 
-    if (isLoading) {
-      return <MapSkeleton />;
-    }
 
     return (
       <MyMap place={center} zoom={12}>
