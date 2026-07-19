@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { InfoWindow, Marker } from "@react-google-maps/api";
+// 1. MarkerClusterer 컴포넌트를 추가로 임포트합니다.
+import { InfoWindow, Marker, MarkerClusterer } from "@react-google-maps/api";
 
 // [Entities Layer]
 import { useSelectedPlacesStore } from "@/entities/place/model/selectedPlacesStore";
@@ -34,32 +35,43 @@ const TravelMapWidget = React.memo(
         }
       }
     }, [places, setCenter]);
+    const clustererOptions = {
+      maxZoom: 12, //높을수록 확대를 많이 해야지 클러스터가 해제(마커 분리)
+    }
 
 
     return (
-      <MyMap place={center} zoom={12}>
-        {places?.map((placeItem) => (
-          <Marker
-            key={placeItem.placeId}
-            position={placeItem.nearCoordinates}
-            onClick={() => addPlace(placeItem)}
-            onMouseOver={() => handleMouseOver(placeItem.placeId)}
-            onMouseOut={handleMouseOut}
-          >
-            {/* 현재 호버된 마커와 이 마커의 데이터가 일치할 때만 InfoWindow 표시 */}
-            {hoveredPlace === placeItem.placeId && detailData && (
-              <InfoWindow options={{ disableAutoPan: true }}>
-                {detailLoading ? (
-                  <div className="p-2 text-xs text-slate-500">
-                    로딩 중...
-                  </div>
-                ) : (
-                  <PlaceInfoWindow place={detailData} />
-                )}
-              </InfoWindow>
-            )}
-          </Marker>
-        ))}
+      <MyMap place={center} zoom={13}>
+        {/* 2. MarkerClusterer로 마커 매핑 로직을 감싸줍니다. */}
+        <MarkerClusterer options={clustererOptions}>
+          {(clusterer) => (
+            <>
+              {places?.map((placeItem) => (
+                <Marker
+                  key={placeItem.placeId}
+                  position={placeItem.nearCoordinates}
+                  // ⚠️ 중요: clusterer 등록을 위해 꼭 넣어주어야 합니다.
+                  clusterer={clusterer} 
+                  onClick={() => addPlace(placeItem)}
+                  onMouseOver={() => handleMouseOver(placeItem.placeId)}
+                  onMouseOut={handleMouseOut}
+                >
+                  {hoveredPlace === placeItem.placeId && detailData && (
+                    <InfoWindow options={{ disableAutoPan: true }}>
+                      {detailLoading ? (
+                        <div className="p-2 text-xs text-slate-500">
+                          로딩 중...
+                        </div>
+                      ) : (
+                        <PlaceInfoWindow place={detailData} />
+                      )}
+                    </InfoWindow>
+                  )}
+                </Marker>
+              ))}
+            </>
+          )}
+        </MarkerClusterer>
       </MyMap>
     );
   }
