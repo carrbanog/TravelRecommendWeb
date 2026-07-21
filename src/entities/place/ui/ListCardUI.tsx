@@ -68,7 +68,7 @@ export const ListCardUI = memo(({
       </div>
 
       <div className="mt-1 flex items-end justify-between gap-2">
-        <h3 className="text-sm font-bold text-slate-700 line-clamp-2 flex-1">
+        <h3 className="text-sm font-bold text-slate-700 line-clamp-2 flex-1 min-h-[2.5rem]">
           {place.title}
         </h3>
         <GripVertical className="w-4 h-4 text-slate-300" />
